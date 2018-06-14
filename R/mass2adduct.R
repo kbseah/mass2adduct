@@ -27,3 +27,7 @@
 #' Accompanying data: List of common molecular \code{\link{adducts}} and their masses
 "_PACKAGE"
 #> [1] "_PACKAGE"
+#'
+#' @useDynLib mass2adduct
+#' @importFrom Rcpp sourceCpp
+NULL

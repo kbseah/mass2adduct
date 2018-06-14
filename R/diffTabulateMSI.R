@@ -17,7 +17,7 @@
 #'          differences, \code{\link{readMSI}} to read MS imaging data
 #' @export
 
-diffTabulateMSI <- function(d, override.limit=FALSE) {
+diffTabulateMSI <- function(d) {
     # Check that d is a data.frame
     if (!is.data.frame(d)) {
         cat ("Error: Input should be a data.frame\n")
@@ -25,7 +25,7 @@ diffTabulateMSI <- function(d, override.limit=FALSE) {
         # Get list of column names as numeric vector (should be peak mass values)
         d.names <- as.numeric(names(d))
         # Tabulate pairs with diffTabulate
-        output <- diffTabulate(d=d.names, override.limit=override.limit)
+        output <- diffTabulate(d=d.names)
         return(output)
     }
 }

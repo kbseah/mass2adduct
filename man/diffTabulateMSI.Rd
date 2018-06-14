@@ -4,7 +4,7 @@
 \alias{diffTabulateMSI}
 \title{Tabulate pairwise combinations of mass peaks from imported MSI data}
 \usage{
-diffTabulateMSI(d, override.limit = FALSE)
+diffTabulateMSI(d)
 }
 \arguments{
 \item{d}{data.frame; MS imaging data imported with \code{readMSI}}

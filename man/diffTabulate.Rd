@@ -4,13 +4,10 @@
 \alias{diffTabulate}
 \title{Tabulate pairwise combinations of mass peaks}
 \usage{
-diffTabulate(d, override.limit = FALSE)
+diffTabulate(d)
 }
 \arguments{
 \item{d}{numeric vector representing m/z values of mass peaks}
-
-\item{override.limit}{logical; continue with computation even if vector
-length is >5000 (default: FALSE)}
 }
 \value{
 data.frame of all pairs of masses and their respective differences
@@ -20,9 +17,8 @@ Takes all pairwise combinations of masses from a simple numeric vector
 that represent the mass values from a mass spectrometry data set.
 }
 \details{
-The number of possible pairs grows combinatorially and so the calculation
-can take a very long time for more than 5000 mass values. Use the
-\code{override.limit} parameter to override the default limit of 5000.
+The number of possible pairs grows combinatorially and the calculation will
+fail for >65536 values (the function uses a 16-bit integer internally).
 }
 \seealso{
 \code{\link{diffTabulateMSI}} to tabulate mass differences from
