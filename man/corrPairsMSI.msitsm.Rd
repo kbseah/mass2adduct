@@ -4,7 +4,8 @@
 \alias{corrPairsMSI.msitsm}
 \title{Calculate correlations of pairs of mass peaks from MSI data}
 \usage{
-\method{corrPairsMSI}{msitsm}(d, pairs, p.val = 0.05, ...)
+\method{corrPairsMSI}{msitsm}(d, pairs, p.val = 0.05, method = "pearson",
+  alternative = "greater", ...)
 }
 \arguments{
 \item{d}{data.frame; MSI data with peaks as columns and pixels as rows,
@@ -46,9 +47,10 @@ peak pairs corresponding to a specific adduct of interest are extracted with
 each other with this function.
 
 Correlation is calculated with \code{\link{cor.test}} function from the
-\code{stats} package, and uses the default two-sided Pearson method. The
-Bonferroni correction is applied to the p-values before assessing significance,
-but the original p-value is reported in column P.value.
+\code{stats} package, and by default uses the Pearson methone (one-sided, i.e.
+positive correlations). The Bonferroni correction is applied to the p-values
+before assessing significance, but the original p-value is reported in column
+P.value.
 }
 \seealso{
 \code{\link{corrSinglePeakMSI}} to calculate correlations of all

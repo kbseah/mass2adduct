@@ -11,9 +11,10 @@
 #' each other with this function.
 #'
 #' Correlation is calculated with \code{\link{cor.test}} function from the
-#' \code{stats} package, and uses the default two-sided Pearson method. The
-#' Bonferroni correction is applied to the p-values before assessing significance,
-#' but the original p-value is reported in column P.value.
+#' \code{stats} package, and by default uses the Pearson methone (one-sided, i.e.
+#' positive correlations). The Bonferroni correction is applied to the p-values
+#' before assessing significance, but the original p-value is reported in column
+#' P.value.
 #'
 #' @param d data.frame; MSI data with peaks as columns and pixels as rows,
 #'        output from \code{\link{readMSI}} function
@@ -25,13 +26,13 @@
 #' @return Object of class data.frame with the following fields:
 #'
 #'         label - Label for row
-#' 
+#'
 #'         parental_ion - First peak mass in each pair
 #'
 #'         adduct_ion - Second peak mass in the pair
 #'
 #'         Estimate - Estimated correlation
-#' 
+#'
 #'         P.value - P-value for the correlation
 #'
 #'         Significance - Whether p-value meets cutoff (specified by "p.val", with
@@ -42,7 +43,7 @@
 #'
 #' @export
 
-corrPairsMSI.msidf <- function(d, pairs, p.val=0.05, ...) {
+corrPairsMSI.msidf <- function(d, pairs, p.val=0.05, method="pearson", alternative="greater", ...) {
     # Adapted from original code by Moritz
     # Get vectors representing parent and adduct ion masses
     ions.parent <- pairs[,1]
@@ -62,7 +63,11 @@ corrPairsMSI.msidf <- function(d, pairs, p.val=0.05, ...) {
                      P.value=numeric(numpairs),
                      Significance=numeric(numpairs))
     for (i in 1:numpairs){
-        test <- cor.test(A[,i], B[,i], ...)
+        test <- cor.test(A[,i],
+                         B[,i],
+                         method=method,
+                         alternative=alternative,
+                         ...)
         df$Estimate[i] <- test$estimate
         df$P.value[i] <- test$p.value
     }
