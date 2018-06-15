@@ -112,6 +112,21 @@ Compare only a single target mass value against all masses in the MSI data
 dat.350.988.corr <- corrSinglePeakMSI(d=dat.msi, peak = 350.988)
 ```
 
+## Reformatting large CSV files
+
+Plain-text CSV files of MSI data exported by software such as SCILS or MSIreader can be large, on the order of several Gb. For many MSI data sets, a lot of this is "wasted" because the majority of peaks are only detected in a minority of pixels. Low-abundance peaks can be thrown out through filtering, but the majority of entries in the data matrix may still be zeroes.
+
+Reading these large files directly into R is inefficient and may not be possible because of insufficient memory. To be more economical, the data can be represented in a "triplet" format rather than matrix.
+
+A Perl script `msimunging.pl` (in the `inst/` subdirectory of the package source) is provided to do this format conversion before importing the files into R. It can convert between plain CSV format, the so-called "triplet" format, and a binary format readable by Perl (mostly used for testing). Note that it is nonetheless still limited by the amount of memory you have on your system (e.g. if your CSV file is 40 Gb and your RAM is 32 Gb, then it will probably not work).
+
+Conversion to triplet format output gives five files, which correspond to the inputs required by the `readMSI()` function in the R package.
+
+The script also provides the option to filter peaks by their frequency of nonzero pixels.
+
+Usage information is shown by typing `msimunging.pl --help`.
+
+
 ## Help and documentation
 
 Further documentation for all the above functions can be found with the `help` or `?` functions in R. Overview of the entire package can be viewed with `help(mass2adduct)`.
