@@ -42,4 +42,43 @@
 #'
 #' @export
 
-corrPairsMSI <- function(d, pairs, p.val=0.05, ...) UseMethod("corrPairsMSI")
+corrPairsMSI.msitsm <- function(d, pairs, p.val=0.05, ...) {
+    # Adapted from original code by Moritz
+    # Get vectors representing parent and adduct ion masses
+    ions.parent <- pairs[,1]
+    ions.adduct <- pairs[,2]
+    # Subset the MSI data frame to contain only target ions
+    peaklist <- d[["peaks"]]
+    idx.parent <- match(ions.parent, peaklist)
+    idx.adduct <- match(ions.adduct, peaklist)
+    d.parent <- d[["tsm"]][,idx.parent]
+    d.adduct <- d[["tsm"]][,idx.adduct]
+    # Convert DFs to matrices
+    A <- Matrix::as.matrix(d.parent)
+    B <- Matrix::as.matrix(d.adduct)
+    # Pairwise correlation with p-values
+    numpairs <- dim(B)[2]
+    cat (paste(c("Calculating correlations between",numpairs,"pairs")))
+    df <- data.frame(label=paste("Ion pair", 1:numpairs),
+                     Estimate=numeric(numpairs),
+                     P.value=numeric(numpairs),
+                     Significance=numeric(numpairs))
+    for (i in 1:numpairs){
+        test <- cor.test(A[,i], B[,i], ...)
+        df$Estimate[i] <- test$estimate
+        df$P.value[i] <- test$p.value
+    }
+    # test for significance with Bonferroni adjusted p-values (p value <= 0.05/number of pixels])
+    adjusted.pvalue <- p.val/numpairs
+    df$Significance <- ifelse(df$P.value<=adjusted.pvalue, 1, 0)
+    # add the parental and adduct ions to the dataframe
+    df["parental ion"] <- ions.parent
+    df["adduct ion"] <- ions.adduct
+    # Retain only relevant fields
+    df <- df[,c(1,5,6,2,3,4)]
+    # Report number of significantly correlated pairs found
+    num.signif <- sum(df$Significance)
+    cat ("Significant correlations found at p-value cutoff of", p.val, "(with Bonferroni correction):", num.signif, "\n")
+    # Return data frame
+    return(df)
+}

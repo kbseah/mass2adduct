@@ -1,35 +1,27 @@
 #' Tabulate pairwise combinations of mass peaks
 #'
-#' Takes all pairwise combinations of masses from a simple numeric vector
-#' that represent the mass values from a mass spectrometry data set.
+#' Takes all pairwise combinations of masses from either an MSI data set that
+#' was imported with the function \code{\link{readMSI}}, or from a simple
+#' numeric vector of masses.
 #'
 #' The number of possible pairs grows combinatorially and the calculation will
 #' fail for >65536 values (the function uses a 16-bit integer internally).
 #' 
-#' @param d numeric vector representing m/z values of mass peaks
+#' @param d Either an MSI data set of class msidf or msitsm, imported with the
+#'          \code{\link{readMSI}} function from the mass2adduct package, or
+#'          numeric vector representing m/z values of mass peaks
 #'
-#' @return data.frame of all pairs of masses and their respective differences
-#' @seealso \code{\link{diffTabulateMSI}} to tabulate mass differences from
-#'          MS imaging data object imported with \code{\link{readMSI}} function,
-#'          \code{\link{diffHist}} to plot histogram of mass differences
+#' @return data.frame with three columns:
+#'
+#'                    A - m/z values for peak pairs; for a given pair, A will
+#'                        be lower than B. Requries that the peak list in the
+#'                        input be sorted ascending numerically by mass.
+#'
+#'                    B - m/z values for peak pairs
+#'
+#'                    diff - their respective differences
+#'
+#' @seealso \code{\link{diffHist}} to plot histogram of mass differences
 #' @export
 
-diffTabulate <- function(d) {
-    # Check that d is numeric 
-    if (!is.numeric(d)) {
-        cat ("Error: Input should be numeric\n")
-    } else {
-        len <- length(d)
-        cat ("Input is numeric vector of length", len, "with", choose(len,2), "possible pairs\n")
-        if (len > 65536) { # Warning if vector is too long 
-            cat ("Warning: Input is longer than 65536 elements\n")
-            cat ("... perhaps you should filter your peak list\n")
-        } else {
-            y <- comb2M(d) # Alternative to R built-in combn function
-            # Format results as data frame with column labels
-            y <- as.data.frame (t(y))
-            names(y) <- c("A","B","diff")
-            return(y)
-        }
-    }
-}
+diffTabulate <- function(d) UseMethod("diffTabulate")

@@ -4,13 +4,28 @@
 \alias{readMSI}
 \title{Read mass spectrometry imaging data}
 \usage{
-readMSI(file, sep = ";", remove.zeroes = TRUE, header = TRUE,
+readMSI(csv = NULL, sep = ",", rows = NULL, cols = NULL, vals = NULL,
+  peaks = NULL, spots = NULL, remove.zeroes = TRUE, header = TRUE,
   check.names = FALSE, row.names = 1, ...)
 }
 \arguments{
-\item{file}{filename; CSV export from MSiReader software using Intensity export}
+\item{csv}{filename; CSV-formatted table of intensities arranged by peak masses
+(columns, with column headers) and pixel spots (rows, with row names)}
 
-\item{sep}{character; column separator in CSV file (default: ";")}
+\item{sep}{character; column separator in CSV file (default: ",")}
+
+\item{rows}{filename; File of row numbers, 0-based (see note on triplet
+representation above), one per line}
+
+\item{cols}{filename; File of column numbers, 0-based, one per line}
+
+\item{vals}{filename; File of intensity values, one per line}
+
+\item{peaks}{filename; File of peak mass values, one per line. Order in list
+should correspond to the column numbers given to argument cols}
+
+\item{spots}{filename; File of pixel spot names, one per line. Order in list
+should correspond to the row numbers given to argument rows}
 
 \item{remove.zeroes}{logical; remove columns where all values are zero? (default: TRUE)}
 
@@ -23,11 +38,19 @@ readMSI(file, sep = ";", remove.zeroes = TRUE, header = TRUE,
 \item{...}{Parameters to be passed to read.csv()}
 }
 \value{
-Object of class data.frame
+Object of class msidf or msitsm
 }
 \description{
-Import mass spectrometry imaging data in CSV format, exported from MSiReader
-using the Intensity export function. Note that the column headers should be
-ion masses, and that table values should be all numeric or there will be an
+Import mass spectrometry imaging data in either CSV or triplet format.
+CSV file is for example exported from MSiReader using the Intensity export
+function or from other software. For CSV file, column headers should be
+ion masses, and table values should be all numeric or there will be an
 error.
+}
+\details{
+Alternatively the data can be in triplet form, with separate lists of row,
+column, and intensity values. Two additional lists hold the peak mass values
+and the pixel spot names. This is useful for importing very large but sparse
+data matrices. If a filename is specified to option csv, then options row,
+cols, vals, peaks, and spots are ignored.
 }

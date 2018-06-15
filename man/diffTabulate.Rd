@@ -7,21 +7,30 @@
 diffTabulate(d)
 }
 \arguments{
-\item{d}{numeric vector representing m/z values of mass peaks}
+\item{d}{Either an MSI data set of class msidf or msitsm, imported with the
+\code{\link{readMSI}} function from the mass2adduct package, or
+numeric vector representing m/z values of mass peaks}
 }
 \value{
-data.frame of all pairs of masses and their respective differences
+data.frame with three columns:
+
+                   A - m/z values for peak pairs; for a given pair, A will
+                       be lower than B. Requries that the peak list in the
+                       input be sorted ascending numerically by mass.
+
+                   B - m/z values for peak pairs
+
+                   diff - their respective differences
 }
 \description{
-Takes all pairwise combinations of masses from a simple numeric vector
-that represent the mass values from a mass spectrometry data set.
+Takes all pairwise combinations of masses from either an MSI data set that
+was imported with the function \code{\link{readMSI}}, or from a simple
+numeric vector of masses.
 }
 \details{
 The number of possible pairs grows combinatorially and the calculation will
 fail for >65536 values (the function uses a 16-bit integer internally).
 }
 \seealso{
-\code{\link{diffTabulateMSI}} to tabulate mass differences from
-         MS imaging data object imported with \code{\link{readMSI}} function,
-         \code{\link{diffHist}} to plot histogram of mass differences
+\code{\link{diffHist}} to plot histogram of mass differences
 }
