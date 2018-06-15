@@ -9,12 +9,16 @@
 #' @return subset of the original data frame d where the mass difference or
 #'         parent ion is close to the specified mass of interest (within the
 #'         specified width)
-#' @export
 
-diffGetPeaks <- function(d, by="diff", mass=NULL, width=0.01) {
+diffGetPeaksIndex <- function(d, by="diff", mass=NULL, width=0.01) {
     if (! is.null (mass)) {
-        idx <- diffGetPeaksIndex(d=d,by=by,mass=mass,width=width)
-        output <- d[idx,]
+        diffLow <- mass - width/2
+        diffUpp <- mass + width/2
+        if (by=="diff") {
+            output <- which(d$diff > diffLow & d$diff <= diffUpp)
+        } else if (by == "parent") {
+            output <- which(d$A > diffLow & d$A <= diffUpp)
+        }
         return (output)
     } else {
         cat ("Error: Mass difference not specified\n")
