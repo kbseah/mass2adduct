@@ -8,7 +8,9 @@ msimunging.pl - Work with large CSV files in mass spectrometry imaging
 
 msimunging.pl -csv msi.csv -skip 10 -outfmt hashimage -out msi_reformat
 
-msimunging.pl -hash msi.hashimage -freqmin 0.01 -outfmt hashimage -out msi_filtered
+msimunging.pl -hash msi.hashimage -filterby freq -freqmin 0.01 -outfmt hashimage -out msi_filtered
+
+msimunging.pl -hash msi.hashimage -filterby top - top 5000 -outfmt hashimage -out msi_filtered
 
 msimunging.pl -help
 
@@ -67,10 +69,12 @@ my $matrix;
 my $out = "test";
 my $outfmt = 'hashimage';
 my $stored;
+my $filterby;
+my $freqmin = 0.01;
+my $toppeaks = 5000;
 my $crlf;
 my $delim = ",";
 my $skip = 0;
-my $freqmin;
 my $quiet;
 
 pod2usage(-verbose=>0) if !@ARGV;
@@ -80,7 +84,9 @@ GetOptions("csv=s" => \$matrix,
            "delim=s" => \$delim,
            "crlf" => \$crlf,
            "skip=i" => \$skip,
+           "filterby=s" => \$filterby,
            "freqmin=f" => \$freqmin,
+           "top=i" => \$toppeaks,
            "out=s" => \$out,
            "outfmt=s" => \$outfmt,
            "quiet" => \$quiet,
@@ -134,12 +140,27 @@ will be ignored.
 
 =over 8
 
-=item --freqmin I<NUMERIC>
+=item --filterby I<STRING>
 
-Filter peaks to include only those which appear in this minimum fraction of all
-pixels. Should be a number between 0 and 1.
+What method for filtering? Options: "freq" (frequency of filled pixels), or
+"top" (take the top N peaks by total intensity)
 
 Default: None (use all peaks)
+
+=item --freqmin I<NUMERIC>
+
+If option I<--filterby freq> is used. Filter peaks to include only those which
+appear in this minimum fraction of all pixels. Should be a number between 0 and 1.
+
+Default: None 
+
+=item --top I<INTEGER>
+
+If option I<--filterby top> is used. Take the top N peaks by total intensity.
+
+Default: 4000
+
+=item 
 
 =back
 
@@ -202,10 +223,19 @@ if ($stored) {
 ## FILTER PEAK LIST
 #print Dumper \%hash;
 my $outputref;
-if ($freqmin) {
-    say STDERR "Filtering peaks at $freqmin minimum pixel frequency";
-    my $newhref = peakFilterFreq($inhref,$freqmin); # 1% filter
-    $outputref = $newhref;
+if (defined $filterby) {
+    if ($filterby eq 'freq' && defined $freqmin) {
+        say STDERR "Filtering peaks at $freqmin minimum pixel frequency";
+        my $newhref = peakFilterFreq($inhref,$freqmin); # 1% filter
+        $outputref = $newhref;
+    } elsif ($filterby eq 'top' && defined $toppeaks) {
+        say STDERR "Filtering peaks to retain top $toppeaks peaks by total intensity";
+        my $newhref = peakFilterTop($inhref,$toppeaks);
+        $outputref = $newhref;
+    } else {
+        say STDERR "Unrecognized option for --filterby, input matrix will not be filtered";
+        $outputref = $inhref;
+    }
 } else {
     say STDERR "Input matrix will not be filtered";
     $outputref = $inhref;
@@ -280,6 +310,49 @@ sub hash2triplets {
     array2file(\@vals,"$outprefix\_vals.list");
     array2file(\@peaklist,"$outprefix\_peaknames.list");
     array2file(\@spotlist,"$outprefix\_spotnames.list");
+}
+
+sub peakFilterTop {
+    my ($href,
+        $top) = @_;
+    my $peaknum = scalar @{$href->{'peaks'}};
+    if ($top > $peaknum) {
+        say STDERR "Number of peaks fewer than number to be filtered, not filtering";
+        return $href;
+    } else {
+        say STDERR "Performing peak filtering, retaining $top top peaks by intensity";
+        my %peakintensitysum;
+        # Sum up intensities per peak
+        my $peaksprocessed = 0;
+        foreach my $peak (@{$href->{'peaks'}}) {
+            $peaksprocessed ++;
+            say STDERR "... $peaksprocessed peaks processed" if $peaksprocessed%1000 == 0;
+            foreach my $spot (keys %{$href->{'values'}{$peak}}) {
+                $peakintensitysum{$peak} += $href->{'values'}{$peak}{$spot};
+            }
+        }
+        # Sort by total intensity per peak, and keep top N peaks
+        my @peakstop = sort {$peakintensitysum{$b} <=> $peakintensitysum{$a}} (keys %peakintensitysum);
+        @peakstop = @peakstop[1..$top];
+        # Re-sort peaks by their masses
+        @peakstop = sort {$a <=> $b} @peakstop;
+        my %newvals = %{$href->{'values'}}{@peakstop};
+        my @spots = @{$href->{'spots'}};
+        my $dim = $top * scalar (@spots);
+        my %newinfo = ("Input file" => $href->{'info'}{'Input file'}." filtered",
+                       "Total peaks" => $top,
+                       "Total spots" => scalar @spots,
+                       "Matrix size" => $dim,
+                       #"Filled pixels" => $countfilledpixels,
+                       #"Filled percentage" => 100*($countfilledpixels/$dim),
+                       );
+        my %newhash = ("info" => \%newinfo,
+                       "values" => \%newvals,
+                       "peaks" => \@peakstop,
+                       "spots" => \@spots);
+        return \%newhash;
+    }
+    
 }
 
 sub peakFilterFreq {
