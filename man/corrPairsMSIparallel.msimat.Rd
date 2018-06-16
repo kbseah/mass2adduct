@@ -4,8 +4,9 @@
 \alias{corrPairsMSIparallel.msimat}
 \title{Calculate correlations of pairs of mass peaks from MSI data (parallel version)}
 \usage{
-corrPairsMSIparallel.msimat(d, pairs, p.val = 0.05, method = "pearson",
-  alternative = "greater", ncores = parallel::detectCores() - 1, ...)
+\method{corrPairsMSIparallel}{msimat}(d, pairs, p.val = 0.05,
+  method = "pearson", alternative = "greater",
+  ncores = parallel::detectCores() - 1, ...)
 }
 \arguments{
 \item{d}{data.frame; MSI data with peaks as columns and pixels as rows,
