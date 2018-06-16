@@ -1,4 +1,4 @@
-#' Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)
+#' Find pairs of mass peaks corresponding to a specific mass
 #'
 #' @param diff data.frame; output from diffTabulate
 #' @param by string; Subset the mass by mass difference (putative adduct
@@ -11,7 +11,7 @@
 #'         specified width)
 #' @export
 
-diffGetPeaks <- function(diff, by="diff", mass=NULL, width=0.01) {
+diffGetPeaks <- function(diff, by="diff", mass=NULL, width=0.001) {
     if (class(diff) != "data.frame") {
         cat ("Error: Input to parameter diff must be a data.frame\n")
     } else {

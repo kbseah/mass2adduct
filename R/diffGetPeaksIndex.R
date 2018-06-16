@@ -10,7 +10,7 @@
 #'         parent ion is close to the specified mass of interest (within the
 #'         specified width)
 
-diffGetPeaksIndex <- function(diff, by="diff", mass=NULL, width=0.01) {
+diffGetPeaksIndex <- function(diff, by="diff", mass=NULL, width=0.001) {
     if (! is.null (mass)) {
         diffLow <- mass - width/2
         diffUpp <- mass + width/2

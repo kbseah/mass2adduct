@@ -13,7 +13,7 @@
 #'          current function)
 #' @export
 
-adductMatchDiffs <- function(diff,add=adducts,width=0.01) {
+adductMatchDiffs <- function(diff,add=adducts,width=0.001) {
     if (class(diff) != "data.frame") {
         cat("Error: Object hist has to be a data.frame produced by function diffTabulate\n")
     } else {
