@@ -4,7 +4,7 @@
 \alias{adductMatchDiffs}
 \title{Find closest-matching known adducts for a set of mass differences}
 \usage{
-adductMatchDiffs(diff, add = adducts, width = 0.01)
+adductMatchDiffs(diff, add = adducts, width = 0.001)
 }
 \arguments{
 \item{diff}{data.frame of mass differences produced by \code{\link{diffTabulate}}}

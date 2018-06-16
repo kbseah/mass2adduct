@@ -2,9 +2,9 @@
 % Please edit documentation in R/diffGetPeaks.R
 \name{diffGetPeaks}
 \alias{diffGetPeaks}
-\title{Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)}
+\title{Find pairs of mass peaks corresponding to a specific mass}
 \usage{
-diffGetPeaks(diff, by = "diff", mass = NULL, width = 0.01)
+diffGetPeaks(diff, by = "diff", mass = NULL, width = 0.001)
 }
 \arguments{
 \item{diff}{data.frame; output from diffTabulate}
@@ -22,5 +22,5 @@ subset of the original data frame d where the mass difference or
         specified width)
 }
 \description{
-Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)
+Find pairs of mass peaks corresponding to a specific mass
 }

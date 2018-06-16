@@ -4,7 +4,7 @@
 \alias{diffGetPeaksIndex}
 \title{Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)}
 \usage{
-diffGetPeaksIndex(diff, by = "diff", mass = NULL, width = 0.01)
+diffGetPeaksIndex(diff, by = "diff", mass = NULL, width = 0.001)
 }
 \arguments{
 \item{by}{string; Subset the mass by mass difference (putative adduct
