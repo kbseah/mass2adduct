@@ -10,7 +10,7 @@
 #' column, and intensity values. Two additional lists hold the peak mass values
 #' and the pixel spot names. This is useful for importing very large but sparse
 #' data matrices. If a filename is specified to option csv, then options row,
-#' cols, vals, peaks, and spots are ignored. 
+#' cols, vals, peaks, and spots are ignored.
 #'
 #' @param csv filename; CSV-formatted table of intensities arranged by peak masses
 #'        (columns, with column headers) and pixel spots (rows, with row names)
@@ -60,10 +60,10 @@ readMSI <- function(csv=NULL,
                                         index1=FALSE,       # 0-based numbering
                                         giveCsparse=FALSE,  # TsparseMatrix
                                         check=TRUE)
-            data <- list(tsm=tsm,
+            data <- list(mat=tsm,
                          peaks=inpeaks,
                          spots=inspots)
-            class(data) <- "msitsm"
+            class(data) <- "msimat"
             return(data)
         }
     }
@@ -81,19 +81,21 @@ readMSI <- function(csv=NULL,
                 data.colsums <- sapply(data, function(x) sum(x))
                 index.data.colzero <- which(data.colsums==0)
                 index.data.notzero <- which(data.colsums!=0)
-                data.nozero <- data[index.data.notzero]
                 cat ("Removing", length(index.data.colzero), "columns with only zeroes\n")
-                class(data.nozero) <- "msidf"
-                return(data.nozero)
-            } else {
-                class(data) <- "msidf"
-                return(data)
+                data <- data[index.data.notzero]
             }
+            peaks <- names(data)
+            spots <- row.names(data)
+            out <- list(mat=as.matrix(data),
+                        peaks=as.numeric(peaks),
+                        spots=spots)
+            class(out) <- "msimat"
+            return(out)
         } else {
             # Error message if non-numeric values found in data input
             cat ("Error: Some values in the input data are non-numeric; please check the input file \n")
         }
     }
 
-    
+
 }
