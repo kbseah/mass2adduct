@@ -60,9 +60,11 @@ readMSI <- function(csv=NULL,
                                         index1=FALSE,       # 0-based numbering
                                         giveCsparse=FALSE,  # TsparseMatrix
                                         check=TRUE)
+            peakintensities <- Matrix::colSums(tsm)
             data <- list(mat=tsm,
                          peaks=inpeaks,
-                         spots=inspots)
+                         spots=inspots,
+                         peakintensities=peakintensities)
             class(data) <- "msimat"
             return(data)
         }
@@ -86,9 +88,11 @@ readMSI <- function(csv=NULL,
             }
             peaks <- names(data)
             spots <- row.names(data)
+            peakintensities <- colSums(data)
             out <- list(mat=as.matrix(data),
                         peaks=as.numeric(peaks),
-                        spots=spots)
+                        spots=spots,
+                        peakintensities=peakintensities)
             class(out) <- "msimat"
             return(out)
         } else {
@@ -96,6 +100,4 @@ readMSI <- function(csv=NULL,
             cat ("Error: Some values in the input data are non-numeric; please check the input file \n")
         }
     }
-
-
 }
