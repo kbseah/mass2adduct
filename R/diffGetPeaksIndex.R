@@ -10,14 +10,14 @@
 #'         parent ion is close to the specified mass of interest (within the
 #'         specified width)
 
-diffGetPeaksIndex <- function(d, by="diff", mass=NULL, width=0.01) {
+diffGetPeaksIndex <- function(diff, by="diff", mass=NULL, width=0.01) {
     if (! is.null (mass)) {
         diffLow <- mass - width/2
         diffUpp <- mass + width/2
         if (by=="diff") {
-            output <- which(d$diff > diffLow & d$diff <= diffUpp)
+            output <- which(diff$diff > diffLow & diff$diff <= diffUpp)
         } else if (by == "parent") {
-            output <- which(d$A > diffLow & d$A <= diffUpp)
+            output <- which(diff$A > diffLow & diff$A <= diffUpp)
         }
         return (output)
     } else {

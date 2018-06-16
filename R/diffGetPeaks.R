@@ -1,6 +1,6 @@
 #' Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)
 #'
-#' @param d data.frame; output from diffTabulate
+#' @param diff data.frame; output from diffTabulate
 #' @param by string; Subset the mass by mass difference (putative adduct
 #'                   transformation) ("diff") or by parent ion ("parent")?
 #' @param mass numeric; mass of putative adduct or parent ion in m/z units
@@ -11,12 +11,16 @@
 #'         specified width)
 #' @export
 
-diffGetPeaks <- function(d, by="diff", mass=NULL, width=0.01) {
-    if (! is.null (mass)) {
-        idx <- diffGetPeaksIndex(d=d,by=by,mass=mass,width=width)
-        output <- d[idx,]
-        return (output)
+diffGetPeaks <- function(diff, by="diff", mass=NULL, width=0.01) {
+    if (class(diff) != "data.frame") {
+        cat ("Error: Input to parameter diff must be a data.frame\n")
     } else {
-        cat ("Error: Mass difference not specified\n")
+        if (! is.null (mass)) {
+            idx <- diffGetPeaksIndex(diff=diff,by=by,mass=mass,width=width)
+            output <- diff[idx,]
+            return (output)
+        } else {
+            cat ("Error: Mass difference not specified\n")
+        }
     }
 }

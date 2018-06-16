@@ -20,7 +20,7 @@ adductMatchDiffs <- function(diff,add=adducts,width=0.01) {
         diff$match <- rep(NA,length(diff$diff))
         for (i in 1:length(add$mass)) {
             # Using a loop because number of adducts are few
-            idx <- diffGetPeaksIndex(d=diff, by="diff", mass=add$mass[i], width=width)
+            idx <- diffGetPeaksIndex(diff=diff, by="diff", mass=add$mass[i], width=width)
             diff$match[idx] <- add$name[i]
         }
         return (diff)
