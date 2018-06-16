@@ -78,8 +78,8 @@ corrPairsMSIloop.msimat <- function(d, pairs, p.val=0.05, method="pearson", alte
     adjusted.pvalue <- p.val/numpairs
     df$Significance <- ifelse(df$P.value<=adjusted.pvalue, 1, 0)
     # add the parental and adduct ions to the dataframe
-    df["parental ion"] <- ions.parent
-    df["adduct ion"] <- ions.adduct
+    df$A <- ions.parent
+    df$B <- ions.adduct
     # Retain only relevant fields
     df <- df[,c(1,5,6,2,3,4)]
     # Report number of significantly correlated pairs found

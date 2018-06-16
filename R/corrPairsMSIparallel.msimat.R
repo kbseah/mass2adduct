@@ -31,9 +31,9 @@
 #'
 #'         label - Label for row
 #'
-#'         parental_ion - First peak mass in each pair
+#'         A - First peak mass in each pair
 #'
-#'         adduct_ion - Second peak mass in the pair
+#'         B - Second peak mass in the pair
 #'
 #'         Estimate - Estimated correlation
 #'
@@ -90,8 +90,8 @@ corrPairsMSIparallel.msimat <- function(d,
     adjusted.pvalue <- p.val/numpairs
     df$Significance <- ifelse(df$P.value<=adjusted.pvalue, 1, 0)
     # add the parental and adduct ions to the dataframe
-    df["parental ion"] <- ions.parent
-    df["adduct ion"] <- ions.adduct
+    df$A <- ions.parent
+    df$B <- ions.adduct
     # Retain only relevant fields
     df <- df[,c(1,5,6,2,3,4)]
     # Report number of significantly correlated pairs found

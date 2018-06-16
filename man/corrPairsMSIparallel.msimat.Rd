@@ -26,9 +26,9 @@ Object of class data.frame with the following fields:
 
         label - Label for row
 
-        parental_ion - First peak mass in each pair
+        A - First peak mass in each pair
 
-        adduct_ion - Second peak mass in the pair
+        B - Second peak mass in the pair
 
         Estimate - Estimated correlation
 
