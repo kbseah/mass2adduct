@@ -4,17 +4,17 @@
 \alias{diffGetPeaksIndex}
 \title{Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)}
 \usage{
-diffGetPeaksIndex(d, by = "diff", mass = NULL, width = 0.01)
+diffGetPeaksIndex(diff, by = "diff", mass = NULL, width = 0.01)
 }
 \arguments{
-\item{d}{data.frame; output from diffTabulate}
-
 \item{by}{string; Subset the mass by mass difference (putative adduct
 transformation) ("diff") or by parent ion ("parent")?}
 
 \item{mass}{numeric; mass of putative adduct or parent ion in m/z units}
 
 \item{width}{numeric; range of values to use}
+
+\item{d}{data.frame; output from diffTabulate}
 }
 \value{
 subset of the original data frame d where the mass difference or

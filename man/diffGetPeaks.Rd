@@ -4,10 +4,10 @@
 \alias{diffGetPeaks}
 \title{Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)}
 \usage{
-diffGetPeaks(d, by = "diff", mass = NULL, width = 0.01)
+diffGetPeaks(diff, by = "diff", mass = NULL, width = 0.01)
 }
 \arguments{
-\item{d}{data.frame; output from diffTabulate}
+\item{diff}{data.frame; output from diffTabulate}
 
 \item{by}{string; Subset the mass by mass difference (putative adduct
 transformation) ("diff") or by parent ion ("parent")?}

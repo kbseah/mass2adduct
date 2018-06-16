@@ -43,7 +43,7 @@
 #'
 #' @export
 
-corrPairsMSI.msitsm <- function(d, pairs, p.val=0.05, method="pearson", alternative="greater", ...) {
+corrPairsMSIloop.msimat <- function(d, pairs, p.val=0.05, method="pearson", alternative="greater", ...) {
     # Adapted from original code by Moritz
     # Get vectors representing parent and adduct ion masses
     ions.parent <- pairs[,1]
@@ -52,11 +52,12 @@ corrPairsMSI.msitsm <- function(d, pairs, p.val=0.05, method="pearson", alternat
     peaklist <- d[["peaks"]]
     idx.parent <- match(ions.parent, peaklist)
     idx.adduct <- match(ions.adduct, peaklist)
-    d.parent <- d[["tsm"]][,idx.parent]
-    d.adduct <- d[["tsm"]][,idx.adduct]
-    # Convert DFs to matrices
-    A <- Matrix::as.matrix(d.parent)
-    B <- Matrix::as.matrix(d.adduct)
+    A <- d[["mat"]][,idx.parent]
+    B <- d[["mat"]][,idx.adduct]
+    # Convert DFs to normal matrices for speed; otherwise if it is a sparse
+    # matrix object, accessing the indices at the lapply function will be slow
+    A <- Matrix::as.matrix(A)
+    B <- Matrix::as.matrix(B)
     # Pairwise correlation with p-values
     numpairs <- dim(B)[2]
     cat (paste(c("Calculating correlations between",numpairs,"pairs")))
