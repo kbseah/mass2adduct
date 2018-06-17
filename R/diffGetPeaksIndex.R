@@ -1,6 +1,6 @@
 #' Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)
 #'
-#' @param d data.frame; output from diffTabulate
+#' @param d massdiff; output from diffTabulate
 #' @param by string; Subset the mass by mass difference (putative adduct
 #'                   transformation) ("diff") or by parent ion ("parent")?
 #' @param mass numeric; mass of putative adduct or parent ion in m/z units

@@ -1,6 +1,7 @@
-#' Histogram of mass difference list
+#' Histogram method for massdiff object
 #'
-#' @param d data.frame; three numeric columns (A, B, diff) representing mass
+#' @param diff massdiff; Output from function \code{\link{diffTabulate}},
+#'        containing three numeric vectors (A, B, diff) representing mass
 #'        peaks and their differences
 #' @param widthFunc character; function to use to bin mass differences into
 #'        histogram. (default "equal", other options to be added)
@@ -12,18 +13,17 @@
 #' @seealso \code{\link{diffTabulate}} to generate the mass difference list
 #' @export
 
-diffHist <- function(d, widthFunc="equal", width=0.01, plot=FALSE, ...) {
-    if (!is.numeric(d$diff)) {
+hist.massdiff <- function(diff, widthFunc="equal", width=0.01, plot=FALSE, ...) {
+    if (!is.numeric(diff$diff)) {
         cat("Error: Input mass difference list must be numeric\n")
     } else {
         # Calculate number of breaks for histogram, integer value
-        massdiff <- d$diff
-        minval <- floor(min(massdiff,na.rm=TRUE))
-        maxval <- ceiling(max(massdiff,na.rm=TRUE))
+        minval <- floor(min(diff$diff,na.rm=TRUE))
+        maxval <- ceiling(max(diff$diff,na.rm=TRUE))
         if (widthFunc == "equal") { # equal bin widths
             breaks <- round((maxval - minval)/width, digits=0)
         } # other options TBD
-        output <- hist(massdiff, breaks=breaks, plot=plot, ...)
+        output <- hist(diff$diff, breaks=breaks, plot=plot, ...)
         return(output)
     }
 }

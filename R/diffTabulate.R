@@ -6,12 +6,12 @@
 #'
 #' The number of possible pairs grows combinatorially and the calculation will
 #' fail for >65536 values (the function uses a 16-bit integer internally).
-#' 
+#'
 #' @param d Either an MSI data set of class msidf or msitsm, imported with the
 #'          \code{\link{readMSI}} function from the mass2adduct package, or
 #'          numeric vector representing m/z values of mass peaks
 #'
-#' @return data.frame with three columns:
+#' @return Object of class \code{massdiff} with three elements:
 #'
 #'                    A - m/z values for peak pairs; for a given pair, A will
 #'                        be lower than B. Requries that the peak list in the
@@ -21,7 +21,9 @@
 #'
 #'                    diff - their respective differences
 #'
-#' @seealso \code{\link{diffHist}} to plot histogram of mass differences
+#' @seealso \code{\link{diffTabulateMSI}} to tabulate mass differences from
+#'          MS imaging data object imported with \code{\link{readMSI}} function,
+#'          \code{\link{diffHist}} to plot histogram of mass differences
 #' @export
 
 diffTabulate <- function(d) UseMethod("diffTabulate")

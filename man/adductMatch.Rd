@@ -2,26 +2,27 @@
 % Please edit documentation in R/adductMatch.R
 \name{adductMatch}
 \alias{adductMatch}
-\title{Find closest-matching mass difference bin for known adducts}
+\title{Find closest-matching known adducts for a set of mass differences or histogram thereof}
 \usage{
-adductMatch(hist, add = adducts, density = FALSE)
+adductMatch(x, add = adducts, ...)
 }
 \arguments{
-\item{hist}{histogram object produced by diffHist()}
+\item{x}{Object of class massdiff from function \code{\link{diffTabulate}} or
+histogram from running \code{\link{hist}} on a massdiff object}
 
-\item{add}{data.frame of adduct masses (default: "adducts" dataset in package)}
-
-\item{density}{logical; return density instead of counts? (default: FALSE)}
+\item{add}{data.frame; Table of known chemical transfomrations and their
+respective masses. (default: built-in data set adducts )}
 }
 \value{
-data.frame of adducts with counts/density from closest-matching bin
-        and their corresponding quantiles in mass difference bins
+data.frame of mass differences given to argument diff, with an
+        additional column reporting the closest matches
 }
 \description{
 For use with internal dataset "adducts" and other similar data
 }
 \seealso{
-\code{\link{topAdducts}} to find the closest-matching adducts for
-         the mass differences with the highest counts (the converse of the
+\code{\link{adductMatch.histogram}}, \code{\link{adductMatch.massdiff}},
+         as well as \code{\link{topAdducts}} to find the closest-matching adducts
+         for the mass differences with the highest counts (the converse of the
          current function)
 }

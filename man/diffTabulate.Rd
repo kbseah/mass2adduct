@@ -12,7 +12,7 @@ diffTabulate(d)
 numeric vector representing m/z values of mass peaks}
 }
 \value{
-data.frame with three columns:
+Object of class \code{massdiff} with three elements:
 
                    A - m/z values for peak pairs; for a given pair, A will
                        be lower than B. Requries that the peak list in the
@@ -32,5 +32,7 @@ The number of possible pairs grows combinatorially and the calculation will
 fail for >65536 values (the function uses a 16-bit integer internally).
 }
 \seealso{
-\code{\link{diffHist}} to plot histogram of mass differences
+\code{\link{diffTabulateMSI}} to tabulate mass differences from
+         MS imaging data object imported with \code{\link{readMSI}} function,
+         \code{\link{diffHist}} to plot histogram of mass differences
 }

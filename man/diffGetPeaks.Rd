@@ -7,7 +7,7 @@
 diffGetPeaks(diff, by = "diff", mass = NULL, width = 0.001)
 }
 \arguments{
-\item{diff}{data.frame; output from diffTabulate}
+\item{diff}{massdiff; output from diffTabulate}
 
 \item{by}{string; Subset the mass by mass difference (putative adduct
 transformation) ("diff") or by parent ion ("parent")?}
@@ -17,7 +17,7 @@ transformation) ("diff") or by parent ion ("parent")?}
 \item{width}{numeric; range of values to use}
 }
 \value{
-subset of the original data frame d where the mass difference or
+subset of the original massdiff object where the mass difference or
         parent ion is close to the specified mass of interest (within the
         specified width)
 }

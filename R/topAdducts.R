@@ -50,8 +50,8 @@ topAdducts <- function(hist, add=adducts, n=50, use.bw=TRUE, threshold=NULL) {
         output <- data.frame (mids,
                               counts=hist$counts[indsort],
                               density=hist$density[indsort],
-                              adduct.name=add$name[addIndices],
-                              adduct.formula=add$formula[addIndices],
+                              adduct.name=as.character(add$name[addIndices]),
+                              adduct.formula=as.character(add$formula[addIndices]),
                               adduct.mass=add$mass[addIndices])
         return(output)
     }
