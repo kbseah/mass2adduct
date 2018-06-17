@@ -16,12 +16,20 @@
 #' before assessing significance, but the original p-value is reported in column
 #' P.value.
 #'
-#' @param d data.frame; MSI data with peaks as columns and pixels as rows,
+#' @param d msimat; MSI data with peaks as columns and pixels as rows,
 #'        output from \code{\link{readMSI}} function
-#' @param pairs data.frame; Data frame with pairs of peaks (as rows) for which
-#'        to calculate correlations.
+#' @param diff massdiff; List of mass differences, parent and putative adduct
+#'        ions, as produced by function \code{\link{diffTabulate}}
 #' @param p.val numeric; p-value cutoff (before Bonferroni correction) (default: 0.05)
-#' @param ... Other parameters to pass to \code{cor.test}
+#' @param method string; Method to use for \code{\link{cor.test}} (default: "pearson")
+#' @param alternative string; Which alternative for \code{\link{cor.test}} (default: "greater")
+#' @param how string; How to implement the multiple correlation tests. Options:
+#'        "loop" (for loop - slow), "parallel" (multiple processors, using
+#'         \code{\link{mclapply}} from package \code{parallel}), or "apply"
+#'        (vectorized lapply function - default).
+#' @param ncores integer; Number of cores if using parallel version. Default is
+#'        total number of cores minus one.
+#' @param ... Other parameters to pass to \code{\link{cor.test}}
 #'
 #' @return Object of class data.frame with the following fields:
 #'
@@ -43,4 +51,11 @@
 #'
 #' @export
 
-corrPairsMSI <- function(d, pairs, p.val=0.05, method="pearson", alternative="greater", ...) UseMethod("corrPairsMSI")
+corrPairsMSI <- function(d,
+                         diff,
+                         p.val=0.05,
+                         method="pearson",
+                         alternative="greater",
+                         how="apply",
+                         ncores=NULL,
+                         ...) UseMethod("corrPairsMSI")

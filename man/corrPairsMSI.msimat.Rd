@@ -4,19 +4,31 @@
 \alias{corrPairsMSI.msimat}
 \title{Calculate correlations of pairs of mass peaks from MSI data}
 \usage{
-\method{corrPairsMSI}{msimat}(d, pairs, p.val = 0.05, method = "pearson",
-  alternative = "greater", ...)
+\method{corrPairsMSI}{msimat}(d, diff, p.val = 0.05, method = "pearson",
+  alternative = "greater", how = "apply", ncores = NULL, ...)
 }
 \arguments{
-\item{d}{data.frame; MSI data with peaks as columns and pixels as rows,
+\item{d}{msimat; MSI data with peaks as columns and pixels as rows,
 output from \code{\link{readMSI}} function}
 
-\item{pairs}{data.frame; Data frame with pairs of peaks (as rows) for which
-to calculate correlations.}
+\item{diff}{massdiff; List of mass differences, parent and putative adduct
+ions, as produced by function \code{\link{diffTabulate}}}
 
 \item{p.val}{numeric; p-value cutoff (before Bonferroni correction) (default: 0.05)}
 
-\item{...}{Other parameters to pass to \code{cor.test}}
+\item{method}{string; Method to use for \code{\link{cor.test}} (default: "pearson")}
+
+\item{alternative}{string; Which alternative for \code{\link{cor.test}} (default: "greater")}
+
+\item{how}{string; How to implement the multiple correlation tests. Options:
+"loop" (for loop - slow), "parallel" (multiple processors, using
+ \code{\link{mclapply}} from package \code{parallel}), or "apply"
+(vectorized lapply function - default).}
+
+\item{ncores}{integer; Number of cores if using parallel version. Default is
+total number of cores minus one.}
+
+\item{...}{Other parameters to pass to \code{\link{cor.test}}}
 }
 \value{
 Object of class data.frame with the following fields:
