@@ -6,8 +6,8 @@
 #' @param add data.frame of adduct masses (default: "adducts" dataset in package)
 #' @param width numeric; the precision to which to match the mass value (default: 0.01)
 #'
-#' @return data.frame of mass differences given to argument diff, with an
-#'         additional column reporting the closest matches
+#' @return Object of class massdiff, with additional element "matches" reporting
+#'         the closest matches
 #' @seealso \code{\link{topAdducts}} to find the closest-matching adducts for
 #'          the mass differences with the highest counts (the converse of the
 #'          current function)
@@ -23,9 +23,10 @@ adductMatch.massdiff <- function(x,add=adducts,width=0.001) {
         indices <- c(indices, idx)
         matches <- c(matches, rep(as.character(add$name[i]),length(idx)))
     }
-    output <- data.frame(A=x$A[indices],
-                         B=x$B[indices],
-                         diff=x$diff[indices],
-                         matches=matches)
+    output <- list(A=x$A[indices],
+                   B=x$B[indices],
+                   diff=x$diff[indices],
+                   matches=matches)
+    class(output) <- "massdiff"
     return(output)
 }
