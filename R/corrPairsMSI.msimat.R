@@ -130,8 +130,16 @@ corrPairsMSI.msimat <- function(d,
     # add the parental and adduct ions to the dataframe
     df$A <- ions.parent
     df$B <- ions.adduct
-    # Retain only relevant fields
-    df <- df[,c(1,5,6,2,3,4)]
+    df$diff <- diff[["diff"]]
+    if (is.null(diff[["matches"]])) {
+      # Retain only relevant fields
+      df <- df[,c(1,5,6,7,2,3,4)]
+    } else {
+      # If this is the output from adductMatch.massdiff, also bind the adduct names
+      df$matches <- diff[["matches"]]
+      # Retain only relevant fields
+      df <- df[,c(1,5,6,7,8,2,3,4)]
+    }
     # Report number of significantly correlated pairs found
     num.signif <- sum(df$Significance)
     cat ("Significant correlations found at p-value cutoff of", p.val, "(with Bonferroni correction):", num.signif, "\n")
