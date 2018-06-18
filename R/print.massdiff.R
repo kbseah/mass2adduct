@@ -5,7 +5,7 @@
 #' @export
 
 print.massdiff <- function(d) {
-    mdinfo <- data.frame(length(d[["diffs"]]),
+    mdinfo <- data.frame(length(d[["diff"]]),
                          min(d[["A"]]),
                          max(d[["B"]]),
                          !is.null(d[["matches"]])
