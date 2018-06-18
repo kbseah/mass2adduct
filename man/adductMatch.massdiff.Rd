@@ -14,8 +14,8 @@
 \item{width}{numeric; the precision to which to match the mass value (default: 0.01)}
 }
 \value{
-data.frame of mass differences given to argument diff, with an
-        additional column reporting the closest matches
+Object of class massdiff, with additional element "matches" reporting
+        the closest matches
 }
 \description{
 For use with internal dataset "adducts" and other similar data
