@@ -7,7 +7,8 @@
 
 sumPeakIntensities.msimat <- function(d) {
     sums <- Matrix::colSums(d[["mat"]])
+    counts <- Matrix::colSums(d[["mat"]] != 0) # Count nonzero values per column
     peaks <- d[["peaks"]]
-    out <- data.frame(peaks=peaks, intensities=sums)
+    out <- data.frame(peaks=peaks, counts=counts, intensities=sums)
     return(out)
 }

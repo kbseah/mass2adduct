@@ -63,6 +63,7 @@ use warnings;
 use Getopt::Long;
 use Pod::Usage;
 use Storable;
+use 5.020;
 use POSIX qw (floor);
 
 my $matrix;
