@@ -1,9 +1,9 @@
 #' Histogram method for massdiff object
 #'
 #' Bin mass differences from a massdiff object produced by
-#' \code{\link{diffTabulate}} into a histogram, and plot if requested.
+#' \code{\link{massdiff}} into a histogram, and plot if requested.
 #'
-#' @param diff massdiff; Output from function \code{\link{diffTabulate}},
+#' @param diff massdiff; Output from function \code{\link{massdiff}},
 #'        containing three numeric vectors (A, B, diff) representing mass
 #'        peaks and their differences
 #' @param widthFunc character; function to use to bin mass differences into
@@ -13,7 +13,7 @@
 #' @param ... Other options to be passed to hist()
 #'
 #' @return Object of class hist
-#' @seealso \code{\link{diffTabulate}} to generate the mass difference list
+#' @seealso \code{\link{massdiff}} to generate the mass difference list
 #' @export
 
 hist.massdiff <- function(diff, widthFunc="equal", width=0.01, plot=FALSE, ...) {

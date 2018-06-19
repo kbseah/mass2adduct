@@ -4,7 +4,7 @@
 #' specific mass difference, which might represent a molecular transformation
 #' of interest.
 #'
-#' @param diff massdiff; output from \code{\link{diffTabulate}}
+#' @param diff massdiff; output from \code{\link{massdiff}}
 #' @param by string; Subset the mass by mass difference (putative adduct
 #'                   transformation) ("diff") or by parent ion ("parent")?
 #' @param mass numeric; mass of putative adduct or parent ion in m/z units

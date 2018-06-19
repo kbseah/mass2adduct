@@ -30,20 +30,26 @@
 #' @param ... Parameters to be passed to read.csv()
 #'
 #' @return Object of class msimat
+#'
+#' @examples
+#' d <- msimat(csv=system.file("extdata","msi.csv",package="mass2adduct"),sep=";")
+#' print(d) # Summary of contents
+#' plot(d) # Mass spectrum of total intensity per peak
+#'
 #' @export
 
-readMSI <- function(csv=NULL,
-                    sep=",",
-                    rows=NULL,
-                    cols=NULL,
-                    vals=NULL,
-                    peaks=NULL,
-                    spots=NULL,
-                    remove.zeroes=TRUE,
-                    header=TRUE,
-                    check.names=FALSE,
-                    row.names=1,
-                    ...) {
+msimat <- function(csv=NULL,
+                   sep=",",
+                   rows=NULL,
+                   cols=NULL,
+                   vals=NULL,
+                   peaks=NULL,
+                   spots=NULL,
+                   remove.zeroes=TRUE,
+                   header=TRUE,
+                   check.names=FALSE,
+                   row.names=1,
+                   ...) {
     if (is.null(csv)) {
         if (is.null(rows) | is.null(cols) | is.null(vals) | is.null(peaks) | is.null(spots)) {
             stop("Required input not specified \n")

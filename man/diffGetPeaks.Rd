@@ -7,7 +7,7 @@
 diffGetPeaks(diff, by = c("diff", "parent"), mass = NULL, width = 0.001)
 }
 \arguments{
-\item{diff}{massdiff; output from \code{\link{diffTabulate}}}
+\item{diff}{massdiff; output from \code{\link{massdiff}}}
 
 \item{by}{string; Subset the mass by mass difference (putative adduct
 transformation) ("diff") or by parent ion ("parent")?}

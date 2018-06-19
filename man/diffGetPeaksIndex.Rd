@@ -15,7 +15,7 @@ transformation) ("diff") or by parent ion ("parent")?}
 
 \item{width}{numeric; range of values to use}
 
-\item{d}{massdiff; output from diffTabulate}
+\item{d}{massdiff; output from massdiff}
 }
 \value{
 subset of the original data frame d where the mass difference or

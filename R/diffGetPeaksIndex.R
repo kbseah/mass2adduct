@@ -4,7 +4,7 @@
 #' specific mass difference, which might represent a molecular transformation
 #' of interest.
 #' 
-#' @param d massdiff; output from diffTabulate
+#' @param d massdiff; output from massdiff
 #' @param by string; Subset the mass by mass difference (putative adduct
 #'                   transformation) ("diff") or by parent ion ("parent")?
 #' @param mass numeric; mass of putative adduct or parent ion in m/z units

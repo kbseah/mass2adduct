@@ -1,6 +1,6 @@
 #' @export
 
-diffTabulate.numeric <- function(d) {
+massdiff.numeric <- function(d) {
     # Check that d is numeric
     if (!is.numeric(d)) {
         stop ("Input should be numeric\n")

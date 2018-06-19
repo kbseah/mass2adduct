@@ -7,7 +7,7 @@
 sumPeakIntensities(d)
 }
 \arguments{
-\item{d}{msimat; MSI data imported with \code{\link{readMSI}}}
+\item{d}{msimat; MSI data imported with \code{\link{msimat}}}
 }
 \value{
 data.frame of peaks and intensities

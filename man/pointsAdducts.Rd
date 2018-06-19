@@ -9,7 +9,7 @@ pointsAdducts(d, diff, which = c("adduct", "parental"), signif = TRUE,
 }
 \arguments{
 \item{d}{msimat; Object of class msimat created by function
-\code{\link{readMSI}}}
+\code{\link{msimat}}}
 
 \item{diff}{data.frame; Mass difference correlation table produced by
 function \code{\link{corrPairsMSI}}}
@@ -26,5 +26,5 @@ either parental or adduct masses as an overlay.
 \seealso{
 \code{\link{corrPairsMSI}} calculate correlations for mass pairs
 
-\code{\link{diffTabulate}} tabulate all possible mass pairs
+\code{\link{massdiff}} tabulate all possible mass pairs
 }

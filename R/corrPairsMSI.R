@@ -1,11 +1,11 @@
 #' Calculate correlations of pairs of mass peaks from MSI data
 #'
 #' Calculate correlations of pairs of mass peaks from MSI data (imported to
-#' R with the \code{\link{readMSI}} function). The list of pairs is supplied
+#' R with the \code{\link{msimat}} function). The list of pairs is supplied
 #' as a data.frame with the parameter \code{pairs}.
 #'
 #' Example usage scenario for this function: Mass differences for all pairwise
-#' combinations of masses are tabulated with \code{\link{diffTabulate}}, and the
+#' combinations of masses are tabulated with \code{\link{massdiff}}, and the
 #' peak pairs corresponding to a specific adduct of interest are extracted with
 #' \code{\link{diffGetPeaks}}. Check which peaks are significantly correlated to
 #' each other with this function.
@@ -17,9 +17,9 @@
 #' "P.value" and can be used e.g. for false discovery rate analysis.
 #'
 #' @param d msimat; MSI data with peaks as columns and pixels as rows,
-#'        output from \code{\link{readMSI}} function
+#'        output from \code{\link{msimat}} function
 #' @param diff massdiff; List of mass differences, parent and putative adduct
-#'        ions, as produced by function \code{\link{diffTabulate}}
+#'        ions, as produced by function \code{\link{massdiff}}
 #' @param p.val numeric; p-value cutoff (before Bonferroni correction) (default:
 #'        0.05)
 #' @param method string; Method to use for \code{\link{cor.test}} (default:
@@ -52,6 +52,12 @@
 #'          sizes to avoid going over available memory. Suggested if using the
 #'          standard corrPairsMSI function causes R to run out of memory and
 #'          crash.
+#'
+#' @examples
+#' d <- msimat(csv=system.file("extdata","msi.csv",package="mass2adduct"),sep=";")
+#' d.diff <- massdiff(d) # Calculate mass differences from imported MSI data
+#' d.diff.annot <- adductMatch(d.diff,add=adducts2) # Find mass diffs matching adducts
+#' d.diff.annot.cor <- corrPairsMSI(d,d.diff.annot,how="apply") # Perform correlation tests on annotated peak pairs
 #'
 #' @export
 

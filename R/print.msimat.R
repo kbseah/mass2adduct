@@ -1,6 +1,6 @@
 #' Print method for class msimat
 #'
-#' @param d msimat; Object created by function \code{\link{readMSI}}
+#' @param d msimat; Object created by function \code{\link{msimat}}
 #'
 #' @export
 

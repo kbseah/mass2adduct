@@ -8,7 +8,7 @@
   plot = FALSE, ...)
 }
 \arguments{
-\item{diff}{massdiff; Output from function \code{\link{diffTabulate}},
+\item{diff}{massdiff; Output from function \code{\link{massdiff}},
 containing three numeric vectors (A, B, diff) representing mass
 peaks and their differences}
 
@@ -26,8 +26,8 @@ Object of class hist
 }
 \description{
 Bin mass differences from a massdiff object produced by
-\code{\link{diffTabulate}} into a histogram, and plot if requested.
+\code{\link{massdiff}} into a histogram, and plot if requested.
 }
 \seealso{
-\code{\link{diffTabulate}} to generate the mass difference list
+\code{\link{massdiff}} to generate the mass difference list
 }

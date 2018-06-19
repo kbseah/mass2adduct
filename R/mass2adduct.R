@@ -3,10 +3,10 @@
 #' Tools for calculating mass differences in mass spectrometry data to explore
 #' molecular adducts. To accompany Janda et al. (MS in prep.)
 #'
-#' Import mass spectrometry imaging intensity data with \code{\link{readMSI}}.
+#' Import mass spectrometry imaging intensity data with \code{\link{msimat}}.
 #' 
 #' Tabulate mass differences from simple list of mass peaks with
-#' \code{\link{diffTabulate}}.
+#' \code{\link{massdiff}}.
 #' 
 #' Bin mass differences into histogram with \code{\link{hist.massdiff}}.
 #' 

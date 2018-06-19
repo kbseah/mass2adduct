@@ -2,7 +2,7 @@
 #'
 #' For use with internal dataset "adducts" and other similar data
 #'
-#' @param x Object of class massdiff from function \code{\link{diffTabulate}} or
+#' @param x Object of class massdiff from function \code{\link{massdiff}} or
 #'        histogram from running \code{\link{hist}} on a massdiff object
 #' @param add data.frame; Table of known chemical transfomrations and their
 #'        respective masses. (default: built-in data set "adducts")

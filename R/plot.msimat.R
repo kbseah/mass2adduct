@@ -2,7 +2,7 @@
 #'
 #' Plots a graph of total intensity per mass peak
 #'
-#' @param d msimat; MSI imaging object created by function \code{\link{readMSI}}
+#' @param d msimat; MSI imaging object created by function \code{\link{msimat}}
 #'
 #' @export
 

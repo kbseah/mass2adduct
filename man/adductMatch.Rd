@@ -7,7 +7,7 @@
 adductMatch(x, add = adducts, ...)
 }
 \arguments{
-\item{x}{Object of class massdiff from function \code{\link{diffTabulate}} or
+\item{x}{Object of class massdiff from function \code{\link{massdiff}} or
 histogram from running \code{\link{hist}} on a massdiff object}
 
 \item{add}{data.frame; Table of known chemical transfomrations and their

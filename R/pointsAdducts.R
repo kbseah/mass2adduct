@@ -4,7 +4,7 @@
 #' either parental or adduct masses as an overlay. 
 #'
 #' @param d msimat; Object of class msimat created by function
-#'        \code{\link{readMSI}}
+#'        \code{\link{msimat}}
 #' @param diff data.frame; Mass difference correlation table produced by
 #'        function \code{\link{corrPairsMSI}}
 #' @param which string; Either plot "parental" or "adduct" peaks as overlay
@@ -12,7 +12,7 @@
 #'        correlation
 #'
 #' @seealso \code{\link{corrPairsMSI}} calculate correlations for mass pairs
-#' @seealso \code{\link{diffTabulate}} tabulate all possible mass pairs
+#' @seealso \code{\link{massdiff}} tabulate all possible mass pairs
 #' @export
 
 pointsAdducts <- function(d, diff, which=c("adduct","parental"), signif=TRUE, pch=20, cex=0.5, col="red", ...) {

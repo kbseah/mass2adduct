@@ -1,6 +1,6 @@
 #' Sum total pixel intensities per peak and report as data frame
 #'
-#' @param d msimat; MSI data imported with \code{\link{readMSI}}
+#' @param d msimat; MSI data imported with \code{\link{msimat}}
 #'
 #' @seealso \code{\link{analyzeIntensityCutoffsCumul}} and
 #'          \code{\link{analyzeIntensityCutoffsDistr}} to visualize and explore

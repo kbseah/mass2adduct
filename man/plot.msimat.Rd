@@ -8,7 +8,7 @@
   ylab = "Total intensity", ...)
 }
 \arguments{
-\item{d}{msimat; MSI imaging object created by function \code{\link{readMSI}}}
+\item{d}{msimat; MSI imaging object created by function \code{\link{msimat}}}
 }
 \description{
 Plots a graph of total intensity per mass peak

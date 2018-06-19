@@ -7,7 +7,7 @@
 \method{adductMatch}{massdiff}(x, add = adducts, width = 0.001)
 }
 \arguments{
-\item{x}{massdiff; Mass differences produced by \code{\link{diffTabulate}}}
+\item{x}{massdiff; Mass differences produced by \code{\link{massdiff}}}
 
 \item{add}{data.frame of adduct masses (default: "adducts" dataset in package)}
 
@@ -18,11 +18,17 @@ Object of class massdiff, with additional element "matches" reporting
         the closest matches
 }
 \description{
-Given a set of mass differences produced by function \code{\link{diffTabulate}},
+Given a set of mass differences produced by function \code{\link{massdiff}},
 report for each pair of masses the closest-matching molecular transformation
 from a list of such potential adduct types. The built-in data sets
 \code{\link{adducts}} and \code{\link{adducts2}} are examples of such lists
 of potential adducts.
+}
+\examples{
+d <- msimat(csv=system.file("extdata","msi.csv",package="mass2adduct"),sep=";")
+d.diff <- massdiff(d) # Calculate mass differences from imported MSI data
+d.diff.annotate <- adductMatch(d.diff,add=adducts2) # Report closest matches
+
 }
 \seealso{
 \code{\link{adductMatch.histogram}} gives an overview for large data

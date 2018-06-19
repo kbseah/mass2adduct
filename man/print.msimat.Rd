@@ -7,7 +7,7 @@
 \method{print}{msimat}(d)
 }
 \arguments{
-\item{d}{msimat; Object created by function \code{\link{readMSI}}}
+\item{d}{msimat; Object created by function \code{\link{msimat}}}
 }
 \description{
 Print method for class msimat

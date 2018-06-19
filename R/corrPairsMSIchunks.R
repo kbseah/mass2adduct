@@ -1,7 +1,7 @@
 #' Calculate correlations of pairs of mass peaks from MSI data in chunks
 #'
 #' Calculate correlations of pairs of mass peaks from MSI data (imported to
-#' R with the \code{\link{readMSI}} function). The list of pairs is supplied
+#' R with the \code{\link{msimat}} function). The list of pairs is supplied
 #' as a data.frame with the parameter \code{pairs}, but is broken up into
 #' "chunks" for processing, to avoid going over a specified memory limit.
 #'
@@ -12,7 +12,7 @@
 #' go over the limit in practice).
 #'
 #' Example usage scenario for this function: Mass differences for all pairwise
-#' combinations of masses are tabulated with \code{\link{diffTabulate}}, and the
+#' combinations of masses are tabulated with \code{\link{massdiff}}, and the
 #' peak pairs corresponding to a specific adduct of interest are extracted with
 #' \code{\link{diffGetPeaks}}. Check which peaks are significantly correlated to
 #' each other with this function.
@@ -24,9 +24,9 @@
 #' "P.value" and can be used e.g. for false discovery rate analysis.
 #'
 #' @param d msimat; MSI data with peaks as columns and pixels as rows,
-#'        output from \code{\link{readMSI}} function
+#'        output from \code{\link{msimat}} function
 #' @param diff massdiff; List of mass differences, parent and putative adduct
-#'        ions, as produced by function \code{\link{diffTabulate}}
+#'        ions, as produced by function \code{\link{massdiff}}
 #' @param p.val numeric; p-value cutoff (before Bonferroni correction) (default:
 #'        0.05)
 #' @param method string; Method to use for \code{\link{cor.test}} (default:
