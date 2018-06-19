@@ -70,7 +70,7 @@ corrPairsMSI <- function(d,
                          ncores=NULL,
                          ...) {
     if (class(d) != "msimat") {
-        stop("Input parameter d must be an msimat object\n")
+        stop("Input parameter d must be an msimat object")
     }
     # Adapted from original code by Moritz
     # Get vectors representing parent and adduct ion masses
@@ -88,7 +88,7 @@ corrPairsMSI <- function(d,
     B <- Matrix::as.matrix(B)
     # Pairwise correlation with p-values
     numpairs <- dim(B)[2]
-    message("Calculating correlations between ",numpairs," pairs\n")
+    message("Calculating correlations between ",numpairs," pairs")
 
     # Run cor.test, using different strategies
     if (how[1] == "loop") { # Use a for-loop to run cor.test
@@ -143,7 +143,7 @@ corrPairsMSI <- function(d,
     }
     # Report number of significantly correlated pairs found
     num.signif <- sum(df$Significance)
-    message("Significant correlations found at p-value cutoff of ", p.val, " (with Bonferroni correction): ", num.signif, "\n")
+    message("Significant correlations found at p-value cutoff of ", p.val, " (with Bonferroni correction): ", num.signif)
     # Return data frame
     return(df)
 }

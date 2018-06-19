@@ -52,7 +52,7 @@ msimat <- function(csv=NULL,
                    ...) {
     if (is.null(csv)) {
         if (is.null(rows) | is.null(cols) | is.null(vals) | is.null(peaks) | is.null(spots)) {
-            stop("Required input not specified \n")
+            stop("Required input not specified")
         }
         inrow <- scan(rows,what=numeric())
         incol <- scan(cols,what=numeric())
@@ -87,7 +87,7 @@ msimat <- function(csv=NULL,
                 data.colsums <- sapply(data, function(x) sum(x))
                 index.data.colzero <- which(data.colsums==0)
                 index.data.notzero <- which(data.colsums!=0)
-                message("Removing ", length(index.data.colzero), " columns with only zeroes\n")
+                message("Removing ", length(index.data.colzero), " columns with only zeroes")
                 data <- data[index.data.notzero]
             }
             peaks <- names(data)
@@ -101,7 +101,7 @@ msimat <- function(csv=NULL,
             return(out)
         } else {
             # Error message if non-numeric values found in data input
-            stop("Some values in the input data are non-numeric; please check the input file\n")
+            stop("Some values in the input data are non-numeric; please check the input file")
         }
     }
 }

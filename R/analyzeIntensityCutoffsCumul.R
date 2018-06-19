@@ -42,7 +42,7 @@ analyzeIntensityCutoffsCumul <- function(df,
                                          report.peaks=FALSE
                                          ) {
     if (class(df) != "data.frame") {
-        stop("Input parameter df must be a data.frame\n")
+        stop("Input parameter df must be a data.frame")
     }
     numpeaks <- length(df[["peaks"]])
     if (!is.null(value)) {

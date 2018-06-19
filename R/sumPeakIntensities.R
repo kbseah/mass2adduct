@@ -10,7 +10,7 @@
 
 sumPeakIntensities <- function(d) {
     if (class(d) != "msimat") {
-        stop("Input should be an object of class msimat\n")
+        stop("Input should be an object of class msimat")
     }
     sums <- Matrix::colSums(d[["mat"]])
     counts <- Matrix::colSums(d[["mat"]] != 0) # Count nonzero values per column

@@ -65,7 +65,7 @@ corrPairsMSIchunks <- function(d,
                                mem.limit=5,
                                ...) {
     if (class(d) != "msimat") {
-        stop("Input parameter d must be an msimat object\n")
+        stop("Input parameter d must be an msimat object")
     }
     # Adapted from original code by Moritz
     # Get vectors representing parent and adduct ion masses
@@ -93,13 +93,13 @@ corrPairsMSIchunks <- function(d,
     mem.needed <- as.numeric(dim(d[["mat"]])[1]) * as.numeric(numpairs) * 2.0 * 10.0 * as.numeric(ncores) / 1e9
     numchunks <- ceiling(mem.needed/mem.limit)
     chunksize <- floor(numpairs/numchunks)
-    message("Mem needed is ",mem.needed," Gb and number of chunks ",numchunks,"\n")
+    message("Mem needed is ",mem.needed," Gb and number of chunks ",numchunks)
     
     # Start chunking
     chunkidx <- 0:(numchunks-1) * chunksize
     chunkidx <- c(chunkidx, numpairs)
     for (i in 1:(length(chunkidx)-1)) {
-        message("Processing chunk ",i," ...\n")
+        message("Processing chunk ",i," ...")
         # Get slices of the data for this chunk
         startidx <- chunkidx[i] + 1
         stopidx <- chunkidx[i + 1]
@@ -117,7 +117,7 @@ corrPairsMSIchunks <- function(d,
         B <- Matrix::as.matrix(B)
         
         # Pairwise correlation with p-values
-        message("Calculating correlations between ",currchunksize," pairs\n")
+        message("Calculating correlations between ",currchunksize," pairs")
         testresult <- parallel::mclapply(1:currchunksize,
                                          function(x) {unlist(cor.test(A[,x], B[,x], method=method, alternative=alternative, ...)[c("estimate","p.value")])},
                                          mc.cores=ncores)
@@ -147,7 +147,7 @@ corrPairsMSIchunks <- function(d,
     
     # Report number of significantly-correlated pairs found
     num.signif <- sum(df$Significance)
-    message("Significant correlations found at p-value cutoff of ", p.val, " (with Bonferroni correction): ", num.signif, "\n")
+    message("Significant correlations found at p-value cutoff of ", p.val, " (with Bonferroni correction): ", num.signif)
     # Return data frame
     return(df)
 }

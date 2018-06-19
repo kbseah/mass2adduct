@@ -21,18 +21,18 @@
 
 topAdducts <- function(hist, add=adducts, n=20, use.bw=TRUE, threshold=NULL) {
     if (class(hist) != "histogram") {
-        stop("Input must be an object of class histogram\n")
+        stop("Input must be an object of class histogram")
     }
     if (use.bw) { # Check is using binwidth as the threshold for assigning adduct
         if (!is.null(threshold)) {
-            warning("Parameter \"threshold\" ignored when use.bw is TRUE\n")
+            warning("Parameter \"threshold\" ignored when use.bw is TRUE")
         }
         # Get width of histogram bins
         binwidth <- hist$mids[2] - hist$mids[1] # Width of histogram bins
         threshold <- binwidth/2
     } else {
         if (is.null(threshold)) {
-            warning("Parameter \"threshold\" not defined although use.bw is FALSE ... setting threshold to 0.005 by default\n")
+            warning("Parameter \"threshold\" not defined although use.bw is FALSE ... setting threshold to 0.005 by default")
             threshold <- 0.005
         }
     }

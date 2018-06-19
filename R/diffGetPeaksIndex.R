@@ -16,7 +16,7 @@
 
 diffGetPeaksIndex <- function(diff, by=c("diff","parent"), mass=NULL, width=0.001) {
     if (is.null (mass)) {
-        stop("Mass difference not specified\n")
+        stop("Mass difference not specified")
     }
     diffLow <- mass - width/2
     diffUpp <- mass + width/2

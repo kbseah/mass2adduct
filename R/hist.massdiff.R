@@ -18,7 +18,7 @@
 
 hist.massdiff <- function(diff, widthFunc="equal", width=0.01, plot=FALSE, ...) {
     if (!is.numeric(diff$diff)) {
-        stop("Input mass difference list must be numeric\n")
+        stop("Input mass difference list must be numeric")
     }
     # Calculate number of breaks for histogram, integer value
     minval <- floor(min(diff$diff,na.rm=TRUE))
