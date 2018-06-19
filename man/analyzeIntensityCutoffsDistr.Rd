@@ -4,8 +4,8 @@
 \alias{analyzeIntensityCutoffsDistr}
 \title{Calculate effects of applying intensity-level cutoffs on mass spectrum}
 \usage{
-analyzeIntensityCutoffsDistr(df, by = "intensities", value = NULL, pc = 1,
-  plot = TRUE, report.peaks = FALSE)
+analyzeIntensityCutoffsDistr(df, by = c("intensities", "counts"),
+  value = NULL, pc = 1, plot = TRUE, report.peaks = FALSE)
 }
 \arguments{
 \item{df}{data.frame of three columns: peaks, counts, intensities, produced
@@ -23,6 +23,12 @@ supplied) (Default: 1)}
 
 \item{report.peaks}{logical; Return peaks that are above cutoff? (default: no)}
 }
+\value{
+data.frame summarizing the number of peaks above the specified cutoff
+        and a plot of the distribution with cutoff overlaid as a vertical
+        line. If option \code{report.peaks} is used, then the a vector of
+        peaks above the cutoff is returned instead.
+}
 \description{
 Given a table of total intensities per mass peak, produced by function
 \code{\link{sumPeakIntensities}}, calculate the number of peaks retained
@@ -34,4 +40,7 @@ the \code{\link{quantile}} function.
 \seealso{
 \code{\link{analyzeIntensityCutoffsCumul}} does a similar analysis,
          but orders the peaks by intensity and takes the cumulative sum.
+
+\code{\link{sumPeakIntensities}} function to generate the data.frame
+         of total intensities and pixel counts per peak from a msimat object.
 }

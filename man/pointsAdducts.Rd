@@ -4,11 +4,12 @@
 \alias{pointsAdducts}
 \title{Overlay adduct parental and adduct masses on plot of msimat object}
 \usage{
-pointsAdducts(d, diff, which = "adduct", signif = TRUE, pch = 20,
-  cex = 0.5, col = "red", ...)
+pointsAdducts(d, diff, which = c("adduct", "parental"), signif = TRUE,
+  pch = 20, cex = 0.5, col = "red", ...)
 }
 \arguments{
-\item{d}{msimat; Object of class msimat created by function \code{\link{readMSI}}}
+\item{d}{msimat; Object of class msimat created by function
+\code{\link{readMSI}}}
 
 \item{diff}{data.frame; Mass difference correlation table produced by
 function \code{\link{corrPairsMSI}}}
@@ -19,5 +20,11 @@ function \code{\link{corrPairsMSI}}}
 correlation}
 }
 \description{
-Overlay adduct parental and adduct masses on plot of msimat object
+On a mass spectrum plot (from an msimat object), plot points representing
+either parental or adduct masses as an overlay.
+}
+\seealso{
+\code{\link{corrPairsMSI}} calculate correlations for mass pairs
+
+\code{\link{diffTabulate}} tabulate all possible mass pairs
 }

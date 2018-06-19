@@ -7,7 +7,7 @@
 \method{print}{massdiff}(d)
 }
 \arguments{
-\item{d}{msimat; Object of class massdiff, created by function \code{\link{diffTabulate}}}
+\item{d}{massdiff; Object created by function \code{\link{diffTabulate}}}
 }
 \description{
 Print method for class massdiff

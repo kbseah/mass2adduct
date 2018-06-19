@@ -7,9 +7,9 @@
 diffTabulate(d)
 }
 \arguments{
-\item{d}{Either an MSI data set of class msidf or msitsm, imported with the
-\code{\link{readMSI}} function from the mass2adduct package, or
-numeric vector representing m/z values of mass peaks}
+\item{d}{Either an MSI data set of class msimat, imported with the function
+\code{\link{readMSI}}, or a numeric vector representing m/z values
+of mass peaks}
 }
 \value{
 Object of class \code{massdiff} with three elements:
@@ -32,7 +32,11 @@ The number of possible pairs grows combinatorially and the calculation will
 fail for >65536 values (the function uses a 16-bit integer internally).
 }
 \seealso{
-\code{\link{diffTabulateMSI}} to tabulate mass differences from
-         MS imaging data object imported with \code{\link{readMSI}} function,
-         \code{\link{diffHist}} to plot histogram of mass differences
+\code{\link{diffHist}} to plot histogram of mass differences
+
+\code{\link{adductMatch}} to match mass differences to possible
+         molecular transformations
+
+\code{\link{corrPairsMSI}} to test whether given peak pairs are
+         correlated, using MSI intensity data from massdiff and msimat objects
 }

@@ -2,16 +2,16 @@
 % Please edit documentation in R/topAdducts.R
 \name{topAdducts}
 \alias{topAdducts}
-\title{Find top adduct candidates}
+\title{Find top adduct candidates from a mass difference histogram}
 \usage{
-topAdducts(hist, add = adducts, n = 50, use.bw = TRUE, threshold = NULL)
+topAdducts(hist, add = adducts, n = 20, use.bw = TRUE, threshold = NULL)
 }
 \arguments{
-\item{hist}{histogram output from diffHist function}
+\item{hist}{histogram of a massdiff object}
 
-\item{add}{data.frame of adducts (default: "adducts" dataset in package)}
+\item{add}{data.frame of adducts (default: "adducts" dataset of mass2adduct)}
 
-\item{n}{numeric; number of top hits to report (default 50)}
+\item{n}{numeric; number of top hits to report (default 20)}
 
 \item{use.bw}{logical; adduct is reported as match only if it falls in the
 same histogram bin (default: TRUE)}
@@ -25,7 +25,8 @@ data.frame of mass bins, counts, closest-matching adduct if known
 }
 \description{
 Identify mass differences with the most observations and report closest-
-matching known adducts.
+matching known adducts. This also reports mass differences which do not have
+a close match to a known adduct, unlike \code{\link{adductMatch}}
 }
 \seealso{
 \code{\link{adductMatch}} to find the closest-matching mass

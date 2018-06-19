@@ -4,7 +4,7 @@
 \name{mass2adduct-package}
 \alias{mass2adduct}
 \alias{mass2adduct-package}
-\title{MassSpec Mass Difference Finder}
+\title{Mass Spectrometry Imaging Molecular Adduct Finder}
 \description{
 Tools for calculating mass differences in mass spectrometry data to explore
 molecular adducts. To accompany Janda et al. (MS in prep.)
@@ -13,10 +13,9 @@ molecular adducts. To accompany Janda et al. (MS in prep.)
 Import mass spectrometry imaging intensity data with \code{\link{readMSI}}.
 
 Tabulate mass differences from simple list of mass peaks with
-\code{\link{diffTabulate}}, or from imported MSI dataset with
-\code{\link{diffTabulateMSI}}.
+\code{\link{diffTabulate}}.
 
-Bin mass differences into histogram with \code{\link{diffHist}}.
+Bin mass differences into histogram with \code{\link{hist.massdiff}}.
 
 Get pairs of mass peaks corresponding to a specific mass difference with
 \code{\link{diffGetPeaks}}.
@@ -27,11 +26,10 @@ matching known molecular adducts for the most-abundant mass differences
 with \code{\link{topAdducts}}.
 
 Find significant correlations between specified pairs of mass peaks in
-mass spectrometry imaging intensity data using \code{\link{corrPairsMSI}};
-or find correlations between a single ion of interest vs. all other peaks
-using \code{\link{corrSinglePeakMSI}}.
+mass spectrometry imaging intensity data using \code{\link{corrPairsMSI}}.
 
-Accompanying data: List of common molecular \code{\link{adducts}} and their masses
+Accompanying data: Lists of common molecular \code{\link{adducts}} with their
+respective formulae and masses
 }
 \author{
 \strong{Maintainer}: Brandon Seah \email{kbseah@mpi-bremen.de}

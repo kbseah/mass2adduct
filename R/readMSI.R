@@ -29,7 +29,7 @@
 #' @param check.names logical; (default: FALSE)
 #' @param ... Parameters to be passed to read.csv()
 #'
-#' @return Object of class msidf or msitsm
+#' @return Object of class msimat
 #' @export
 
 readMSI <- function(csv=NULL,
@@ -46,28 +46,26 @@ readMSI <- function(csv=NULL,
                     ...) {
     if (is.null(csv)) {
         if (is.null(rows) | is.null(cols) | is.null(vals) | is.null(peaks) | is.null(spots)) {
-            cat ("Error: Required input not specified \n")
+            stop("Required input not specified \n")
         }
-        else {
-            inrow <- scan(rows,what=numeric())
-            incol <- scan(cols,what=numeric())
-            inval <- scan(vals,what=numeric())
-            inpeaks <- scan(peaks,what=numeric())
-            inspots <- scan(spots,what=character())
-            tsm <- Matrix::sparseMatrix(i=inrow,
-                                        j=incol,
-                                        x=inval,
-                                        index1=FALSE,       # 0-based numbering
-                                        giveCsparse=FALSE,  # TsparseMatrix
-                                        check=TRUE)
-            peakintensities <- Matrix::colSums(tsm)
-            data <- list(mat=tsm,
-                         peaks=inpeaks,
-                         spots=inspots,
-                         peakintensities=peakintensities)
-            class(data) <- "msimat"
-            return(data)
-        }
+        inrow <- scan(rows,what=numeric())
+        incol <- scan(cols,what=numeric())
+        inval <- scan(vals,what=numeric())
+        inpeaks <- scan(peaks,what=numeric())
+        inspots <- scan(spots,what=character())
+        tsm <- Matrix::sparseMatrix(i=inrow,
+                                    j=incol,
+                                    x=inval,
+                                    index1=FALSE,       # 0-based numbering
+                                    giveCsparse=FALSE,  # TsparseMatrix
+                                    check=TRUE)
+        peakintensities <- Matrix::colSums(tsm)
+        data <- list(mat=tsm,
+                     peaks=inpeaks,
+                     spots=inspots,
+                     peakintensities=peakintensities)
+        class(data) <- "msimat"
+        return(data)
     }
     else {
         data <- read.csv (file=csv,
@@ -83,7 +81,7 @@ readMSI <- function(csv=NULL,
                 data.colsums <- sapply(data, function(x) sum(x))
                 index.data.colzero <- which(data.colsums==0)
                 index.data.notzero <- which(data.colsums!=0)
-                cat ("Removing", length(index.data.colzero), "columns with only zeroes\n")
+                message("Removing ", length(index.data.colzero), " columns with only zeroes\n")
                 data <- data[index.data.notzero]
             }
             peaks <- names(data)
@@ -97,7 +95,7 @@ readMSI <- function(csv=NULL,
             return(out)
         } else {
             # Error message if non-numeric values found in data input
-            cat ("Error: Some values in the input data are non-numeric; please check the input file \n")
+            stop("Some values in the input data are non-numeric; please check the input file\n")
         }
     }
 }

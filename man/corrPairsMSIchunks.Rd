@@ -4,8 +4,9 @@
 \alias{corrPairsMSIchunks}
 \title{Calculate correlations of pairs of mass peaks from MSI data in chunks}
 \usage{
-corrPairsMSIchunks(d, diff, p.val = 0.05, method = "pearson",
-  alternative = "greater", ncores = NULL, mem.limit = 5, ...)
+corrPairsMSIchunks(d, diff, p.val = 0.05, method = c("pearson", "kendall",
+  "spearman"), alternative = c("two.sided", "less", "greater"),
+  ncores = NULL, mem.limit = 5, ...)
 }
 \arguments{
 \item{d}{msimat; MSI data with peaks as columns and pixels as rows,
@@ -14,11 +15,14 @@ output from \code{\link{readMSI}} function}
 \item{diff}{massdiff; List of mass differences, parent and putative adduct
 ions, as produced by function \code{\link{diffTabulate}}}
 
-\item{p.val}{numeric; p-value cutoff (before Bonferroni correction) (default: 0.05)}
+\item{p.val}{numeric; p-value cutoff (before Bonferroni correction) (default:
+0.05)}
 
-\item{method}{string; Method to use for \code{\link{cor.test}} (default: "pearson")}
+\item{method}{string; Method to use for \code{\link{cor.test}} (default:
+"pearson")}
 
-\item{alternative}{string; Which alternative for \code{\link{cor.test}} (default: "greater")}
+\item{alternative}{string; Which alternative for \code{\link{cor.test}}
+(default: "greater")}
 
 \item{ncores}{integer; Number of cores if using parallel version. Default is
 total number of cores minus one.}
@@ -44,14 +48,15 @@ Object of class data.frame with the following fields:
 \description{
 Calculate correlations of pairs of mass peaks from MSI data (imported to
 R with the \code{\link{readMSI}} function). The list of pairs is supplied
-as a data.frame with the parameter \code{pairs}, but is broken up into "chunks"
-for processing, to avoid going over a specified memory limit.
+as a data.frame with the parameter \code{pairs}, but is broken up into
+"chunks" for processing, to avoid going over a specified memory limit.
 }
 \details{
 This function is otherwise equivalent to \code{\link{corrPairsMSI}} with
-option how="parallel". The memory requirement is estimated conservatively but
-has only been tested empirically (i.e. the process might go over the limit)
-in practice.
+option \code{how="parallel"}. It uses forking processes and is therefore not
+suitable for Windows systems. The memory requirement is estimated
+conservatively but has only been tested empirically (i.e. the process might
+go over the limit in practice).
 
 Example usage scenario for this function: Mass differences for all pairwise
 combinations of masses are tabulated with \code{\link{diffTabulate}}, and the
@@ -59,13 +64,13 @@ peak pairs corresponding to a specific adduct of interest are extracted with
 \code{\link{diffGetPeaks}}. Check which peaks are significantly correlated to
 each other with this function.
 
-Correlation is calculated with \code{\link{cor.test}} function from the
-\code{stats} package, and by default uses the Pearson methone (one-sided, i.e.
-positive correlations). The Bonferroni correction is applied to the p-values
-before assessing significance, but the original p-value is reported in column
-P.value.
+Correlation is calculated with \code{\link{cor.test}} function and by default
+uses the Pearson method (two-sided, because correlations can be both positive
+and negative). The Bonferroni correction is applied to the p-values before
+assessing significance, but the original p-value is reported in column
+"P.value" and can be used e.g. for false discovery rate analysis.
 }
 \seealso{
-\code{\link{corrSinglePeakMSI}} to calculate correlations of all
-         peaks in a dataset vs. a single peak of interest
+\code{\link{corrPairsMSI}} function which does not split input into
+         chunks.
 }

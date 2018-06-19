@@ -7,11 +7,16 @@
 sumPeakIntensities(d)
 }
 \arguments{
-\item{d}{msitsm or msidf; MSI data imported with \code{\link{readMSI}}}
+\item{d}{msimat; MSI data imported with \code{\link{readMSI}}}
 }
 \value{
 data.frame of peaks and intensities
 }
 \description{
 Sum total pixel intensities per peak and report as data frame
+}
+\seealso{
+\code{\link{analyzeIntensityCutoffsCumul}} and
+         \code{\link{analyzeIntensityCutoffsDistr}} to visualize and explore
+         possible peak filtering cutoffs, given the output from this function
 }

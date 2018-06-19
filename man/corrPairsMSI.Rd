@@ -4,8 +4,9 @@
 \alias{corrPairsMSI}
 \title{Calculate correlations of pairs of mass peaks from MSI data}
 \usage{
-corrPairsMSI(d, diff, p.val = 0.05, method = "pearson",
-  alternative = "greater", how = "apply", ncores = NULL, ...)
+corrPairsMSI(d, diff, p.val = 0.05, method = c("pearson", "kendall",
+  "spearman"), alternative = c("two.sided", "less", "greater"),
+  how = c("apply", "parallel", "loop"), ncores = NULL, ...)
 }
 \arguments{
 \item{d}{msimat; MSI data with peaks as columns and pixels as rows,
@@ -14,18 +15,22 @@ output from \code{\link{readMSI}} function}
 \item{diff}{massdiff; List of mass differences, parent and putative adduct
 ions, as produced by function \code{\link{diffTabulate}}}
 
-\item{p.val}{numeric; p-value cutoff (before Bonferroni correction) (default: 0.05)}
+\item{p.val}{numeric; p-value cutoff (before Bonferroni correction) (default:
+0.05)}
 
-\item{method}{string; Method to use for \code{\link{cor.test}} (default: "pearson")}
+\item{method}{string; Method to use for \code{\link{cor.test}} (default:
+"pearson")}
 
-\item{alternative}{string; Which alternative for \code{\link{cor.test}} (default: "greater")}
+\item{alternative}{string; Which alternative for \code{\link{cor.test}}
+(default: "greater")}
 
 \item{how}{string; How to implement the multiple correlation tests. Options:
 "loop" (for loop - slow), "parallel" (multiple processors, using
  \code{\link{mclapply}} from package \code{parallel}), or "apply"
-(vectorized lapply function - default).}
+(vectorized lapply function - default). Option "parallel" uses forking
+processes and is therefore not suitable for Windows systems.}
 
-\item{ncores}{integer; Number of cores if using parallel version. Default is
+\item{ncores}{integer; Number of cores if using \code{how="parallel"}. Default is
 total number of cores minus one.}
 
 \item{...}{Other parameters to pass to \code{\link{cor.test}}}
@@ -33,15 +38,13 @@ total number of cores minus one.}
 \value{
 Object of class data.frame with the following fields:
 
-        label - Label for row
-
         A - First peak mass in each pair
 
         B - Second peak mass in the pair
 
         Estimate - Estimated correlation
 
-        P.value - P-value for the correlation
+        P.value - P-value for the correlation (uncorrected)
 
         Significance - Whether p-value meets cutoff (specified by "p.val", with
                        Bonferroni correction)
@@ -58,13 +61,15 @@ peak pairs corresponding to a specific adduct of interest are extracted with
 \code{\link{diffGetPeaks}}. Check which peaks are significantly correlated to
 each other with this function.
 
-Correlation is calculated with \code{\link{cor.test}} function from the
-\code{stats} package, and by default uses the Pearson methone (one-sided, i.e.
-positive correlations). The Bonferroni correction is applied to the p-values
-before assessing significance, but the original p-value is reported in column
-P.value.
+Correlation is calculated with \code{\link{cor.test}} function and by default
+uses the Pearson method (two-sided, because correlations can be both positive
+and negative). The Bonferroni correction is applied to the p-values before
+assessing significance, but the original p-value is reported in column
+"P.value" and can be used e.g. for false discovery rate analysis.
 }
 \seealso{
-\code{\link{corrSinglePeakMSI}} to calculate correlations of all
-         peaks in a dataset vs. a single peak of interest
+\code{\link{corrPairsMSIchunks}} to split input data into manageable
+         sizes to avoid going over available memory. Suggested if using the
+         standard corrPairsMSI function causes R to run out of memory and
+         crash.
 }

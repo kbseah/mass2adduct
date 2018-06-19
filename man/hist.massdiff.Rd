@@ -19,13 +19,14 @@ histogram. (default "equal", other options to be added)}
 
 \item{plot}{logical; whether histogram graphic should be plotted (default FALSE)}
 
-\item{...}{Parameters to be passed to hist()}
+\item{...}{Other options to be passed to hist()}
 }
 \value{
 Object of class hist
 }
 \description{
-Histogram method for massdiff object
+Bin mass differences from a massdiff object produced by
+\code{\link{diffTabulate}} into a histogram, and plot if requested.
 }
 \seealso{
 \code{\link{diffTabulate}} to generate the mass difference list

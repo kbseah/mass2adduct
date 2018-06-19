@@ -1,11 +1,12 @@
-#' Find top adduct candidates
+#' Find top adduct candidates from a mass difference histogram
 #'
 #' Identify mass differences with the most observations and report closest-
-#' matching known adducts.
+#' matching known adducts. This also reports mass differences which do not have
+#' a close match to a known adduct, unlike \code{\link{adductMatch}}
 #'
-#' @param hist histogram output from diffHist function
-#' @param add data.frame of adducts (default: "adducts" dataset in package)
-#' @param n numeric; number of top hits to report (default 50)
+#' @param hist histogram of a massdiff object
+#' @param add data.frame of adducts (default: "adducts" dataset of mass2adduct)
+#' @param n numeric; number of top hits to report (default 20)
 #' @param use.bw logical; adduct is reported as match only if it falls in the
 #'        same histogram bin (default: TRUE)
 #' @param threshold numeric; maximum distance between adduct mass and mass
@@ -18,41 +19,39 @@
 #'          current function)
 #' @export
 
-topAdducts <- function(hist, add=adducts, n=50, use.bw=TRUE, threshold=NULL) {
+topAdducts <- function(hist, add=adducts, n=20, use.bw=TRUE, threshold=NULL) {
     if (class(hist) != "histogram") {
-        cat ("Error: Input must be an object of class histogram\n")
-    } else {
-        if (use.bw) { # Check is using binwidth as the threshold for assigning adduct
-            if (!is.null(threshold)) {
-                cat ("Warning: Parameter \"threshold\" ignored when use.bw is TRUE\n")
-            }
-            # Get width of histogram bins
-            binwidth <- hist$mids[2] - hist$mids[1] # Width of histogram bins
-            threshold <- binwidth/2
-        } else {
-            if (is.null(threshold)) {
-                cat ("Error: Parameter \"threshold\" not defined although use.bw is FALSE\n")
-                cat ("       ... setting threshold to 0.005 by default\n")
-                threshold <- 0.005
-            }
-        }
-        # Sorted indices of mass difference bins by counts
-        indsort <- order(hist$counts,decreasing=TRUE)[1:n]
-        mids <- hist$mids[indsort]
-        addIndices <- sapply(mids, function(x) {
-                index <- which.min(abs(add$mass - x))
-                if ( abs(add$mass[index] - x) < threshold ) {
-                    return (index)
-                } else {
-                    return (NA)
-                }
-            })
-        output <- data.frame (mids,
-                              counts=hist$counts[indsort],
-                              density=hist$density[indsort],
-                              adduct.name=as.character(add$name[addIndices]),
-                              adduct.formula=as.character(add$formula[addIndices]),
-                              adduct.mass=add$mass[addIndices])
-        return(output)
+        stop("Input must be an object of class histogram\n")
     }
+    if (use.bw) { # Check is using binwidth as the threshold for assigning adduct
+        if (!is.null(threshold)) {
+            warning("Parameter \"threshold\" ignored when use.bw is TRUE\n")
+        }
+        # Get width of histogram bins
+        binwidth <- hist$mids[2] - hist$mids[1] # Width of histogram bins
+        threshold <- binwidth/2
+    } else {
+        if (is.null(threshold)) {
+            warning("Parameter \"threshold\" not defined although use.bw is FALSE ... setting threshold to 0.005 by default\n")
+            threshold <- 0.005
+        }
+    }
+    # Sorted indices of mass difference bins by counts
+    indsort <- order(hist$counts,decreasing=TRUE)[1:n]
+    mids <- hist$mids[indsort]
+    addIndices <- sapply(mids, function(x) {
+            index <- which.min(abs(add$mass - x))
+            if ( abs(add$mass[index] - x) < threshold ) {
+                return (index)
+            } else {
+                return (NA)
+            }
+        })
+    output <- data.frame (mids,
+                          counts=hist$counts[indsort],
+                          density=hist$density[indsort],
+                          adduct.name=as.character(add$name[addIndices]),
+                          adduct.formula=as.character(add$formula[addIndices]),
+                          adduct.mass=add$mass[addIndices])
+    return(output)
 }

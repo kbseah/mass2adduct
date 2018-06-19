@@ -2,7 +2,7 @@
 % Please edit documentation in R/adductMatch.histogram.R
 \name{adductMatch.histogram}
 \alias{adductMatch.histogram}
-\title{Find closest-matching mass difference bin for known adducts}
+\title{Report closest-matching adduct type for a mass difference histogram}
 \usage{
 \method{adductMatch}{histogram}(x, add = adducts, density = FALSE)
 }
@@ -18,9 +18,19 @@ data.frame of adducts with counts/density from closest-matching bin
         and their corresponding quantiles in mass difference bins
 }
 \description{
-For use with internal dataset "adducts" and other similar data
+Given a histogram of mass differences (from applying \code{hist} on a massdiff
+object), report the bins most closely matching a list of potential molecular
+transformations (adduct types). The built-in data sets \code{\link{adducts}}
+and \code{\link{adducts2}} are examples of such lists of potential adducts.
+This function is designed for a quick exploratory overview of an MSI data set,
+especially when the number of peaks is large. To report each peak pair that
+has a match to the list of potential adducts, apply \code{\link{adductMatch}}
+directly to a massdiff object.
 }
 \seealso{
+\code{\link{adductMatch.massdiff}} reports closest-matching adducts
+         for each individual peak pair.
+
 \code{\link{topAdducts}} to find the closest-matching adducts for
          the mass differences with the highest counts (the converse of the
          current function)

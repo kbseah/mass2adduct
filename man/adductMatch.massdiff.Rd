@@ -2,7 +2,7 @@
 % Please edit documentation in R/adductMatch.massdiff.R
 \name{adductMatch.massdiff}
 \alias{adductMatch.massdiff}
-\title{Find closest-matching known adducts for a set of mass differences}
+\title{Report closest-matching adduct type for a list of mass differences}
 \usage{
 \method{adductMatch}{massdiff}(x, add = adducts, width = 0.001)
 }
@@ -11,16 +11,24 @@
 
 \item{add}{data.frame of adduct masses (default: "adducts" dataset in package)}
 
-\item{width}{numeric; the precision to which to match the mass value (default: 0.01)}
+\item{width}{numeric; the precision to which to match the mass value (default: 0.001)}
 }
 \value{
 Object of class massdiff, with additional element "matches" reporting
         the closest matches
 }
 \description{
-For use with internal dataset "adducts" and other similar data
+Given a set of mass differences produced by function \code{\link{diffTabulate}},
+report for each pair of masses the closest-matching molecular transformation
+from a list of such potential adduct types. The built-in data sets
+\code{\link{adducts}} and \code{\link{adducts2}} are examples of such lists
+of potential adducts.
 }
 \seealso{
+\code{\link{adductMatch.histogram}} gives an overview for large data
+         sets by matching closest adducts to mass differences already binned
+         into a histogram.
+
 \code{\link{topAdducts}} to find the closest-matching adducts for
          the mass differences with the highest counts (the converse of the
          current function)

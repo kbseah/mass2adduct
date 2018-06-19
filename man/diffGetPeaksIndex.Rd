@@ -2,9 +2,10 @@
 % Please edit documentation in R/diffGetPeaksIndex.R
 \name{diffGetPeaksIndex}
 \alias{diffGetPeaksIndex}
-\title{Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)}
+\title{Find pairs of mass peaks corresponding to a specific mass (report index)}
 \usage{
-diffGetPeaksIndex(diff, by = "diff", mass = NULL, width = 0.001)
+diffGetPeaksIndex(diff, by = c("diff", "parent"), mass = NULL,
+  width = 0.001)
 }
 \arguments{
 \item{by}{string; Subset the mass by mass difference (putative adduct
@@ -22,5 +23,7 @@ subset of the original data frame d where the mass difference or
         specified width)
 }
 \description{
-Find pairs of mass peaks corresponding to a specific mass difference (putative adduct)
+From a set of all possible mass pairs, find all pairs corresponding to a
+specific mass difference, which might represent a molecular transformation
+of interest.
 }

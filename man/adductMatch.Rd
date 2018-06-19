@@ -11,7 +11,9 @@ adductMatch(x, add = adducts, ...)
 histogram from running \code{\link{hist}} on a massdiff object}
 
 \item{add}{data.frame; Table of known chemical transfomrations and their
-respective masses. (default: built-in data set adducts )}
+respective masses. (default: built-in data set "adducts")}
+
+\item{...}{Other options to pass to underlying methods}
 }
 \value{
 data.frame of mass differences given to argument diff, with an
@@ -21,8 +23,11 @@ data.frame of mass differences given to argument diff, with an
 For use with internal dataset "adducts" and other similar data
 }
 \seealso{
-\code{\link{adductMatch.histogram}}, \code{\link{adductMatch.massdiff}},
-         as well as \code{\link{topAdducts}} to find the closest-matching adducts
+\code{\link{adductMatch.histogram}} method for histogram objects
+
+\code{\link{adductMatch.massdiff}} method for massdiff objects
+
+\code{\link{topAdducts}} to find the closest-matching adducts
          for the mass differences with the highest counts (the converse of the
          current function)
 }

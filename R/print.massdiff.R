@@ -1,6 +1,6 @@
 #' Print method for class massdiff
 #'
-#' @param d msimat; Object of class massdiff, created by function \code{\link{diffTabulate}}
+#' @param d massdiff; Object created by function \code{\link{diffTabulate}}
 #'
 #' @export
 

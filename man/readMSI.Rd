@@ -38,7 +38,7 @@ should correspond to the row numbers given to argument rows}
 \item{...}{Parameters to be passed to read.csv()}
 }
 \value{
-Object of class msidf or msitsm
+Object of class msimat
 }
 \description{
 Import mass spectrometry imaging data in either CSV or triplet format.

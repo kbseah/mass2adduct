@@ -4,22 +4,23 @@
 \alias{analyzeIntensityCutoffsCumul}
 \title{Calculate effects of applying cumulative intensity-level cutoffs on mass spectrum}
 \usage{
-analyzeIntensityCutoffsCumul(df, by = "intensities", value = NULL, pc = 1,
-  plot = TRUE, log.plot = TRUE, report.peaks = FALSE)
+analyzeIntensityCutoffsCumul(df, by = c("intensities", "counts"),
+  value = NULL, pc = 1, plot = TRUE, log.plot = TRUE,
+  report.peaks = FALSE)
 }
 \arguments{
 \item{df}{data.frame of three columns: peaks, counts, intensities, produced
 by function \code{\link{sumPeakIntensities}}, or by external script
 msicsvprofiler.pl if matrix is too large to import into R}
 
-\item{by}{string; Apply cutoff by intensities or counts (default: intensities)}
+\item{by}{string; Apply cutoff by intensities or counts (default: "intensities")}
 
-\item{value}{numeric; Minimum intensity/counts cutoff to apply}
+\item{value}{numeric; Minimum intensity/counts cutoff to apply (default: NULL)}
 
 \item{pc}{numeric; Percent intensity/counts cutoff to apply (ignored if value
 supplied). For example, 50% would find the top peaks arranged by
 intensity, whose combined total intensity accounts for 50% of the total
-intensity in the data (Default: 1)}
+intensity in the data (default: 1)}
 
 \item{plot}{logical; Plot distribution? (default: TRUE)}
 
@@ -27,6 +28,12 @@ intensity in the data (Default: 1)}
 
 \item{report.peaks}{logical: Report list of peaks above the cutoff, as vector
 (default: FALSE)}
+}
+\value{
+data.frame summarizing the number of peaks above the specified cutoff
+        and a plot of the distribution with cutoff overlaid as a vertical
+        line. If option \code{report.peaks} is used, then the a vector of
+        peaks above the cutoff is returned instead.
 }
 \description{
 Given a table of total intensities per mass peak, produced by function
@@ -40,4 +47,7 @@ assemblies.
 \code{\link{analyzeIntensityCutoffsDistr}} does a similar analysis
          but without taking cumulative sums, instead using the empirical CDF
          of the values.
+
+\code{\link{sumPeakIntensities}} function to generate the data.frame
+         of total intensities and pixel counts per peak from a msimat object.
 }
