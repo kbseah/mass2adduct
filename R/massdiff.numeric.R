@@ -15,5 +15,6 @@ massdiff.numeric <- function(d) {
     y <- as.data.frame (t(y))
     names(y) <- c("A","B","diff")
     class(y) <- c("massdiff","data.frame")
+    row.names(y) <- NULL
     return(y)
 }

@@ -36,10 +36,11 @@ adductMatch.massdiff <- function(x,add=adducts,width=0.001) {
         indices <- c(indices, idx)
         matches <- c(matches, rep(as.character(add$name[i]),length(idx)))
     }
-    output <- list(A=x$A[indices],
-                   B=x$B[indices],
-                   diff=x$diff[indices],
-                   matches=matches)
+    output <- data.frame(A=x$A[indices],
+                         B=x$B[indices],
+                         diff=x$diff[indices],
+                         matches=matches)
     class(output) <- c("massdiff","data.frame")
+    row.names(output) <- NULL
     return(output)
 }
