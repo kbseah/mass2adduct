@@ -17,15 +17,15 @@
 #' @export
 
 hist.massdiff <- function(diff, widthFunc="equal", width=0.01, plot=FALSE, ...) {
-    if (!is.numeric(diff$diff)) {
-        stop("Input mass difference list must be numeric")
-    }
-    # Calculate number of breaks for histogram, integer value
-    minval <- floor(min(diff$diff,na.rm=TRUE))
-    maxval <- ceiling(max(diff$diff,na.rm=TRUE))
-    if (widthFunc == "equal") { # equal bin widths
-        breaks <- round((maxval - minval)/width, digits=0)
-    } # other options TBD
-    output <- hist(diff$diff, breaks=breaks, plot=plot, ...)
-    return(output)
+  if (!is.numeric(diff$diff)) {
+    stop("Input mass difference list must be numeric")
+  }
+  # Calculate number of breaks for histogram, integer value
+  minval <- floor(min(diff$diff,na.rm=TRUE))
+  maxval <- ceiling(max(diff$diff,na.rm=TRUE))
+  if (widthFunc == "equal") { # equal bin widths
+    breaks <- round((maxval - minval)/width, digits=0)
+  } # other options TBD
+  output <- hist(diff$diff, breaks=breaks, plot=plot, ...)
+  return(output)
 }

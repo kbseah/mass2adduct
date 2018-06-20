@@ -27,20 +27,20 @@
 #' @export
 
 adductMatch.massdiff <- function(x,add=adducts,width=0.001) {
-    #matches <- rep(NA,length(x$diff))
-    indices <- vector()
-    matches <- vector()
-    for (i in 1:length(add$mass)) {
-        # Using a loop because number of adducts are few
-        idx <- diffGetPeaksIndex(diff=x, by="diff", mass=add$mass[i], width=width)
-        indices <- c(indices, idx)
-        matches <- c(matches, rep(as.character(add$name[i]),length(idx)))
-    }
-    output <- data.frame(A=x$A[indices],
-                         B=x$B[indices],
-                         diff=x$diff[indices],
-                         matches=matches)
-    class(output) <- c("massdiff","data.frame")
-    row.names(output) <- NULL
-    return(output)
+  #matches <- rep(NA,length(x$diff))
+  indices <- vector()
+  matches <- vector()
+  for (i in 1:length(add$mass)) {
+    # Using a loop because number of adducts are few
+    idx <- diffGetPeaksIndex(diff=x, by="diff", mass=add$mass[i], width=width)
+    indices <- c(indices, idx)
+    matches <- c(matches, rep(as.character(add$name[i]),length(idx)))
+  }
+  output <- data.frame(A=x$A[indices],
+                       B=x$B[indices],
+                       diff=x$diff[indices],
+                       matches=matches)
+  class(output) <- c("massdiff","data.frame")
+  row.names(output) <- NULL
+  return(output)
 }

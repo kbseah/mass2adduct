@@ -16,23 +16,23 @@
 #' @export
 
 pointsAdducts <- function(d, diff, which=c("adduct","parental"), signif=TRUE, pch=20, cex=0.5, col="red", ...) {
-    if (signif) {
-        diff <- subset(diff, Significance == 1)
-    }
-    if (which[1] == "adduct") {
-        shortlist <- diff$B
-    } else if (which[1] == "parental") {
-        shortlist <- diff$A
-    }
-    # It is possible that there are duplicates in shortlist because there may be
-    # more than one parent/adduct pair with a mass difference within the
-    # tolerated range
-    peaksshortlist <- d[["peaks"]][which(d[["peaks"]] %in% shortlist)]
-    intensities <- d[["peakintensities"]][which(d[["peaks"]] %in% shortlist)]
-    points(x=peaksshortlist,
-           y=intensities,
-           pch=pch,
-           cex=cex,
-           col=col,
-           ...)
+  if (signif) {
+    diff <- subset(diff, Significance == 1)
+  }
+  if (which[1] == "adduct") {
+    shortlist <- diff$B
+  } else if (which[1] == "parental") {
+    shortlist <- diff$A
+  }
+  # It is possible that there are duplicates in shortlist because there may be
+  # more than one parent/adduct pair with a mass difference within the
+  # tolerated range
+  peaksshortlist <- d[["peaks"]][which(d[["peaks"]] %in% shortlist)]
+  intensities <- d[["peakintensities"]][which(d[["peaks"]] %in% shortlist)]
+  points(x=peaksshortlist,
+         y=intensities,
+         pch=pch,
+         cex=cex,
+         col=col,
+         ...)
 }

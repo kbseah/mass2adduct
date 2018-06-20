@@ -1,6 +1,7 @@
 Package: mass2adduct
 Title: MassSpec Mass Difference Finder
 Version: 0.0.0.9001
+Date: 2018-06-20
 Authors@R: c(
     person("Brandon", "Seah", email = "kbseah@mpi-bremen.de", role = c("aut", "cre")),
     person("Moritz", "Janda", role = "aut"),

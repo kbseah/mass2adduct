@@ -20,38 +20,38 @@
 #' @export
 
 topAdducts <- function(hist, add=adducts, n=20, use.bw=TRUE, threshold=NULL) {
-    if (class(hist) != "histogram") {
-        stop("Input must be an object of class histogram")
+  if (class(hist) != "histogram") {
+    stop("Input must be an object of class histogram")
+  }
+  if (use.bw) { # Check is using binwidth as the threshold for assigning adduct
+    if (!is.null(threshold)) {
+      warning("Parameter \"threshold\" ignored when use.bw is TRUE")
     }
-    if (use.bw) { # Check is using binwidth as the threshold for assigning adduct
-        if (!is.null(threshold)) {
-            warning("Parameter \"threshold\" ignored when use.bw is TRUE")
-        }
-        # Get width of histogram bins
-        binwidth <- hist$mids[2] - hist$mids[1] # Width of histogram bins
-        threshold <- binwidth/2
-    } else {
-        if (is.null(threshold)) {
-            warning("Parameter \"threshold\" not defined although use.bw is FALSE ... setting threshold to 0.005 by default")
-            threshold <- 0.005
-        }
+    # Get width of histogram bins
+    binwidth <- hist$mids[2] - hist$mids[1] # Width of histogram bins
+    threshold <- binwidth/2
+  } else {
+    if (is.null(threshold)) {
+      warning("Parameter \"threshold\" not defined although use.bw is FALSE ... setting threshold to 0.005 by default")
+      threshold <- 0.005
     }
-    # Sorted indices of mass difference bins by counts
-    indsort <- order(hist$counts,decreasing=TRUE)[1:n]
-    mids <- hist$mids[indsort]
-    addIndices <- sapply(mids, function(x) {
-            index <- which.min(abs(add$mass - x))
-            if ( abs(add$mass[index] - x) < threshold ) {
-                return (index)
-            } else {
-                return (NA)
-            }
-        })
-    output <- data.frame (mids,
-                          counts=hist$counts[indsort],
-                          density=hist$density[indsort],
-                          adduct.name=as.character(add$name[addIndices]),
-                          adduct.formula=as.character(add$formula[addIndices]),
-                          adduct.mass=add$mass[addIndices])
-    return(output)
+  }
+  # Sorted indices of mass difference bins by counts
+  indsort <- order(hist$counts,decreasing=TRUE)[1:n]
+  mids <- hist$mids[indsort]
+  addIndices <- sapply(mids, function(x) {
+      index <- which.min(abs(add$mass - x))
+      if ( abs(add$mass[index] - x) < threshold ) {
+        return (index)
+      } else {
+        return (NA)
+      }
+    })
+  output <- data.frame (mids,
+                        counts=hist$counts[indsort],
+                        density=hist$density[indsort],
+                        adduct.name=as.character(add$name[addIndices]),
+                        adduct.formula=as.character(add$formula[addIndices]),
+                        adduct.mass=add$mass[addIndices])
+  return(output)
 }

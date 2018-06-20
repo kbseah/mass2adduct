@@ -35,41 +35,41 @@ analyzeIntensityCutoffsDistr <- function(df,
                                          plot=TRUE,
                                          report.peaks=FALSE
                                          ) {
-    if (class(df) != "data.frame") {
-        stop("Input parameter df must be a data.frame")
-    } 
-    numpeaks <- length(df[["peaks"]])
-    if (!is.null(value)) {
-        cutoff <- value
-        pc <- value / max(df[[by[1]]])
-    } else if (pc <= 100 & pc >= 0) {
-        cutoff <- (pc/100) * max(df[[by[1]]])
-    }
-    peakquant <- ecdf(df[[by[1]]])(cutoff)
-    peaksabove <- numpeaks * (1 - peakquant)
-    out <- data.frame(numpeaks,
-                      cutoff,
-                      pc,
-                      peakquant,
-                      peaksabove
-                      )
-    names(out) <- c("Total peaks",
-                    "Cutoff value",
-                    "Cutoff percent",
-                    "Quantile",
-                    "Peaks above cutoff")
-    if (plot) {
-        plot(ecdf(x=df[[by[1]]]),
-             main=paste(c("Empirical CDF by",by[1]),collapse=" "),
-             xlab=by[1]
-            )
-        abline(v=cutoff,col="grey")
-    }
-    if (report.peaks) {
-        peaksshortlist <- df[["peaks"]][which(df[[by[1]]] > cutoff)]
-        print(out)
-        return(peaksshortlist)
-    } else {
-        return(out)
-    }
+  if (class(df) != "data.frame") {
+    stop("Input parameter df must be a data.frame")
+  } 
+  numpeaks <- length(df[["peaks"]])
+  if (!is.null(value)) {
+    cutoff <- value
+    pc <- value / max(df[[by[1]]])
+  } else if (pc <= 100 & pc >= 0) {
+    cutoff <- (pc/100) * max(df[[by[1]]])
+  }
+  peakquant <- ecdf(df[[by[1]]])(cutoff)
+  peaksabove <- numpeaks * (1 - peakquant)
+  out <- data.frame(numpeaks,
+                    cutoff,
+                    pc,
+                    peakquant,
+                    peaksabove
+                    )
+  names(out) <- c("Total peaks",
+                  "Cutoff value",
+                  "Cutoff percent",
+                  "Quantile",
+                  "Peaks above cutoff")
+  if (plot) {
+    plot(ecdf(x=df[[by[1]]]),
+         main=paste(c("Empirical CDF by",by[1]),collapse=" "),
+         xlab=by[1]
+        )
+    abline(v=cutoff,col="grey")
+  }
+  if (report.peaks) {
+    peaksshortlist <- df[["peaks"]][which(df[[by[1]]] > cutoff)]
+    print(out)
+    return(peaksshortlist)
+  } else {
+    return(out)
+  }
 }

@@ -9,12 +9,12 @@
 #' @export
 
 sumPeakIntensities <- function(d) {
-    if (class(d) != "msimat") {
-        stop("Input should be an object of class msimat")
-    }
-    sums <- Matrix::colSums(d[["mat"]])
-    counts <- Matrix::colSums(d[["mat"]] != 0) # Count nonzero values per column
-    peaks <- d[["peaks"]]
-    out <- data.frame(peaks=peaks, counts=counts, intensities=sums)
-    return(out)
+  if (class(d) != "msimat") {
+    stop("Input should be an object of class msimat")
+  }
+  sums <- Matrix::colSums(d[["mat"]])
+  counts <- Matrix::colSums(d[["mat"]] != 0) # Count nonzero values per column
+  peaks <- d[["peaks"]]
+  out <- data.frame(peaks=peaks, counts=counts, intensities=sums)
+  return(out)
 }

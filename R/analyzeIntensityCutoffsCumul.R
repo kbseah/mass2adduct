@@ -41,54 +41,54 @@ analyzeIntensityCutoffsCumul <- function(df,
                                          log.plot=TRUE,
                                          report.peaks=FALSE
                                          ) {
-    if (class(df) != "data.frame") {
-        stop("Input parameter df must be a data.frame")
-    }
-    numpeaks <- length(df[["peaks"]])
-    if (!is.null(value)) {
-        cutoff <- value
-        pc <- value / sum(df[[by[1]]])
-    } else if (pc <= 100 & pc >= 0) {
-        cutoff <- (pc/100) * sum(df[[by[1]]])
-    }
-    reorderidx <- order(df[[by[1]]], decreasing=F)
-    cumulint <- cumsum(df[[by[1]]][reorderidx])
-    peaksabove <- length(which(cumulint > cutoff))
-    out <- data.frame(numpeaks,
-                      max(cumulint),
-                      cutoff,
-                      pc,
-                      peaksabove
-                      )
-    names(out) <- c("Total peaks",
-                    "Total value",
-                    "Cutoff value",
-                    "Cutoff percent",
-                    "Peaks above cutoff")
-    if (plot) {
-        if (log.plot) {
-            yvals <- log10(cumulint)
-            ycutoff <- log10(cutoff)
-            ylabel <- "Cumulative values (log10)"
-        } else {
-            yvals <- cumulint
-            ycutoff <- cutoff
-            ylabel <- "Cumulative values"
-        }
-        plot(x=1:numpeaks,
-             y=yvals,
-             main=paste(c("Cumulative sum by ",by[1]),collapse=" "),
-             xlab="Number of peaks",
-             ylab=ylabel,
-             type="l"
-            )
-        abline(h=ycutoff,col="grey")
-    }
-    if (report.peaks) {
-        peaksshortlist <- df[["peaks"]][reorderidx[which(cumulint>cutoff)]]
-        print(out)
-        return(peaksshortlist)
+  if (class(df) != "data.frame") {
+    stop("Input parameter df must be a data.frame")
+  }
+  numpeaks <- length(df[["peaks"]])
+  if (!is.null(value)) {
+    cutoff <- value
+    pc <- value / sum(df[[by[1]]])
+  } else if (pc <= 100 & pc >= 0) {
+    cutoff <- (pc/100) * sum(df[[by[1]]])
+  }
+  reorderidx <- order(df[[by[1]]], decreasing=F)
+  cumulint <- cumsum(df[[by[1]]][reorderidx])
+  peaksabove <- length(which(cumulint > cutoff))
+  out <- data.frame(numpeaks,
+                    max(cumulint),
+                    cutoff,
+                    pc,
+                    peaksabove
+                    )
+  names(out) <- c("Total peaks",
+                  "Total value",
+                  "Cutoff value",
+                  "Cutoff percent",
+                  "Peaks above cutoff")
+  if (plot) {
+    if (log.plot) {
+      yvals <- log10(cumulint)
+      ycutoff <- log10(cutoff)
+      ylabel <- "Cumulative values (log10)"
     } else {
-        return(out)
+      yvals <- cumulint
+      ycutoff <- cutoff
+      ylabel <- "Cumulative values"
     }
+    plot(x=1:numpeaks,
+         y=yvals,
+         main=paste(c("Cumulative sum by ",by[1]),collapse=" "),
+         xlab="Number of peaks",
+         ylab=ylabel,
+         type="l"
+        )
+    abline(h=ycutoff,col="grey")
+  }
+  if (report.peaks) {
+    peaksshortlist <- df[["peaks"]][reorderidx[which(cumulint>cutoff)]]
+    print(out)
+    return(peaksshortlist)
+  } else {
+    return(out)
+  }
 }

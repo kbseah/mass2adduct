@@ -17,19 +17,19 @@
 #' @export
 
 diffGetPeaks <- function(diff, by=c("diff","parent"), mass=NULL, width=0.001) {
-    if (!"massdiff" %in% class(diff)) {
-        stop ("Input to parameter diff must be an object of class massdiff")
-    }
-    if (is.null (mass)) {
-        stop("Mass difference not specified")
-    }
-    idx <- diffGetPeaksIndex(diff=diff,by=by,mass=mass,width=width)
-    newA <- diff$A[idx]
-    newB <- diff$B[idx]
-    newdiff <- diff$diff[idx]
-    output <- list(A=newA,
-                   B=newB,
-                   diff=newdiff)
-    class(output) <- c("massdiff","data.frame")
-    return (output)
+  if (!"massdiff" %in% class(diff)) {
+    stop ("Input to parameter diff must be an object of class massdiff")
+  }
+  if (is.null (mass)) {
+    stop("Mass difference not specified")
+  }
+  idx <- diffGetPeaksIndex(diff=diff,by=by,mass=mass,width=width)
+  newA <- diff$A[idx]
+  newB <- diff$B[idx]
+  newdiff <- diff$diff[idx]
+  output <- list(A=newA,
+                 B=newB,
+                 diff=newdiff)
+  class(output) <- c("massdiff","data.frame")
+  return (output)
 }

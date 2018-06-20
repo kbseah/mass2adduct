@@ -15,15 +15,15 @@
 #'         specified width)
 
 diffGetPeaksIndex <- function(diff, by=c("diff","parent"), mass=NULL, width=0.001) {
-    if (is.null (mass)) {
-        stop("Mass difference not specified")
-    }
-    diffLow <- mass - width/2
-    diffUpp <- mass + width/2
-    if (by[1] == "diff") {
-        output <- which(diff$diff > diffLow & diff$diff <= diffUpp)
-    } else if (by[1] == "parent") {
-        output <- which(diff$A > diffLow & diff$A <= diffUpp)
-    }
-    return (output)
+  if (is.null (mass)) {
+    stop("Mass difference not specified")
+  }
+  diffLow <- mass - width/2
+  diffUpp <- mass + width/2
+  if (by[1] == "diff") {
+    output <- which(diff$diff > diffLow & diff$diff <= diffUpp)
+  } else if (by[1] == "parent") {
+    output <- which(diff$A > diffLow & diff$A <= diffUpp)
+  }
+  return (output)
 }

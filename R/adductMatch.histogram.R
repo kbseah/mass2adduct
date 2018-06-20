@@ -23,25 +23,25 @@
 #' @export
 
 adductMatch.histogram <- function(x,add=adducts,density=FALSE) {
-    binwidth <- x$mids[2] - x$mids[1] # Width of histogram bins
-    indices <- sapply(add$mass, function(z) {
-        index <- which.min(abs(x$mids - z))
-        # Check for values that fall outside the closest bin!
-        if ( abs(x$mids[index] - z) < binwidth/2 ) {
-            return (index)
-        } else {
-            return (NA)
-        }
-    })
-    if (density) { # Report densities
-        # Get quantiles for bin of each adduct
-        diffqnts <- ecdf (x$density)
-        quantiles <- diffqnts(x$density[indices])
-        output <- data.frame(add, density=x$density[indices], quantiles)
-    } else { # Report counts
-        diffqnts <- ecdf (x$counts)
-        quantiles <- diffqnts (x$counts[indices])
-        output <- data.frame (add, counts=x$counts[indices],quantiles)
+  binwidth <- x$mids[2] - x$mids[1] # Width of histogram bins
+  indices <- sapply(add$mass, function(z) {
+    index <- which.min(abs(x$mids - z))
+    # Check for values that fall outside the closest bin!
+    if ( abs(x$mids[index] - z) < binwidth/2 ) {
+      return (index)
+    } else {
+      return (NA)
     }
-    return(output)
+  })
+  if (density) { # Report densities
+    # Get quantiles for bin of each adduct
+    diffqnts <- ecdf (x$density)
+    quantiles <- diffqnts(x$density[indices])
+    output <- data.frame(add, density=x$density[indices], quantiles)
+  } else { # Report counts
+    diffqnts <- ecdf (x$counts)
+    quantiles <- diffqnts (x$counts[indices])
+    output <- data.frame (add, counts=x$counts[indices],quantiles)
+  }
+  return(output)
 }
