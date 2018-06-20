@@ -1,5 +1,5 @@
 Package: mass2adduct
-Title: MassSpec Mass Difference Finder
+Title: Mass Spectrometry Imaging Molecular Adduct Finder
 Version: 0.0.0.9001
 Date: 2018-06-20
 Authors@R: c(

@@ -1,8 +1,11 @@
+#' @title
 #' Mass Spectrometry Imaging Molecular Adduct Finder
 #'
+#' @description
 #' Tools for calculating mass differences in mass spectrometry data to explore
 #' molecular adducts. To accompany Janda et al. (MS in prep.)
 #'
+#' @details
 #' Import mass spectrometry imaging intensity data with \code{\link{msimat}}.
 #' 
 #' Tabulate mass differences from simple list of mass peaks with
