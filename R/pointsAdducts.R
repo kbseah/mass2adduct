@@ -10,6 +10,10 @@
 #' @param which string; Either plot "parental" or "adduct" peaks as overlay
 #' @param signif logical; Only plot points which have statistically significant
 #'        correlation
+#' @param pch Plot character to use, passed to \code{points}
+#' @param cex Character expansion parameter, passed to \code{points}
+#' @param col Color for overlay points, passed to \code{\points}
+#' @param ... Other parameters to pass to \code{points}
 #'
 #' @seealso \code{\link{corrPairsMSI}} calculate correlations for mass pairs
 #' @seealso \code{\link{massdiff}} tabulate all possible mass pairs
@@ -17,7 +21,7 @@
 
 pointsAdducts <- function(d, diff, which=c("adduct","parental"), signif=TRUE, pch=20, cex=0.5, col="red", ...) {
   if (signif) {
-    diff <- subset(diff, Significance == 1)
+    diff <- diff[which(diff$Significance == 1),]
   }
   if (which[1] == "adduct") {
     shortlist <- diff$B

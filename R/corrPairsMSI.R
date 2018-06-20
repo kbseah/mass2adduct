@@ -57,7 +57,9 @@
 #' d <- msimat(csv=system.file("extdata","msi.csv",package="mass2adduct"),sep=";")
 #' d.diff <- massdiff(d) # Calculate mass differences from imported MSI data
 #' d.diff.annot <- adductMatch(d.diff,add=adducts2) # Find mass diffs matching adducts
-#' d.diff.annot.cor <- corrPairsMSI(d,d.diff.annot,how="apply") # Perform correlation tests on annotated peak pairs
+#' # Perform correlation tests on annotated peak pairs
+#' d.diff.annot.cor <- corrPairsMSI(d,d.diff.annot,how="apply")
+#' 
 #'
 #' @export
 

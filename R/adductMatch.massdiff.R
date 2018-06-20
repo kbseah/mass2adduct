@@ -26,7 +26,7 @@
 #'
 #' @export
 
-adductMatch.massdiff <- function(x,add=adducts,width=0.001) {
+adductMatch.massdiff <- function(x, add=adducts, width=0.001) {
   #matches <- rep(NA,length(x$diff))
   indices <- vector()
   matches <- vector()

@@ -1,10 +1,10 @@
-#' Print method for class massdiff
+#' Summary method for class massdiff
 #'
 #' @param d massdiff; Object created by function \code{\link{massdiff}}
 #'
 #' @export
 
-print.massdiff <- function(d) {
+summary.massdiff <- function(d) {
   mdinfo <- data.frame(length(d[["diff"]]),
                        min(d[["A"]]),
                        max(d[["B"]]),
@@ -12,6 +12,5 @@ print.massdiff <- function(d) {
                        )
   names(mdinfo) <- c("Pairs","Lowest mass","Highest mass","Contains matches")
   cat("Object of class massdiff:\n")
-  print(mdinfo)
   return(mdinfo)
 }

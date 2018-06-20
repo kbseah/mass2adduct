@@ -9,6 +9,14 @@
 }
 \arguments{
 \item{d}{msimat; MSI imaging object created by function \code{\link{msimat}}}
+
+\item{type}{What type of plot to be drawn, passed to \code{\link{plot}}}
+
+\item{xlab}{Label for x axis}
+
+\item{ylab}{Label for y-axis}
+
+\item{...}{Other parameters to pass to \code{plot}}
 }
 \description{
 Plots a graph of total intensity per mass peak

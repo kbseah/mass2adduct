@@ -8,14 +8,14 @@ diffGetPeaksIndex(diff, by = c("diff", "parent"), mass = NULL,
   width = 0.001)
 }
 \arguments{
+\item{diff}{massdiff; output from massdiff}
+
 \item{by}{string; Subset the mass by mass difference (putative adduct
 transformation) ("diff") or by parent ion ("parent")?}
 
 \item{mass}{numeric; mass of putative adduct or parent ion in m/z units}
 
 \item{width}{numeric; range of values to use}
-
-\item{d}{massdiff; output from massdiff}
 }
 \value{
 subset of the original data frame d where the mass difference or

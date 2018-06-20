@@ -1,3 +1,6 @@
+"_PACKAGE"
+#> [1] "_PACKAGE"
+#'
 #' @title
 #' Mass Spectrometry Imaging Molecular Adduct Finder
 #'
@@ -26,9 +29,12 @@
 #'
 #' Accompanying data: Lists of common molecular \code{\link{adducts}} with their
 #' respective formulae and masses
-"_PACKAGE"
-#> [1] "_PACKAGE"
-#'
+#' 
+#' @docType package
+#' @name mass2adduct
 #' @useDynLib mass2adduct
 #' @importFrom Rcpp sourceCpp
+#' @importFrom graphics abline hist plot points
+#' @importFrom stats cor.test ecdf
+#' @importFrom utils read.csv
 NULL
