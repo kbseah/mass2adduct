@@ -74,6 +74,9 @@ corrPairsMSI <- function(d,
   if (class(d) != "msimat") {
     stop("Input parameter d must be an msimat object")
   }
+  if (length(diff$diff) == 0) {
+    stop("No pairs to compare. Perhaps width parameter for adduct matching was too narrow?")
+  }
   # Adapted from original code by Moritz
   # Get vectors representing parent and adduct ion masses
   ions.parent <- diff[["A"]]

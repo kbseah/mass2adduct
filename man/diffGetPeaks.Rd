@@ -4,17 +4,18 @@
 \alias{diffGetPeaks}
 \title{Find pairs of mass peaks corresponding to a specific mass}
 \usage{
-diffGetPeaks(diff, by = c("diff", "parent"), mass = NULL, width = 0.001)
+diffGetPeaks(diff, mass = NULL, ppm = 2, width = NULL)
 }
 \arguments{
 \item{diff}{massdiff; output from \code{\link{massdiff}}}
 
-\item{by}{string; Subset the mass by mass difference (putative adduct
-transformation) ("diff") or by parent ion ("parent")?}
-
 \item{mass}{numeric; mass of putative adduct or parent ion in m/z units}
 
-\item{width}{numeric; range of values to use}
+\item{ppm}{numeric; mass resolution of the original measurements, to
+determine the cutoff for the match (default: 2)}
+
+\item{width}{numeric; Instead of a sliding ppm cutoff, use an absolute m/z 
+difference cutoff to call matches (default: NULL)}
 }
 \value{
 Subset of the original massdiff object where the mass difference or

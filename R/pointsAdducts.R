@@ -12,7 +12,7 @@
 #'        correlation
 #' @param pch Plot character to use, passed to \code{points}
 #' @param cex Character expansion parameter, passed to \code{points}
-#' @param col Color for overlay points, passed to \code{\points}
+#' @param col Color for overlay points, passed to \code{points}
 #' @param ... Other parameters to pass to \code{points}
 #'
 #' @seealso \code{\link{corrPairsMSI}} calculate correlations for mass pairs

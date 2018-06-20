@@ -36,13 +36,13 @@ d.diff.annot <- adductMatch(d.diff,add=adducts2)
 test_that("Adduct matching", {
   expect_is(d.diff.annot,"massdiff")
   expect_is(d.diff.annot,"data.frame")
-  expect_equal(dim(d.diff.annot),c(2805,4))
+  expect_equal(dim(d.diff.annot),c(11035,5))
 })
 
 test_that("Correlation testing", {
   expect_message(d.diff.annot.cor <- corrPairsMSI(d,d.diff.annot))
   expect_is(d.diff.annot.cor,"data.frame")
-  expect_equal(sum(d.diff.annot.cor$Significance),1229)
+  expect_equal(sum(d.diff.annot.cor$Significance),3867)
 })
 
 test_that("Parallelized code", {

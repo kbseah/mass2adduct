@@ -23,7 +23,7 @@ correlation}
 
 \item{cex}{Character expansion parameter, passed to \code{points}}
 
-\item{col}{Color for overlay points, passed to \code{\points}}
+\item{col}{Color for overlay points, passed to \code{points}}
 
 \item{...}{Other parameters to pass to \code{points}}
 }
