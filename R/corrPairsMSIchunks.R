@@ -64,90 +64,96 @@ corrPairsMSIchunks <- function(d,
                                ncores=NULL,
                                mem.limit=5,
                                ...) {
-    if (class(d) != "msimat") {
-        stop("Input parameter d must be an msimat object")
-    }
-    # Adapted from original code by Moritz
-    # Get vectors representing parent and adduct ion masses
-    ions.parent <- diff[["A"]]
-    ions.adduct <- diff[["B"]]
-    # Subset the MSI data frame to contain only target ions
-    peaklist <- d[["peaks"]]
-    idx.parent <- match(ions.parent, peaklist)
-    idx.adduct <- match(ions.adduct, peaklist)
-    numpairs <- length(idx.parent)
-
-    if (is.null(ncores)) {
-        # If number of cores not specified, one fewer than total detected cores
-        ncores <- parallel::detectCores() - 1
-    }
+  # Test for input and OS ------------------------------------------------------
+  if (class(d) != "msimat") {
+    stop("Input parameter d must be an msimat object")
+  }
+  # Check that this is a Unix system
+  if (.Platform$OS.type != "unix") {
+    stop("Parallel option only available on Unix-type systems")
+  }
+  if (is.null(ncores)) {
+    # If number of cores not specified, one fewer than total detected cores
+    ncores <- parallel::detectCores() - 1
+  }
+  # Adapted from original code by Moritz
+  # Construct input ------------------------------------------------------------
+  # Get vectors representing parent and adduct ion masses
+  ions.parent <- diff[["A"]]
+  ions.adduct <- diff[["B"]]
+  # Subset the MSI data frame to contain only target ions
+  peaklist <- d[["peaks"]]
+  idx.parent <- match(ions.parent, peaklist)
+  idx.adduct <- match(ions.adduct, peaklist)
+  numpairs <- length(idx.parent)
+  
+  # initialize output data frame -----------------------------------------------
+  df <- data.frame(Estimate=numeric(),
+                   P.value=numeric())
+  
+  # Estimate memory required, being v conservative with 10 bytes per numeric
+  # Num pixels * Num pairs * 2 * 10 B * num cores
+  # However, not taking memory size of output into account...
+  # Using as.numeric to avoid integer overflow
+  mem.needed <- as.numeric(dim(d[["mat"]])[1]) * as.numeric(numpairs) * 2.0 * 10.0 * as.numeric(ncores) / 1e9
+  numchunks <- ceiling(mem.needed/mem.limit)
+  chunksize <- floor(numpairs/numchunks)
+  message("Mem needed is ",mem.needed," Gb and number of chunks ",numchunks)
+  
+  # Start chunking -------------------------------------------------------------
+  chunkidx <- 0:(numchunks-1) * chunksize
+  chunkidx <- c(chunkidx, numpairs)
+  for (i in 1:(length(chunkidx)-1)) {
+    message("Processing chunk ",i," ...")
+    # Get slices of the data for this chunk
+    startidx <- chunkidx[i] + 1
+    stopidx <- chunkidx[i + 1]
+    idx.parent.subset <- idx.parent[startidx:stopidx]
+    idx.adduct.subset <- idx.adduct[startidx:stopidx]
+    currchunksize <- length(idx.parent.subset)
     
-    # initialize output data frame
-    df <- data.frame(Estimate=numeric(),
-                     P.value=numeric())
+    # Continue with the correlation testing
+    A <- d[["mat"]][,idx.parent.subset]
+    B <- d[["mat"]][,idx.adduct.subset]
+    # If original matrix is a Tsparse matrix object, convert to normal
+    # matrices for speed; otherwise accessing the indices at the lapply
+    # function will be slow
+    A <- Matrix::as.matrix(A)
+    B <- Matrix::as.matrix(B)
     
-    # Estimate memory required, being v conservative with 10 bytes per numeric
-    # Num pixels * Num pairs * 2 * 10 B * num cores
-    # However, not taking memory size of output into account...
-    # Using as.numeric to avoid integer overflow
-    mem.needed <- as.numeric(dim(d[["mat"]])[1]) * as.numeric(numpairs) * 2.0 * 10.0 * as.numeric(ncores) / 1e9
-    numchunks <- ceiling(mem.needed/mem.limit)
-    chunksize <- floor(numpairs/numchunks)
-    message("Mem needed is ",mem.needed," Gb and number of chunks ",numchunks)
-    
-    # Start chunking
-    chunkidx <- 0:(numchunks-1) * chunksize
-    chunkidx <- c(chunkidx, numpairs)
-    for (i in 1:(length(chunkidx)-1)) {
-        message("Processing chunk ",i," ...")
-        # Get slices of the data for this chunk
-        startidx <- chunkidx[i] + 1
-        stopidx <- chunkidx[i + 1]
-        idx.parent.subset <- idx.parent[startidx:stopidx]
-        idx.adduct.subset <- idx.adduct[startidx:stopidx]
-        currchunksize <- length(idx.parent.subset)
-        
-        # Continue with the correlation testing
-        A <- d[["mat"]][,idx.parent.subset]
-        B <- d[["mat"]][,idx.adduct.subset]
-        # If original matrix is a Tsparse matrix object, convert to normal
-        # matrices for speed; otherwise accessing the indices at the lapply
-        # function will be slow
-        A <- Matrix::as.matrix(A)
-        B <- Matrix::as.matrix(B)
-        
-        # Pairwise correlation with p-values
-        message("Calculating correlations between ",currchunksize," pairs")
-        testresult <- parallel::mclapply(1:currchunksize,
-                                         function(x) {unlist(cor.test(A[,x], B[,x], method=method, alternative=alternative, ...)[c("estimate","p.value")])},
-                                         mc.cores=ncores)
-        testresult <- unlist(testresult)
-        testresult <- matrix(testresult,nrow=currchunksize,byrow=TRUE)
-        df <- rbind(df, data.frame(testresult[,1],testresult[,2]))
-    }
-    
-    names(df) <- c("Estimate","P.value")
-    # test for significance with Bonferroni adjusted p-values (p value <= 0.05/number of pixels])
-    adjusted.pvalue <- p.val/numpairs
-    df$Significance <- ifelse(df$P.value<=adjusted.pvalue, 1, 0)
-    # add the parental and adduct ions to the dataframe
-    df$A <- ions.parent
-    df$B <- ions.adduct
-    df$diff <- diff[["diff"]]
-    
-    if (is.null(diff[["matches"]])) {
-      # Reorder fields
-      df <- df[,c(4,5,6,1,2,3)]
-    } else {
-      # If this is the output from adductMatch.massdiff, also bind the adduct names
-      df$matches <- diff[["matches"]]
-      # Reorder fields
-      df <- df[,c(4,5,6,7,1,2,3)]
-    }
-    
-    # Report number of significantly-correlated pairs found
-    num.signif <- sum(df$Significance)
-    message("Significant correlations found at p-value cutoff of ", p.val, " (with Bonferroni correction): ", num.signif)
-    # Return data frame
-    return(df)
+    # Pairwise correlation with p-values
+    message("Calculating correlations between ",currchunksize," pairs")
+    testresult <- parallel::mclapply(1:currchunksize,
+                                     function(x) {unlist(cor.test(A[,x], B[,x], method=method, alternative=alternative, ...)[c("estimate","p.value")])},
+                                     mc.cores=ncores)
+    testresult <- unlist(testresult)
+    testresult <- matrix(testresult,nrow=currchunksize,byrow=TRUE)
+    df <- rbind(df, data.frame(testresult[,1],testresult[,2]))
+  }
+  
+  # Assemble data frame for output ---------------------------------------------
+  names(df) <- c("Estimate","P.value")
+  # test for significance with Bonferroni adjusted p-values (p value <= 0.05/number of pixels])
+  adjusted.pvalue <- p.val/numpairs
+  df$Significance <- ifelse(df$P.value<=adjusted.pvalue, 1, 0)
+  # add the parental and adduct ions to the dataframe
+  df$A <- ions.parent
+  df$B <- ions.adduct
+  df$diff <- diff[["diff"]]
+  
+  if (is.null(diff[["matches"]])) {
+    # Reorder fields
+    df <- df[,c(4,5,6,1,2,3)]
+  } else {
+    # If this is the output from adductMatch.massdiff, also bind the adduct names
+    df$matches <- diff[["matches"]]
+    # Reorder fields
+    df <- df[,c(4,5,6,7,1,2,3)]
+  }
+  
+  # Report number of significantly-correlated pairs found
+  num.signif <- sum(df$Significance)
+  message("Significant correlations found at p-value cutoff of ", p.val, " (with Bonferroni correction): ", num.signif)
+  # Return data frame
+  return(df)
 }

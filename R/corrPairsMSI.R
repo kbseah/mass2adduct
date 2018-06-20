@@ -89,8 +89,9 @@ corrPairsMSI <- function(d,
   # Pairwise correlation with p-values
   numpairs <- dim(B)[2]
   message("Calculating correlations between ",numpairs," pairs")
-
   # Run cor.test, using different strategies
+  
+  # Loop -----------------------------------------------------------------------
   if (how[1] == "loop") { # Use a for-loop to run cor.test
     df <- data.frame(Estimate=numeric(numpairs),
                      P.value=numeric(numpairs),
@@ -104,7 +105,13 @@ corrPairsMSI <- function(d,
       df$Estimate[i] <- test$estimate
       df$P.value[i] <- test$p.value
     }
-  } else if (how[1] == "parallel") { # Use parallelized lapply to run cor.test
+  }
+  # Parallel -------------------------------------------------------------------
+  else if (how[1] == "parallel") { # Use parallelized lapply to run cor.test
+    # Check that this is a Unix system
+    if (.Platform$OS.type != "unix") {
+      stop("Parallel option only available on Unix-type systems")
+    }
     if (is.null(ncores)) {
       # If number of cores not specified, one fewer than total detected cores
       ncores <- parallel::detectCores() - 1
@@ -116,7 +123,9 @@ corrPairsMSI <- function(d,
     testresult <- matrix(testresult,nrow=numpairs,byrow=TRUE)
     df <- data.frame(Estimate=testresult[,1],
                      P.value=testresult[,2])
-  } else { # Default - use lapply
+  }
+  # Apply ----------------------------------------------------------------------
+  else { # Default - use lapply
     testresult <- lapply(1:numpairs,
                          function(x) {unlist(cor.test(A[,x], B[,x], method=method, alternative=alternative, ...)[c("estimate","p.value")])})
     testresult <- unlist(testresult)
@@ -124,7 +133,8 @@ corrPairsMSI <- function(d,
     df <- data.frame(Estimate=testresult[,1],
                      P.value=testresult[,2])
   }
-
+  
+  # Put data frame together for output -----------------------------------------
   # test for significance with Bonferroni adjusted p-values (p value <= 0.05/number of pixels])
   adjusted.pvalue <- p.val/numpairs
   df$Significance <- ifelse(df$P.value<=adjusted.pvalue, 1, 0)
