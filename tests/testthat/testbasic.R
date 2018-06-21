@@ -26,6 +26,7 @@ test_that("Diff calculation", {
 test_that("Diff histogram and annotation", {
   d.diff.hist <- hist(d.diff)
   expect_is(d.diff.hist,"histogram")
+  expect_is(d.diff.hist,"massdiffhist")
   d.diff.hist.annot <- adductMatch(d.diff.hist,add=adducts2)
   expect_is(d.diff.hist.annot,"data.frame")
   expect_equal(dim(d.diff.hist.annot),c(9,5))

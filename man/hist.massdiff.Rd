@@ -4,8 +4,7 @@
 \alias{hist.massdiff}
 \title{Histogram method for massdiff object}
 \usage{
-\method{hist}{massdiff}(diff, widthFunc = "equal", width = 0.01,
-  plot = FALSE, ...)
+\method{hist}{massdiff}(diff, widthFunc = "equal", width = 0.01, ...)
 }
 \arguments{
 \item{diff}{massdiff; Output from function \code{\link{massdiff}},
@@ -17,12 +16,10 @@ histogram. (default "equal", other options to be added)}
 
 \item{width}{numeric; bin width in m/z units (default 0.01)}
 
-\item{plot}{logical; whether histogram graphic should be plotted (default FALSE)}
-
 \item{...}{Other options to be passed to hist()}
 }
 \value{
-Object of class hist
+Object of classes hist and massdiffhist
 }
 \description{
 Bin mass differences from a massdiff object produced by
@@ -30,4 +27,7 @@ Bin mass differences from a massdiff object produced by
 }
 \seealso{
 \code{\link{massdiff}} to generate the mass difference list
+
+\code{\link{plot.massdiffhist}} for plotting and annotating the
+         resulting object
 }

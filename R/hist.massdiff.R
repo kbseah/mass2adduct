@@ -9,14 +9,15 @@
 #' @param widthFunc character; function to use to bin mass differences into
 #'        histogram. (default "equal", other options to be added)
 #' @param width numeric; bin width in m/z units (default 0.01)
-#' @param plot logical; whether histogram graphic should be plotted (default FALSE)
 #' @param ... Other options to be passed to hist()
 #'
-#' @return Object of class hist
+#' @return Object of classes hist and massdiffhist
 #' @seealso \code{\link{massdiff}} to generate the mass difference list
+#' @seealso \code{\link{plot.massdiffhist}} for plotting and annotating the
+#'          resulting object
 #' @export
 
-hist.massdiff <- function(diff, widthFunc="equal", width=0.01, plot=FALSE, ...) {
+hist.massdiff <- function(diff, widthFunc="equal", width=0.01, ...) {
   if (!is.numeric(diff$diff)) {
     stop("Input mass difference list must be numeric")
   }
@@ -26,6 +27,7 @@ hist.massdiff <- function(diff, widthFunc="equal", width=0.01, plot=FALSE, ...) 
   if (widthFunc == "equal") { # equal bin widths
     breaks <- round((maxval - minval)/width, digits=0)
   } # other options TBD
-  output <- hist(diff$diff, breaks=breaks, plot=plot, ...)
+  output <- hist(diff$diff, breaks=breaks, plot=FALSE, ...)
+  class(output) <- c("histogram","massdiffhist")
   return(output)
 }

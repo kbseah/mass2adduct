@@ -9,7 +9,7 @@
 #' has a match to the list of potential adducts, apply \code{\link{adductMatch}}
 #' directly to a massdiff object.
 #'
-#' @param x histogram object produced by \code{\link{hist.massdiff}}
+#' @param x massdiffhist object produced by \code{\link{hist.massdiff}}
 #' @param add data.frame of adduct masses (default: "adducts" dataset in package)
 #' @param density logical; return density instead of counts? (default: FALSE)
 #'
@@ -22,7 +22,7 @@
 #'          current function)
 #' @export
 
-adductMatch.histogram <- function(x,add=adducts, density=FALSE) {
+adductMatch.massdiffhist <- function(x,add=adducts, density=FALSE) {
   binwidth <- x$mids[2] - x$mids[1] # Width of histogram bins
   indices <- sapply(add$mass, function(z) {
     index <- which.min(abs(x$mids - z))
