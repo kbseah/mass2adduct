@@ -334,7 +334,7 @@ sub peakFilterTop {
         }
         # Sort by total intensity per peak, and keep top N peaks
         my @peakstop = sort {$peakintensitysum{$b} <=> $peakintensitysum{$a}} (keys %peakintensitysum);
-        @peakstop = @peakstop[1..$top];
+        @peakstop = @peakstop[0..$top-1];
         # Re-sort peaks by their masses
         @peakstop = sort {$a <=> $b} @peakstop;
         my %newvals = %{$href->{'values'}}{@peakstop};
