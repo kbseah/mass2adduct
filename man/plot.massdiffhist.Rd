@@ -5,7 +5,7 @@
 \title{Plot massdiffhist histogram with named adducts labeled}
 \usage{
 \method{plot}{massdiffhist}(hist, add = adducts, labels = NULL, pch = 0,
-  col = "blue", pos = 4, main = "Mass difference histogram",
+  col = "blue", cex = 0.5, pos = 4, main = "Mass difference histogram",
   xlab = "mass difference (m/z)", ...)
 }
 \arguments{
@@ -18,6 +18,8 @@ adduct table specified to option \code{add} (default: NULL - no labels)}
 \item{pch}{Plot character to use for highlighting adduct peaks}
 
 \item{col}{Color for labels and text}
+
+\item{cex}{Character scaling for labelled points and text}
 
 \item{pos}{Position of text label, values 1, 2, 3, 4 are below, left, above,
 and to the right of points respectively.}

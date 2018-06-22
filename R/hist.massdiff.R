@@ -28,6 +28,6 @@ hist.massdiff <- function(diff, widthFunc="equal", width=0.01, ...) {
     breaks <- round((maxval - minval)/width, digits=0)
   } # other options TBD
   output <- hist(diff$diff, breaks=breaks, plot=FALSE, ...)
-  class(output) <- c("histogram","massdiffhist")
+  class(output) <- c("massdiffhist","histogram")
   return(output)
 }

@@ -20,8 +20,8 @@
 #' @export
 
 topAdducts <- function(hist, add=adducts, n=20, use.bw=TRUE, threshold=NULL) {
-  if (class(hist) != "histogram") {
-    stop("Input must be an object of class histogram")
+  if (!"massdiffhist" %in% class(hist)) {
+    stop("Input must be an object of class massdiffhist")
   }
   if (use.bw) { # Check is using binwidth as the threshold for assigning adduct
     if (!is.null(threshold)) {

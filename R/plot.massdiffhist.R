@@ -12,6 +12,7 @@
 #'        adduct table specified to option \code{add} (default: NULL - no labels)
 #' @param pch Plot character to use for highlighting adduct peaks
 #' @param col Color for labels and text
+#' @param cex Character scaling for labelled points and text
 #' @param pos Position of text label, values 1, 2, 3, 4 are below, left, above,
 #'        and to the right of points respectively.
 #' @param main character; Title for histogram plot
@@ -25,26 +26,29 @@ plot.massdiffhist <- function(hist,
                               labels=NULL,
                               pch=0,
                               col="blue",
+                              cex=0.5,
                               pos=4,
                               main="Mass difference histogram",
                               xlab="mass difference (m/z)",
                               ...) {
   # Plot histogram
-  plot(hist, main=main, xlab=xlab, ...)
+  graphics:::plot.histogram(hist, main=main, xlab=xlab, ...)
   # Overlay points and text labels
   # Calculate top adducts
   if (!is.null(labels)) {
-    matches <- adductMatch.massdiffhist(x=hist, add=add, density=FALSE)
+    matches <- adductMatch(x=hist, add=add, density=FALSE)
     matches <- matches[order(matches$counts,decreasing=T),] 
     matches <- matches[1:labels,] # Take the top N hits
     points(x=matches$mass,
           y=matches$counts,
           pch=pch,
-          col=col)
+          col=col,
+          cex=cex)
     text(x=matches$mass,
          y=matches$counts,
          label=as.character(matches$name),
          pos=pos,
-         col=col)
+         col=col,
+         cex=cex)
   }
 }
