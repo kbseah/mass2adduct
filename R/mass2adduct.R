@@ -34,7 +34,7 @@
 #' @name mass2adduct
 #' @useDynLib mass2adduct
 #' @importFrom Rcpp sourceCpp
-#' @importFrom graphics abline hist plot points
+#' @importFrom graphics abline hist plot points image
 #' @importFrom stats cor.test ecdf
 #' @importFrom utils read.csv
 NULL
