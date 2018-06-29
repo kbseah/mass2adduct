@@ -16,4 +16,5 @@ LinkingTo: Rcpp
 Imports: Rcpp,
     Matrix,
     parallel
-Suggests: testthat
+Suggests: testthat, knitr, rmarkdown
+VignetteBuilder: knitr
