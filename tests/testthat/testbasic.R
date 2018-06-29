@@ -55,6 +55,12 @@ test_that("Adduct matching", {
   expect_equal(dim(d.diff.annot),c(11035,5))
 })
 
+test_that("Adduct ion peak counting", {
+  d.diff.annot.addion <- countPeaksFromDiff(d.diff.annot,which="adduct")
+  expect_is(d.diff.annot.addion, "data.frame")
+  expect_equal(subset(d.diff.annot.addion,matches=="Na adduct")$peaks,1546)
+})
+
 test_that("Correlation testing", {
   expect_message(d.diff.annot.cor <- corrPairsMSI(d,d.diff.annot))
   expect_is(d.diff.annot.cor,"data.frame")

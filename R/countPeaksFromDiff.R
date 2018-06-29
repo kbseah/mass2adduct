@@ -24,7 +24,7 @@
 countPeaksFromDiff <- function(diff,
                                which=c("adduct","parent")
                                ) {
-    if (which == "adduct") {
+    if (which[1] == "adduct") {
         vec <- data.frame(mass=diff$B,matches=diff$matches)
     } else {
         vec <- data.frame(mass=diff$A,matches=diff$matches)
