@@ -70,6 +70,7 @@ my $matrix;
 my $out = "test";
 my $outfmt = 'hashimage';
 my $stored;
+my $rflag;
 my $filterby;
 my $freqmin = 0.01;
 my $toppeaks = 5000;
@@ -84,6 +85,7 @@ GetOptions("csv=s" => \$matrix,
            "hash=s" => \$stored,
            "delim=s" => \$delim,
            "crlf" => \$crlf,
+           "rflag" => \$rflag,
            "skip=i" => \$skip,
            "filterby=s" => \$filterby,
            "freqmin=f" => \$freqmin,
@@ -134,6 +136,9 @@ option.
 If this is provided, any input to I<--csv>, I<--delim>, I<--crlf>, I<--skip>
 will be ignored.
 
+=item --rflag
+
+Flag to indicate that this command is being called from R environment.
 
 =back
 
@@ -144,7 +149,8 @@ will be ignored.
 =item --filterby I<STRING>
 
 What method for filtering? Options: "freq" (frequency of filled pixels), or
-"top" (take the top N peaks by total intensity)
+"top" (take the top N peaks by total intensity), "nozero" (remove all peaks with
+zero total intensity)
 
 Default: None (use all peaks)
 
@@ -160,8 +166,6 @@ Default: None
 If option I<--filterby top> is used. Take the top N peaks by total intensity.
 
 Default: 4000
-
-=item 
 
 =back
 
@@ -233,6 +237,9 @@ if (defined $filterby) {
         say STDERR "Filtering peaks to retain top $toppeaks peaks by total intensity";
         my $newhref = peakFilterTop($inhref,$toppeaks);
         $outputref = $newhref;
+    } elsif ($filterby eq 'nozero') {
+        my $newhref = peakFilterZero($inhref);
+        $outputref = $newhref;
     } else {
         say STDERR "Unrecognized option for --filterby, input matrix will not be filtered";
         $outputref = $inhref;
@@ -247,6 +254,15 @@ if (defined $filterby) {
 if ($outfmt eq 'triplet') {
     say STDERR "Writing files for triplet representation of intensity matrix";
     hash2triplets($outputref,$out);
+    if ($rflag) {
+        # Check that all output files created and return value to STDOUT
+        my @outarr;
+        foreach my $outtype (qw(rows cols vals peaknames spotnames)) {
+            push @outarr, $outtype if (-f "$out\_$outtype.list"); # Check that file exists
+        }
+        print STDERR join "\n", @outarr;
+    }
+    
 } elsif ($outfmt eq 'csv') {
     say STDERR "Writing CSV representation of intensity matrix";
     hash2csv($outputref,$out);
@@ -311,6 +327,41 @@ sub hash2triplets {
     array2file(\@vals,"$outprefix\_vals.list");
     array2file(\@peaklist,"$outprefix\_peaknames.list");
     array2file(\@spotlist,"$outprefix\_spotnames.list");
+}
+
+sub peakFilterZero {
+    my ($href) = @_;
+    say STDERR "Removing peaks that have zero total intensity";
+    my %peakintensitysum;
+    # Sum up intensities per peak
+    my $peaksprocessed = 0;
+    foreach my $peak (@{$href->{'peaks'}}) {
+        $peaksprocessed ++;
+        say STDERR "... $peaksprocessed peaks processed" if $peaksprocessed%1000 == 0;
+        foreach my $spot (keys %{$href->{'values'}{$peak}}) {
+            $peakintensitysum{$peak} += $href->{'values'}{$peak}{$spot};
+        }
+    }
+    # Find which peaks have nonzero intensity
+    my @peaksnozero;
+    foreach my $peak (sort {$a <=> $b} keys %peakintensitysum) {
+        push @peaksnozero, $peak if ($peakintensitysum{$peak} > 0);
+    }
+    my %newvals = %{$href->{'values'}}{@peaksnozero};
+    my @spots = @{$href->{'spots'}};
+    my $dim = scalar (@peaksnozero) * scalar (@spots);
+    my %newinfo = ("Input file" => $href->{'info'}{'Input file'}." filtered",
+                   "Total peaks" => scalar (@peaksnozero),
+                   "Total spots" => scalar @spots,
+                   "Matrix size" => $dim,
+                   #"Filled pixels" => $countfilledpixels,
+                   #"Filled percentage" => 100*($countfilledpixels/$dim),
+                   );
+    my %newhash = ("info" => \%newinfo,
+                   "values" => \%newvals,
+                   "peaks" => \@peaksnozero,
+                   "spots" => \@spots);
+    return \%newhash;
 }
 
 sub peakFilterTop {

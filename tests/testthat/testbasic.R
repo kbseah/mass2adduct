@@ -14,6 +14,21 @@ test_that("Import file classes", {
   expect_is(peaklist, "numeric")
 })
 
+test_that("Conversion of CSV to Triplet input matrix", {
+  e <- msimat(system.file("extdata","msi.csv",package="mass2adduct"),
+              sep=";",
+              crlf=TRUE,
+              reformat.large.csv="test")
+  expect_is(e,"msimat")
+  expect_is(e$mat,"TsparseMatrix")
+  expect_equal(d$peaks,e$peaks)
+  file.remove(file.path(".","test_rows.list"))
+  file.remove(file.path(".","test_cols.list"))
+  file.remove(file.path(".","test_vals.list"))
+  file.remove(file.path(".","test_peaknames.list"))
+  file.remove(file.path(".","test_spotnames.list"))
+})
+
 d.diff <- massdiff(d)
 
 test_that("Diff calculation", {
