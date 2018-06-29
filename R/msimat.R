@@ -27,6 +27,7 @@
 #' @param header logical; (default: TRUE)
 #' @param row.names numeric; column in import table specifying row names (default: 1)
 #' @param check.names logical; (default: FALSE)
+#' @param reformat.large.csv logical; Convert ##############################################################################################################
 #' @param ... Parameters to be passed to read.csv()
 #'
 #' @return Object of class msimat
@@ -49,59 +50,27 @@ msimat <- function(csv=NULL,
                    header=TRUE,
                    check.names=FALSE,
                    row.names=1,
+                   reformat.large.csv=FALSE,
                    ...) {
   if (is.null(csv)) {
     if (is.null(rows) | is.null(cols) | is.null(vals) | is.null(peaks) | is.null(spots)) {
       stop("Required input not specified")
     }
-    inrow <- scan(rows,what=numeric())
-    incol <- scan(cols,what=numeric())
-    inval <- scan(vals,what=numeric())
-    inpeaks <- scan(peaks,what=numeric())
-    inspots <- scan(spots,what=character())
-    tsm <- Matrix::sparseMatrix(i=inrow,
-                                j=incol,
-                                x=inval,
-                                index1=FALSE,       # 0-based numbering
-                                giveCsparse=FALSE,  # TsparseMatrix
-                                check=TRUE)
-    peakintensities <- Matrix::colSums(tsm)
-    data <- list(mat=tsm,
-                 peaks=inpeaks,
-                 spots=inspots,
-                 peakintensities=peakintensities)
-    class(data) <- "msimat"
-    return(data)
+    out <- msimatreadtriplet(rows=rows,
+                             cols=cols,
+                             vals=vals,
+                             peaks=peaks,
+                             spots=spots)
+    return(out)
   }
   else {
-    data <- read.csv (file=csv,
-                      sep=sep,
-                      header=header,
-                      check.names=check.names,
-                      row.names=row.names,
-                      ...)
-    # Check that all values are numeric
-    data.isnumeric <- sapply(data, function(x) is.numeric(x))
-    if (all(data.isnumeric)) {
-      if (remove.zeroes) { # Remove columns that are only zero
-        data.colsums <- sapply(data, function(x) sum(x))
-        index.data.colzero <- which(data.colsums==0)
-        index.data.notzero <- which(data.colsums!=0)
-        message("Removing ", length(index.data.colzero), " columns with only zeroes")
-        data <- data[index.data.notzero]
-      }
-      peaks <- names(data)
-      spots <- row.names(data)
-      peakintensities <- colSums(data)
-      out <- list(mat=as.matrix(data),
-                  peaks=as.numeric(peaks),
-                  spots=spots,
-                  peakintensities=peakintensities)
-      class(out) <- "msimat"
-      return(out)
-    } else {
-      # Error message if non-numeric values found in data input
-      stop("Some values in the input data are non-numeric; please check the input file")
-    }
+    out <- msimatreadcsv(csv=csv,
+                         sep=sep,
+                         remove.zeroes=remove.zeroes,
+                         header=header,
+                         check.names=check.names,
+                         row.names=row.names,
+                         ...)
+    return(out)
   }
 }
