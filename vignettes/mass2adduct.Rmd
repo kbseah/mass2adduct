@@ -77,7 +77,7 @@ Of course, most pairs do not represent real or meaningful chemical transformatio
 
 A histogram of all mass difference values will provide an overview. We expect that interesting transformations or adducts will be peaks in the histogram, i.e. they are more commonly encountered as parent-adduct ion pairs than random values.
 
-```{r}
+```{r, fig.width=7, fig.height=4}
 d.diff.hist <- hist(d.diff) # Object of classes histogram and massdiffhist
 plot(d.diff.hist,labels=10)
 ```
@@ -86,8 +86,8 @@ The plot shows peaks representing common chemical transformations in this sample
 
 We can examine certain areas of the histogram in more detail.
 
-```{r}
-plot(d.diff.hist,labels=10,xlim=c(100,200))
+```{r, fig.width=7, fig.height=4}
+plot(d.diff.hist, labels=10, xlim=c(100,200))
 ```
 
 Also note that the background of likely non-meaningful mass differences is not uniformly distributed, but instead has peaks at integer values. This can be understood from the fact that most chemical masses are themselves close to integer values, hence the differences between them should be too. 
@@ -101,13 +101,13 @@ The following function looks for known adducts by finding the closest-matching b
 Note that quantile values will usually be quite high because the majority of mass differences have zero to few counts.
 
 ```{r}
-adductMatch (d.diff.hist, n=10) # Show the top ten matches to known adducts
+head(adductMatch(d.diff.hist),n=10) # Show the top ten matches to known adducts
 ```
 
 However this only shows known adducts. What about peaks in the histogram which don't have a good match to the reference list? `topAdducts` ranks mass differences by their occurrences, and reports them in descending order, as well as matches to known adducts, if any
 
 ```{r}
-topAdducts(d.diff.hist,n=10) # Report top ten hits
+topAdducts(d.diff.hist, n=10) # Report top ten hits
 ```
 
 ## Examine specific adducts in detail
