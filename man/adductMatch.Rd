@@ -23,7 +23,7 @@ data.frame of mass differences given to argument diff, with an
 For use with internal dataset "adducts" and other similar data
 }
 \seealso{
-\code{\link{adductMatch.histogram}} method for histogram objects
+\code{\link{adductMatch.massdiffhist}} method for histogram objects
 
 \code{\link{adductMatch.massdiff}} method for massdiff objects
 

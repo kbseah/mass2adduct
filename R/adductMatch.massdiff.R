@@ -13,7 +13,7 @@
 #'
 #' @return Object of class massdiff, with additional element "matches" reporting
 #'         the closest matches
-#' @seealso \code{\link{adductMatch.histogram}} gives an overview for large data
+#' @seealso \code{\link{adductMatch.massdiffhist}} gives an overview for large data
 #'          sets by matching closest adducts to mass differences already binned
 #'          into a histogram.
 #' @seealso \code{\link{topAdducts}} to find the closest-matching adducts for

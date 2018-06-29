@@ -32,7 +32,7 @@ d.diff.annotate <- adductMatch(d.diff,add=adducts2) # Report closest matches
 
 }
 \seealso{
-\code{\link{adductMatch.histogram}} gives an overview for large data
+\code{\link{adductMatch.massdiffhist}} gives an overview for large data
          sets by matching closest adducts to mass differences already binned
          into a histogram.
 
