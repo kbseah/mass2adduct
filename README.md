@@ -15,6 +15,7 @@ Install mass2adduct from Github:
 
 ```R
 install_github("kbseah/mass2adduct")
+install_github("kbseah/mass2adduct", build_vignettes=TRUE) # Build vignette "mass2adduct" (not done by default)
 ```
 
 ## Import data
@@ -56,7 +57,8 @@ Output is a `massdiff` object with three elements: the two parent masses and the
 The calculated mass differences are misleadingly precise, because measurement error and uncertainty are not taken into account. They should be binned into a histogram with a user-specified bin width, that depends on the known mass precision of your instrument. In this example, we use the value of 0.01:
 
 ```R
-d.diff.hist <- hist(d.diff, plot = TRUE) # Produces a histogram plot
+d.diff.hist <- hist(d.diff) # Produces a histogram object
+plot(d.diff.hist) # Plot the histogram
 ```
 
 The resulting object `d.diff.hist` is a standard R histogram object. You can "zoom" into specific regions of the plot with the `xlim` parameter in the R `plot` command.
@@ -74,7 +76,7 @@ The following function looks for known adducts by finding the closest-matching b
 Note that quantile values will usually be quite high because the majority of mass differences have zero to few counts.
 
 ```R
-adductMatch (d.diff.hist, n=10) # Show the top ten matches to known adducts
+head(adductMatch (d.diff.hist)) # Show the top ten matches to known adducts
 ```
 
 ## List the highest-counted mass differences and any matches to known adducts
@@ -110,7 +112,6 @@ Output is a data.frame with p-values for each ion pair. By default the cutoff fo
 
 For large data sets, where the tables would not fit into memory, it is possible to break up the problem into "chunks" processed serially. Use the function `corrPairsMSIchunks` instead of `corrPairsMSI`. See the help message for details.
 
-
 ## Reformatting large CSV files
 
 Plain-text CSV files of MSI data exported by software such as SCILS or MSIreader can be large, on the order of several Gb. For many MSI data sets, a lot of this is "wasted" because the majority of peaks are only detected in a minority of pixels. Low-abundance peaks can be thrown out through filtering, but the majority of entries in the data matrix may still be zeroes.
@@ -127,7 +128,7 @@ Usage information is shown by typing `msimunging.pl --help`.
 
 ## Help and documentation
 
-Further documentation for all the above functions can be found with the `help` or `?` functions in R. Overview of the entire package can be viewed with `help(mass2adduct)`. List of exported functions is given by `library(help="mass2adduct")`
+Further documentation for all the above functions can be found with the `help` or `?` functions in R. Overview of the entire package can be viewed with `help(mass2adduct)`. List of exported functions is given by `library(help="mass2adduct")`. If you used the `build_vignettes=TRUE` option when installing the package, you can view the mass2adduct vignette with `vignette("mass2adduct",package="mass2adduct")`.
 
 Please report any problems to the package maintainer, either by email or with the issue tracker on Github.
 
