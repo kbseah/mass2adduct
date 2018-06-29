@@ -160,5 +160,6 @@ corrPairsMSI <- function(d,
   num.signif <- sum(df$Significance)
   message("Significant correlations found at p-value cutoff of ", p.val, " (with Bonferroni correction): ", num.signif)
   # Return data frame
+  class(df) <- c("massdiff","data.frame")
   return(df)
 }
