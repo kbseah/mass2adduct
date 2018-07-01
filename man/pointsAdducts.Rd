@@ -4,7 +4,7 @@
 \alias{pointsAdducts}
 \title{Overlay adduct parental and adduct masses on plot of msimat object}
 \usage{
-pointsAdducts(d, diff, which = c("adduct", "parental"), signif = TRUE,
+pointsAdducts(d, diff, which = c("adduct", "parent"), signif = TRUE,
   pch = 20, cex = 0.5, col = "red", ...)
 }
 \arguments{
@@ -14,7 +14,7 @@ pointsAdducts(d, diff, which = c("adduct", "parental"), signif = TRUE,
 \item{diff}{data.frame; Mass difference correlation table produced by
 function \code{\link{corrPairsMSI}}}
 
-\item{which}{string; Either plot "parental" or "adduct" peaks as overlay}
+\item{which}{string; Either plot "parent" or "adduct" peaks as overlay}
 
 \item{signif}{logical; Only plot points which have statistically significant
 correlation}
@@ -29,7 +29,11 @@ correlation}
 }
 \description{
 On a mass spectrum plot (from an msimat object), plot points representing
-either parental or adduct masses as an overlay.
+either parental or adduct masses as an overlay. By default only those flagged
+as having statistically significant spatial correlation will be plotted. The
+massdiff object should have been processed with \code{\link{adductMatch}} and
+\code{\link{corrPairsMSI}} to annotate with adduct matches and correlation
+test results.
 }
 \seealso{
 \code{\link{corrPairsMSI}} calculate correlations for mass pairs
