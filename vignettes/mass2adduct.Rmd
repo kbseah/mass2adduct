@@ -18,9 +18,19 @@ knitr::opts_chunk$set(
 
 ## Background: Molecular adducts in mass spectrometry imaging
 
-In mass spectrometry imaging (MSI), adducts can form between target molecules (e.g. metabolites) and other substances such as matrix or salt ions.
+This package presents tools for counting and identifying possible adducts in MS data, and accompanies Janda et al. (in prep.). In mass spectrometry imaging (MSI), adducts can form between target molecules (e.g. metabolites) and other substances such as matrix or salt ions.
 
-This package presents tools for counting and identifying possible adducts in MS data, and accompanies Janda et al. (in prep.).
+### Terminology
+
+Each peak in a mass spectrum represents ions of a given mass/charge ratio (m/z) that have been detected by the instrument. In this documentation, we use the term *mass peak* (in short: mass or peak) to refer to both the ions themselves and to their nominal m/z values.[^1]
+
+Two ions may differ chemically from each other by a certain chemical moiety, e.g. the gain/loss of a H2O molecule. This may represent two different metabolic compounds naturally present in the sample (e.g. sucrose vs. glucose, which differ from each other by a fructose unit). They may also represent changes that occur during the processing of a sample for MSI, or during the ionization process itself. We use the term *chemical transformation* to refer agnostically to the chemical difference between two ions. We coin the abbreviation *massdiff* for "mass difference" to refer to the absolute difference in m/z values between two mass peaks.
+
+An *adduct* refers specifically to a transformation caused by the addition of a chemical moiety, often during the MSI procedure. It can also refer to the product of the adduct transformation, which would be a molecular ion. The precursor to an adduct is the *parent* ion/molecule.
+
+In our analysis we look at pairs of peaks (*peak pairs*, *ion pairs*), and attempt to match their massdiffs to known chemical transformations, in order to find adducts derived from the chemical matrix used for MALDI-MSI.
+
+[^1]: The terms "mass peak", "adduct", "transformation" are defined in the [IUPAC Gold Book](http://goldbook.iupac.org/index.html).
 
 ## Import data
 
@@ -38,7 +48,7 @@ If the data matrix is very large, it may need to be reformatted to be loaded int
 Typing the object name or using the `summary()` function gives you a summary of its contents.
 
 ```{r}
-d # Object of class massdiff
+d 
 ```
 
 ## Tabulate all pairwise mass differences
@@ -73,6 +83,16 @@ At this point, the intensity information is not yet used.
 
 Of course, most pairs do not represent real or meaningful chemical transformations. However, we expect that common chemical transformations, e.g. the difference between carbon-12 and carbon-13 isotopes in organic compounds, will be more often encountered than the background "noise". 
 
+There are two built-in data sets `adducts` and `adducts2` (shorter), which list biologically-relevant chemical species that might occur in biological samples.
+
+```{r}
+data(package="mass2adduct") # View list of included datasets
+data(adducts) # Load dataset
+head(adducts) # Preview contents
+```
+
+If you are interested in something that's not in the built-in list, simply make your own table with the same three columns. 
+
 ### Visualize with a histogram
 
 A histogram of all mass difference values will provide an overview. We expect that interesting transformations or adducts will be peaks in the histogram, i.e. they are more commonly encountered as parent-adduct ion pairs than random values.
@@ -82,12 +102,12 @@ d.diff.hist <- hist(d.diff) # Object of classes histogram and massdiffhist
 plot(d.diff.hist,labels=10)
 ```
 
-The plot shows peaks representing common chemical transformations in this sample. The built-in data set `adducts` contains a list of biologically-relevant chemical species that might occur in biological samples. With the `labels=10` option, you can label the top 10 peaks which have close matches to that list.
+The plot shows peaks representing common chemical transformations in this sample. With the `labels=10` option, you can label the top 10 peaks which have close matches to the adducts data passed to parameter `add=`.
 
 We can examine certain areas of the histogram in more detail.
 
 ```{r, fig.width=7, fig.height=4}
-plot(d.diff.hist, labels=10, xlim=c(100,200))
+plot(d.diff.hist, add=adducts, labels=10, xlim=c(100,200))
 ```
 
 Also note that the background of likely non-meaningful mass differences is not uniformly distributed, but instead has peaks at integer values. This can be understood from the fact that most chemical masses are themselves close to integer values, hence the differences between them should be too. 
@@ -112,8 +132,47 @@ topAdducts(d.diff.hist, n=10) # Report top ten hits
 
 ## Examine specific adducts in detail
 
-Using the histogram gives us a useful overview and helps us to see if there are possible chemical transformations that we do not know about (i.e. unlabelled peaks). However, there are some drawbacks. The histogram bins massdiff values into bins of fixed width, whereas we know that the mass resolution of a mass spectrometer varies with the mass. What do we do if we would like to identify massdiffs that correspond to a specific adduct of interest?
+Using the histogram gives us a useful overview and helps us to see if there are possible chemical transformations that we do not know about (i.e. unlabelled peaks). However, there are some drawbacks. The histogram bins massdiff values into bins of fixed width, whereas we know that the mass resolution of a mass spectrometer varies with the mass. What do we do if we would like to identify massdiffs that correspond to specific adducts of interest?
+
+We can match massdiffs to specific adduct types using the same function `adductMatch` that we applied to the histogram above. This adds an additional column to the `massdiff` object called `matches`, which lists the closest-matching adduct (if any) corresponding to a given ion pair. 
+
+```{r}
+d.diff.annot <- adductMatch(d.diff,add=adducts2)
+summary(d.diff.annot)
+head(d.diff.annot)
+```
+
+The object `d.diff.annot` is a subset of the original `d.diff` object, as ion pairs without a matching adduct are excluded.
 
 ## Test for correlations between parent and adduct ions
 
+Now that we have a list of annotated massdiffs, we want to exploit the spatial information contained in the MSI data to test if each ion pair is actually spatially correlated in the sample. This performs a correlation test (by default two-tailed with Pearson's method) on each pair of peaks in the massdiff object. You'll have to supply the msimat object that was originally used to create the massdiff object, too.
 
+```{r}
+d.diff.annot.cor <- corrPairsMSI(d,d.diff.annot)
+```
+
+For a small subset of the original list of pairs, this should not take too long. With a larger dataset, you can speed up the process with the option `how=parallel` if you have multiple processors on your computer. Use `ncores=N` to specify the number of processors N. For even larger datasets (e.g. hundreds or thousands of peaks), you might run out of memory and crash. To avoid this, use `corrPairsMSIchunks` instead of `corrPairsMSI`, and specify the maximum available memory with `mem.limit=N` where N is in Gb. This estimates the amount of memory needed, and splits up the job into "chunks" that will fit, also taking multiple processors into account. This comes at the expense of more overhead and less speed.
+
+The correlation tests results will be added to the massdiff object, with three values reported: `Estimate` (correlation coefficient), `P.value`, and `Significance` (whether or not p-value is below the threshold after Bonferroni correction). As there are different ways to evaluate significance, the raw p-values (not Bonferroni corrected) are reported for you to run your own analysis if desired.
+
+```{r}
+head(d.diff.annot.cor)
+```
+
+## Visualizing adducts
+
+### Annotation of mass spectrum
+
+You can annotate the original mass spectrum using a massdiff object, to mark peaks corresponding to parent ions and adduct ions in different colors.
+
+For example, if one is interested only in sodium adducts:
+
+```{r, fig.width=7, fig.height=4}
+d.diff.annot.cor.Na <- subset(d.diff.annot.cor,matches=="Na adduct")
+plot(d)
+pointsAdducts(d, d.diff.annot.cor.Na, which="adduct", signif=TRUE, pch=20, cex=0.5, col="red") # Adduct ions in red
+pointsAdducts(d, d.diff.annot.cor.Na, which="parent", signif=TRUE, pch=1, cex=0.5, col="blue") # Parent ions in blue outlines
+```
+
+The overlap in red and blue points shows that some adduct ions may themselves be parents of further adducts. 
