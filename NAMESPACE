@@ -2,6 +2,8 @@
 
 S3method(adductMatch,massdiff)
 S3method(adductMatch,massdiffhist)
+S3method(filterPeaks,data.frame)
+S3method(filterPeaks,msimat)
 S3method(hist,massdiff)
 S3method(identify,msimat)
 S3method(image,msimat)

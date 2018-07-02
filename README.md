@@ -2,7 +2,7 @@
 
 In mass spectrometry imaging, adducts can form between target molecules (e.g. metabolites) and other substances such as matrix or salt ions. This package presents tools for counting and identifying possible adducts in MS data, and accompanies Janda et al. (in prep.).
 
-## Install package
+## Install and load package
 
 You will need the [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html) package, if you don't have it already:
 
@@ -16,6 +16,12 @@ Install mass2adduct from Github:
 ```R
 install_github("kbseah/mass2adduct")
 install_github("kbseah/mass2adduct", build_vignettes=TRUE) # Build vignette "mass2adduct" (not done by default)
+```
+
+Load mass2adduct package after it is installed
+
+```R
+library(mass2adduct)
 ```
 
 ## Import data
