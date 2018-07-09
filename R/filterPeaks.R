@@ -18,6 +18,7 @@
 #' @return Either a data.frame or msimat object, representing subset of the
 #'         input data, or a vector of indices if \code{index=TRUE} and the input
 #'         is a data.frame.
+#' @export
 
 filterPeaks <- function(d,
                         how=c("topX","XofTop","XofTotal"),
