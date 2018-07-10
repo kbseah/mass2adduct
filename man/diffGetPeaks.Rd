@@ -4,26 +4,34 @@
 \alias{diffGetPeaks}
 \title{Find pairs of mass peaks corresponding to a specific mass}
 \usage{
-diffGetPeaks(diff, mass = NULL, ppm = 2, width = NULL)
+diffGetPeaks(diff, mass = NULL, ppm = 2, mDa = NULL)
 }
 \arguments{
 \item{diff}{massdiff; output from \code{\link{massdiff}}}
 
 \item{mass}{numeric; mass of putative adduct or parent ion in m/z units}
 
-\item{ppm}{numeric; mass resolution of the original measurements, to
-determine the cutoff for the match (default: 2)}
+\item{ppm}{numeric; the peak width (uncertainty) of the calculated peaks in
+proportional units, as parts per million (default: 2)}
 
-\item{width}{numeric; Instead of a sliding ppm cutoff, use an absolute m/z 
-difference cutoff to call matches (default: NULL)}
+\item{mDa}{numeric; the peak width (uncertainty) of the calculated peaks in
+absolute mass units, as milliDaltons (default: NULL)}
 }
 \value{
 Subset of the original massdiff object where the mass difference or
-        parent ion is close to the specified mass of interest (within the
-        specified width)
+        parent ion is close to the specified mass of interest within the
+        uncertainty specified
 }
 \description{
 From a set of all possible mass pairs, find all pairs corresponding to a
 specific mass difference, which might represent a molecular transformation
 of interest.
+}
+\details{
+There are two options for setting a cutoff to match a given mass to a given
+target value. The cutoff can be either proportional to the mass (and
+expressed as parts per million \code{ppm}) or a flat absolute value (in
+milliDaltons \code{mDa}). ppm is used by default. If a value for mDa is
+specified, then any value given to ppm is ignored. The ppm or mDa values are
+usually reported by the peak-picking software used.
 }

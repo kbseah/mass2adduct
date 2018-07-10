@@ -4,15 +4,18 @@
 \alias{adductMatch.massdiff}
 \title{Report closest-matching adduct type for a list of mass differences}
 \usage{
-\method{adductMatch}{massdiff}(x, add = adducts, ppm = 2)
+\method{adductMatch}{massdiff}(x, add = adducts, ppm = 2, mDa = NULL)
 }
 \arguments{
 \item{x}{massdiff; Mass differences produced by \code{\link{massdiff}}}
 
 \item{add}{data.frame of adduct masses (default: "adducts" dataset in package)}
 
-\item{ppm}{numeric; the mass resolution of the original measurement
-(default: 2)}
+\item{ppm}{numeric; the peak width (uncertainty) of the calculated peaks in
+proportional units, as parts per million (default: 2)}
+
+\item{mDa}{numeric; the peak width (uncertainty) of the calculated peaks in
+absolute mass units, as milliDaltons (default: NULL)}
 }
 \value{
 Object of class massdiff, with additional element "matches" reporting
@@ -24,6 +27,14 @@ report for each pair of masses the closest-matching molecular transformation
 from a list of such potential adduct types. The built-in data sets
 \code{\link{adducts}} and \code{\link{adducts2}} are examples of such lists
 of potential adducts.
+}
+\details{
+There are two options for setting a cutoff to match a given mass to a given
+potential adduct. The cutoff can be either proportional to the mass (and
+expressed as parts per million \code{ppm}) or a flat absolute value (in
+milliDaltons \code{mDa}). ppm is used by default. If a value for mDa is
+specified, then any value given to ppm is ignored. The ppm or mDa values are
+usually reported by the peak-picking software used.
 }
 \examples{
 d <- msimat(csv=system.file("extdata","msi.csv",package="mass2adduct"),sep=";")
