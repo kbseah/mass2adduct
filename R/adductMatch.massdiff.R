@@ -56,11 +56,23 @@ adductMatch.massdiff <- function(x, add=adducts, ppm=2, mDa=NULL) {
     indices <- c(indices, idx)
     matches <- c(matches, rep(as.character(add$name[i]),length(idx)))
   }
+  
   output <- data.frame(A=x$A[indices],
                        B=x$B[indices],
                        diff=x$diff[indices],
                        delta=x$delta[indices],
                        matches=matches)
+  # If original massdiff object contains correlation test results, include them too
+  if (!is.null(x$Estimate)) {
+    output$Estimate <- x$Estimate[indices]
+  }
+  if (!is.null(x$P.value)) {
+    output$P.value <- x$P.value[indices]
+  }
+  if (!is.null(x$Significance)) {
+    output$Significance <- x$Significance[indices]
+  }
+  
   class(output) <- c("massdiff","data.frame")
   row.names(output) <- NULL
   return(output)
