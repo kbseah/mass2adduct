@@ -22,6 +22,7 @@ test_that("Conversion of CSV to Triplet input matrix", {
   expect_is(e,"msimat")
   expect_is(e$mat,"TsparseMatrix")
   expect_equal(d$peaks,e$peaks)
+  expect_equal(d$spots,e$spots)
   file.remove(file.path(".","test_rows.list"))
   file.remove(file.path(".","test_cols.list"))
   file.remove(file.path(".","test_vals.list"))

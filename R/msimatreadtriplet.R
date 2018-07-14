@@ -18,11 +18,11 @@ msimatreadtriplet <- function(rows,
                               vals,
                               peaks,
                               spots) {
-  inrow <- scan(rows,what=numeric())
-  incol <- scan(cols,what=numeric())
-  inval <- scan(vals,what=numeric())
-  inpeaks <- scan(peaks,what=numeric())
-  inspots <- scan(spots,what=character())
+  inrow <- scan(rows,what=numeric(),sep="\n")
+  incol <- scan(cols,what=numeric(),sep="\n")
+  inval <- scan(vals,what=numeric(),sep="\n")
+  inpeaks <- scan(peaks,what=numeric(),sep="\n")
+  inspots <- scan(spots,what=character(),sep="\n")
   tsm <- Matrix::sparseMatrix(i=inrow,
                               j=incol,
                               x=inval,
