@@ -10,7 +10,7 @@
 #'
 #' @export
 
-plot.msimat <- function(d, type="l", xlab="m/z", ylab="Total intensity", ...) {
+plot.msimat <- function(d, type="h", xlab="m/z", ylab="Total intensity", ...) {
   plot(x=d[["peaks"]],
        y=d[["peakintensities"]],
        type=type,

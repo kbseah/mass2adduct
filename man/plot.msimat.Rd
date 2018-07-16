@@ -4,7 +4,7 @@
 \alias{plot.msimat}
 \title{Plot method for object msimat}
 \usage{
-\method{plot}{msimat}(d, type = "l", xlab = "m/z",
+\method{plot}{msimat}(d, type = "h", xlab = "m/z",
   ylab = "Total intensity", ...)
 }
 \arguments{
