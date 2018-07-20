@@ -90,5 +90,14 @@ test_that("Platform detection", {
   expect_error(corrPairsMSIchunks(d,d.diff.annot,ncores=2,mem.limit=0.01)) # Should use two chunks
 })
 
+test_that("Peak subtraction", {
+  flist <- scan(system.file("extdata","d1.filt.list",package="mass2adduct"), what=numeric())
+  d2 <- subtractPeaks(d, flist, 2, 5)
+  expect_is(d2, "msimat")
+  expect_equal(dim(d2$mat), c(99, 6670))
+  expect_equal(length(d2$peaks), 6670)
+  expect_equal(length(d2$peakintensities), 6670)
+})
+
 # Cleanup
 rm(d,peaklist,d.diff,d.diff.annot)
