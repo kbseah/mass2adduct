@@ -4,8 +4,8 @@
 \alias{pointsAdducts}
 \title{Overlay adduct parental and adduct masses on plot of msimat object}
 \usage{
-pointsAdducts(d, diff, which = c("adduct", "parent"), signif = TRUE,
-  pch = 20, cex = 0.5, col = "red", ...)
+pointsAdducts(d, diff, which = c("adduct", "parent"), invert = FALSE,
+  signif = TRUE, pch = 20, cex = 0.5, col = "red", ...)
 }
 \arguments{
 \item{d}{msimat; Object of class msimat created by function
@@ -15,6 +15,8 @@ pointsAdducts(d, diff, which = c("adduct", "parent"), signif = TRUE,
 function \code{\link{corrPairsMSI}}}
 
 \item{which}{string; Either plot "parent" or "adduct" peaks as overlay}
+
+\item{invert}{logical; Overlay the points which are NOT adducts}
 
 \item{signif}{logical; Only plot points which have statistically significant
 correlation}

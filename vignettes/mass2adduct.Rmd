@@ -51,6 +51,12 @@ Typing the object name or using the `summary()` function gives you a summary of 
 d 
 ```
 
+Default plot method for an `msimat` object will display a mass spectrum, with vertical lines representing the total intensity of each peak.
+
+```{r, fig.width=7, fig.height=4}
+plot(d)
+```
+
 ## Tabulate all pairwise mass differences
 
 Take all possible pairs of masses and calculate the mass difference for each pair. These mass differences represent potential molecular adducts.

@@ -12,6 +12,7 @@
 #' @param diff data.frame; Mass difference correlation table produced by
 #'        function \code{\link{corrPairsMSI}}
 #' @param which string; Either plot "parent" or "adduct" peaks as overlay
+#' @param invert logical; Overlay the points which are NOT adducts
 #' @param signif logical; Only plot points which have statistically significant
 #'        correlation
 #' @param pch Plot character to use, passed to \code{points}
@@ -23,7 +24,7 @@
 #' @seealso \code{\link{massdiff}} tabulate all possible mass pairs
 #' @export
 
-pointsAdducts <- function(d, diff, which=c("adduct","parent"), signif=TRUE, pch=20, cex=0.5, col="red", ...) {
+pointsAdducts <- function(d, diff, which=c("adduct","parent"), invert=FALSE, signif=TRUE, pch=20, cex=0.5, col="red", ...) {
   if (signif) {
     diff <- diff[which(diff$Significance == 1),]
   }
@@ -35,8 +36,13 @@ pointsAdducts <- function(d, diff, which=c("adduct","parent"), signif=TRUE, pch=
   # It is possible that there are duplicates in shortlist because there may be
   # more than one parent/adduct pair with a mass difference within the
   # tolerated range
-  peaksshortlist <- d[["peaks"]][which(d[["peaks"]] %in% shortlist)]
-  intensities <- d[["peakintensities"]][which(d[["peaks"]] %in% shortlist)]
+  if (invert) {
+    peaksshortlist <- d[["peaks"]][which(!d[["peaks"]] %in% shortlist)]
+    intensities <- d[["peakintensities"]][which(!d[["peaks"]] %in% shortlist)]
+  } else {
+    peaksshortlist <- d[["peaks"]][which(d[["peaks"]] %in% shortlist)]
+    intensities <- d[["peakintensities"]][which(d[["peaks"]] %in% shortlist)]
+  }
   points(x=peaksshortlist,
          y=intensities,
          pch=pch,
