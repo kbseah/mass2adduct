@@ -1,7 +1,7 @@
 Package: mass2adduct
 Title: Mass Spectrometry Imaging Molecular Adduct Finder
-Version: 0.0.0.9001
-Date: 2018-06-20
+Version: 1.0.0.0
+Date: 2018-08-28
 Authors@R: c(
     person("Brandon", "Seah", email = "kbseah@mpi-bremen.de", role = c("aut", "cre")),
     person("Moritz", "Janda", role = "aut"),
