@@ -95,10 +95,10 @@ topAdducts(d.diff.hist,n=10) # Report top ten hits
 
 ## Find mass peaks associated with specific mass difference
 
-Find parent and derivative mass peaks associated with a specific molecular adduct, e.g. DHB-H2O (mass 136.01600)
+Find parent and derivative mass peaks associated with a specific molecular adduct, e.g. DHB-H2O (mass 136.01600), within a window of 1 mDa, i.e. +/- 0.5 mDa. Alternatively, the window can be set as a proportion of the mass peak center in ppm units.
 
 ```R
-d.diff.DHBH2O <- diffGetPeaks(d.diff, mass=136.01600, width=0.01)
+d.diff.DHBH2O <- diffGetPeaks(d.diff, mass=136.01600, mDa=1)
 ```
 
 Output is a subset of the original `d.diff` object.
