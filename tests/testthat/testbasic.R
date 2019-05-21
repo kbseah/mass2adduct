@@ -53,19 +53,19 @@ d.diff.annot <- adductMatch(d.diff,add=adducts2)
 test_that("Adduct matching", {
   expect_is(d.diff.annot,"massdiff")
   expect_is(d.diff.annot,"data.frame")
-  expect_equal(dim(d.diff.annot),c(11035,5))
+  expect_equal(dim(d.diff.annot),c(11141,5))
 })
 
 test_that("Adduct ion peak counting", {
   d.diff.annot.addion <- countPeaksFromDiff(d.diff.annot,which="adduct")
   expect_is(d.diff.annot.addion, "data.frame")
-  expect_equal(subset(d.diff.annot.addion,matches=="Na adduct")$peaks,1546)
+  expect_equal(subset(d.diff.annot.addion,matches=="Na adduct")$peaks,1612)
 })
 
 test_that("Correlation testing", {
   expect_message(d.diff.annot.cor <- corrPairsMSI(d,d.diff.annot))
   expect_is(d.diff.annot.cor,"data.frame")
-  expect_equal(sum(d.diff.annot.cor$Significance),3867)
+  expect_equal(sum(d.diff.annot.cor$Significance),3970)
 })
 
 test_that("Parallelized code", {
