@@ -4,7 +4,8 @@
 \alias{topAdducts}
 \title{Find top adduct candidates from a mass difference histogram}
 \usage{
-topAdducts(hist, add = adducts, n = 20, use.bw = TRUE, threshold = NULL)
+topAdducts(hist, add = mass2adduct::adducts, n = 20, use.bw = TRUE,
+  threshold = NULL)
 }
 \arguments{
 \item{hist}{histogram of a massdiff object}

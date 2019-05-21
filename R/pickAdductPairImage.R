@@ -68,7 +68,7 @@ pickAdductPairImage <- function(d,
   }
 
   # Pick the point
-  peakidx <- identify(d, plot=TRUE, give.names=FALSE, n=1)
+  peakidx <- identify.msimat(d, plot=TRUE, give.names=FALSE, n=1)
 
   # Subset the diff table by the desired masses
   if (which[1] == "parent") {

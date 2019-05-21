@@ -4,8 +4,20 @@
 \alias{filterPeaks.data.frame}
 \title{Filter peak list of MSI data}
 \usage{
-\method{filterPeaks}{data.frame}(d, how = c("topX", "XofTop", "XofTotal"),
-  x = NULL, index = FALSE)
+\method{filterPeaks}{data.frame}(d, how = c("topX", "XofTop",
+  "XofTotal"), x = NULL, index = FALSE)
+}
+\arguments{
+\item{d}{either an \code{\link{msimat}} object, or a data.frame with three
+columns: \code{peaks}, \code{counts}, and \code{intensities}
+representing the mass spectrum of the MSI data.}
+
+\item{how}{character; Method to use for filtering (see above)}
+
+\item{x}{numeric; Parameter for the filtering method.}
+
+\item{index}{logical; If input is a dataframe, and \code{index=TRUE}, then
+return will be a vector of indices rather than a data frame.}
 }
 \description{
 Filter peak list of MSI data

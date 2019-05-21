@@ -7,9 +7,10 @@
 #' be used to determine the margin of error for excluding a given peak.
 #'
 #' @param input numeric; msimat object or vector containing peaks to be removed
-#' @param v numeric; List of peaks to be removed from d
+#' @param vec numeric; List of peaks to be removed from d
 #' @param ppm1 numeric; Mass accuracy for peaklist v1, in ppm
 #' @param ppm2 numeric; Mass accuracy for peaklist v2, in ppm
+#' @param ... other parameters
 #'
 #' @return msimat object or numeric
 #'

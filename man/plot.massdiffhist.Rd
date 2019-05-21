@@ -4,11 +4,15 @@
 \alias{plot.massdiffhist}
 \title{Plot massdiffhist histogram with named adducts labeled}
 \usage{
-\method{plot}{massdiffhist}(hist, add = adducts, labels = NULL, pch = 0,
-  col = "blue", cex = 0.5, pos = 4, main = "Mass difference histogram",
-  xlab = "mass difference (m/z)", ...)
+\method{plot}{massdiffhist}(hist, add = mass2adduct::adducts,
+  labels = NULL, pch = 0, col = "blue", cex = 0.5, pos = 4,
+  main = "Mass difference histogram", xlab = "mass difference (m/z)",
+  ...)
 }
 \arguments{
+\item{hist}{Histogram of a massdiff object produced by
+\code{\link{hist.massdiff}}}
+
 \item{add}{data.frame; adduct data to use to annotate the mass diff peaks,
 (default: built-in data set \code{adducts})}
 
@@ -29,9 +33,6 @@ and to the right of points respectively.}
 \item{xlab}{character; X-axis label}
 
 \item{...}{Other parameters to pass to plot}
-
-\item{hist;}{Histogram of a massdiff object produced by
-\code{\link{hist.massdiff}}}
 }
 \description{
 Plot massdiff histogram with option of labeling peaks corresponding to known

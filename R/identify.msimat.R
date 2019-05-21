@@ -19,7 +19,7 @@ identify.msimat <- function(d,
                             plot=TRUE,
                             give.names=TRUE,
                             ...) {
-  idx <- identify(x=d$peaks,
+  idx <- graphics::identify(x=d$peaks,
                   y=d$peakintensities,
                   labels=as.character(d$peaks),
                   ...)

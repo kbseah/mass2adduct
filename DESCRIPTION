@@ -8,10 +8,10 @@ Authors@R: c(
     person("Manuel", "Liebeke", email = "mliebeke@mpi-bremen.de", role = "aut"))
 Description: Tools for calculating mass differences in mass spectrometry data to explore molecular adducts. To accompany Janda et al. (MS in prep.)
 Depends: R (>= 3.3.2)
-License: GPL-2.0
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 LinkingTo: Rcpp
 Imports: Rcpp,
     Matrix,

@@ -4,7 +4,8 @@
 \alias{adductMatch.massdiff}
 \title{Report closest-matching adduct type for a list of mass differences}
 \usage{
-\method{adductMatch}{massdiff}(x, add = adducts, ppm = 2, mDa = NULL)
+\method{adductMatch}{massdiff}(x, add = mass2adduct::adducts, ppm = 2,
+  mDa = NULL)
 }
 \arguments{
 \item{x}{massdiff; Mass differences produced by \code{\link{massdiff}}}

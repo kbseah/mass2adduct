@@ -2,7 +2,7 @@
 #'
 #' From an MSI dataset imported with \code{\link{msimat}}, plot an image of the
 #' signal intensity for a specified peaks. The image dimensions must be
-#' specified as either \code{nrow} or |code{ncol}. 
+#' specified as either \code{nrow} or |code{ncol}.
 #'
 #' @param d msimat; MSI dataset imported with \code{\link{msimat}}
 #' @param peak Name of the peak to plot. If NULL, then plot the total intensity
@@ -19,7 +19,7 @@ image.msimat <- function(d,
                          peak=NULL,
                          nrow=NULL,
                          ncol=NULL,
-                         col=terrain.colors(36),
+                         col=grDevices::terrain.colors(36),
                          main=NULL,
                          ...) {
   if (is.null(nrow) & is.null(ncol)) {
@@ -53,7 +53,7 @@ image.msimat <- function(d,
       stop ("Dimensions specified do not fit image, please check")
     }
     img <- matrix(vec,ncol=ncol)
-  } 
+  }
   # Plot image
   image(img,
         col=col,

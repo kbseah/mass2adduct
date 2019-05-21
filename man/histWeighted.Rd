@@ -4,7 +4,8 @@
 \alias{histWeighted}
 \title{Correlation-weighted histogram of massdiff object}
 \usage{
-histWeighted(diff, widthFunc = "equal", width = 0.01, ncores = NULL, ...)
+histWeighted(diff, widthFunc = "equal", width = 0.01, ncores = NULL,
+  ...)
 }
 \arguments{
 \item{diff}{massdiff; Output from function \code{\link{massdiff}},

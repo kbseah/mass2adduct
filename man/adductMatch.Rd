@@ -4,7 +4,7 @@
 \alias{adductMatch}
 \title{Find closest-matching known adducts for a set of mass differences or histogram thereof}
 \usage{
-adductMatch(x, add = adducts, ...)
+adductMatch(x, add = mass2adduct::adducts, ...)
 }
 \arguments{
 \item{x}{Object of class massdiff from function \code{\link{massdiff}} or

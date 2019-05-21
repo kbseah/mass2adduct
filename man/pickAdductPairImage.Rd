@@ -4,8 +4,8 @@
 \alias{pickAdductPairImage}
 \title{Display parent/adduct ion pair MSI images}
 \usage{
-pickAdductPairImage(d, diff, which = c("parent", "adduct"), match = NULL,
-  nrow = NULL, ncol = NULL)
+pickAdductPairImage(d, diff, which = c("parent", "adduct"),
+  match = NULL, nrow = NULL, ncol = NULL)
 }
 \arguments{
 \item{d}{msimat object used to plot the mass spectrum}

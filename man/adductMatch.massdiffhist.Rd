@@ -4,7 +4,8 @@
 \alias{adductMatch.massdiffhist}
 \title{Report closest-matching adduct type for a mass difference histogram}
 \usage{
-\method{adductMatch}{massdiffhist}(x, add = adducts, density = FALSE)
+\method{adductMatch}{massdiffhist}(x, add = mass2adduct::adducts,
+  density = FALSE)
 }
 \arguments{
 \item{x}{massdiffhist object produced by \code{\link{hist.massdiff}}}

@@ -9,11 +9,13 @@ subtractPeaks(input, vec, ppm1, ppm2, ...)
 \arguments{
 \item{input}{numeric; msimat object or vector containing peaks to be removed}
 
+\item{vec}{numeric; List of peaks to be removed from d}
+
 \item{ppm1}{numeric; Mass accuracy for peaklist v1, in ppm}
 
 \item{ppm2}{numeric; Mass accuracy for peaklist v2, in ppm}
 
-\item{v}{numeric; List of peaks to be removed from d}
+\item{...}{other parameters}
 }
 \value{
 msimat object or numeric

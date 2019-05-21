@@ -19,4 +19,4 @@
 #'
 #' @export
 
-adductMatch <- function(x, add=adducts, ...) UseMethod("adductMatch")
+adductMatch <- function(x, add=mass2adduct::adducts, ...) UseMethod("adductMatch")

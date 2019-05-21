@@ -4,7 +4,7 @@
 #' adducts or chemical transformations. The best-matching adducts for each
 #' histogram bin are found internally with \code{\link{adductMatch.histogram}}.
 #'
-#' @param hist; Histogram of a massdiff object produced by
+#' @param hist Histogram of a massdiff object produced by
 #'        \code{\link{hist.massdiff}}
 #' @param add data.frame; adduct data to use to annotate the mass diff peaks,
 #'        (default: built-in data set \code{adducts})
@@ -22,7 +22,7 @@
 #' @export
 
 plot.massdiffhist <- function(hist,
-                              add=adducts,
+                              add=mass2adduct::adducts,
                               labels=NULL,
                               pch=0,
                               col="blue",
@@ -37,18 +37,18 @@ plot.massdiffhist <- function(hist,
   # Calculate top adducts
   if (!is.null(labels)) {
     matches <- adductMatch(x=hist, add=add, density=FALSE)
-    matches <- matches[order(matches$counts,decreasing=T),] 
+    matches <- matches[order(matches$counts,decreasing=T),]
     matches <- matches[1:labels,] # Take the top N hits
     points(x=matches$mass,
           y=matches$counts,
           pch=pch,
           col=col,
           cex=cex)
-    text(x=matches$mass,
-         y=matches$counts,
-         label=as.character(matches$name),
-         pos=pos,
-         col=col,
-         cex=cex)
+    graphics::text(x=matches$mass,
+                   y=matches$counts,
+                   label=as.character(matches$name),
+                   pos=pos,
+                   col=col,
+                   cex=cex)
   }
 }

@@ -22,7 +22,7 @@
 #'          current function)
 #' @export
 
-adductMatch.massdiffhist <- function(x,add=adducts, density=FALSE) {
+adductMatch.massdiffhist <- function(x,add=mass2adduct::adducts, density=FALSE) {
   binwidth <- x$mids[2] - x$mids[1] # Width of histogram bins
   indices <- sapply(add$mass, function(z) {
     index <- which.min(abs(x$mids - z))

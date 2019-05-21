@@ -4,11 +4,12 @@
 \alias{msimat}
 \title{Read mass spectrometry imaging data}
 \usage{
-msimat(csv = NULL, sep = ",", rows = NULL, cols = NULL, vals = NULL,
-  peaks = NULL, spots = NULL, remove.zeroes = TRUE, header = TRUE,
-  check.names = FALSE, row.names = 1, reformat.large.csv = NULL,
-  crlf = FALSE, script.path = system.file("msimunging.pl", package =
-  "mass2adduct"), ...)
+msimat(csv = NULL, sep = ",", rows = NULL, cols = NULL,
+  vals = NULL, peaks = NULL, spots = NULL, remove.zeroes = TRUE,
+  header = TRUE, check.names = FALSE, row.names = 1,
+  reformat.large.csv = NULL, crlf = FALSE,
+  script.path = system.file("msimunging.pl", package = "mass2adduct"),
+  ...)
 }
 \arguments{
 \item{csv}{filename; CSV-formatted table of intensities arranged by peak

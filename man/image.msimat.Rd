@@ -5,7 +5,7 @@
 \title{Plot mass spectrometry imaging image of a msimat object}
 \usage{
 \method{image}{msimat}(d, peak = NULL, nrow = NULL, ncol = NULL,
-  col = terrain.colors(36), main = NULL, ...)
+  col = grDevices::terrain.colors(36), main = NULL, ...)
 }
 \arguments{
 \item{d}{msimat; MSI dataset imported with \code{\link{msimat}}}

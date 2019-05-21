@@ -36,7 +36,7 @@
 #'
 #' @export
 
-adductMatch.massdiff <- function(x, add=adducts, ppm=2, mDa=NULL) {
+adductMatch.massdiff <- function(x, add=mass2adduct::adducts, ppm=2, mDa=NULL) {
   # For each mass pair calculate the mass difference tolerance
   if (!is.null(mDa)) {
     Ad <- rep(mDa * 1e-3, times=length(x$A))
@@ -46,7 +46,7 @@ adductMatch.massdiff <- function(x, add=adducts, ppm=2, mDa=NULL) {
     Bd <- x$B * ppm * 1e-6
   }
   x$delta <- sqrt(Ad**2 + Bd**2) # Uncertainties add in quadrature
-  
+
   indices <- vector()
   matches <- vector()
   for (i in 1:length(add$mass)) {
@@ -56,7 +56,7 @@ adductMatch.massdiff <- function(x, add=adducts, ppm=2, mDa=NULL) {
     indices <- c(indices, idx)
     matches <- c(matches, rep(as.character(add$name[i]),length(idx)))
   }
-  
+
   output <- data.frame(A=x$A[indices],
                        B=x$B[indices],
                        diff=x$diff[indices],
@@ -72,7 +72,7 @@ adductMatch.massdiff <- function(x, add=adducts, ppm=2, mDa=NULL) {
   if (!is.null(x$Significance)) {
     output$Significance <- x$Significance[indices]
   }
-  
+
   class(output) <- c("massdiff","data.frame")
   row.names(output) <- NULL
   return(output)

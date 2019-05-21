@@ -1,6 +1,6 @@
 #' Filter peak list of MSI data
 #'
-#' Perform peak filtering of MSI dataset by one of three methods. "topX" retains 
+#' Perform peak filtering of MSI dataset by one of three methods. "topX" retains
 #' the top X peaks by intensity. "XofTop" retains all peaks above fraction X of
 #' the highest peak. "XofTotal" retains the top peaks (by intensity) that
 #' cumulatively account for 1-X of the total intensity. For "topX", the value of

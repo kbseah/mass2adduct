@@ -19,7 +19,7 @@
 #'          current function)
 #' @export
 
-topAdducts <- function(hist, add=adducts, n=20, use.bw=TRUE, threshold=NULL) {
+topAdducts <- function(hist, add=mass2adduct::adducts, n=20, use.bw=TRUE, threshold=NULL) {
   if (!"massdiffhist" %in% class(hist)) {
     stop("Input must be an object of class massdiffhist")
   }

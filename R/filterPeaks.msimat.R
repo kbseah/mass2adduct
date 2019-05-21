@@ -1,4 +1,5 @@
 #' Filter peak list of MSI data
+#' @inheritParams filterPeaks
 #' @export
 
 filterPeaks.msimat <- function(d,
@@ -11,12 +12,12 @@ filterPeaks.msimat <- function(d,
                         how=how,
                         x=x,
                         index=TRUE)
-    
+
   outidx <- outidx[order(d$peaks[outidx],decreasing=FALSE)]
   newpeaks <- d$peaks[outidx]
   newmat <- d$mat[,outidx]
   newpeakintensities <- d$peakintensities[outidx]
-  
+
   out <- list(mat=newmat,
               peaks=newpeaks,
               spots=d$spots,

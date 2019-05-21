@@ -1,4 +1,5 @@
 #' Filter peak list of MSI data
+#' @inheritParams filterPeaks
 #' @export
 
 filterPeaks.data.frame <- function(d,
@@ -18,7 +19,7 @@ filterPeaks.data.frame <- function(d,
   if (! how[1] %in% c("topX","XofTop","XofTotal")) {
     stop("Invalid filtering method")
   }
-  
+
   # topX method
   if (how[1]=="topX") {
     if (x < 1) {
@@ -39,12 +40,12 @@ filterPeaks.data.frame <- function(d,
     #out <- d[reorderidx[which(cumulint>cutoff)],]
     outidx <- reorderidx[which(cumulint>cutoff)]
   }
-  
+
   if (index) {
     return (outidx)
   } else {
     out <- d[outidx,]
     return(out)
   }
-  
+
 }

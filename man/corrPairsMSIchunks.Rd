@@ -4,9 +4,9 @@
 \alias{corrPairsMSIchunks}
 \title{Calculate correlations of pairs of mass peaks from MSI data in chunks}
 \usage{
-corrPairsMSIchunks(d, diff, p.val = 0.05, method = c("pearson", "kendall",
-  "spearman"), alternative = c("two.sided", "less", "greater"),
-  ncores = NULL, mem.limit = 5, ...)
+corrPairsMSIchunks(d, diff, p.val = 0.05, method = c("pearson",
+  "kendall", "spearman"), alternative = c("two.sided", "less",
+  "greater"), ncores = NULL, mem.limit = 5, ...)
 }
 \arguments{
 \item{d}{msimat; MSI data with peaks as columns and pixels as rows,
