@@ -9,11 +9,11 @@
 \arguments{
 \item{input}{numeric; msimat object containing peaks to be removed}
 
+\item{vec}{numeric; List of peaks to be removed from d}
+
 \item{ppm1}{numeric; Mass accuracy for peaklist v1, in ppm}
 
 \item{ppm2}{numeric; Mass accuracy for peaklist v2, in ppm}
-
-\item{v}{numeric; List of peaks to be removed from d}
 }
 \value{
 msimat object

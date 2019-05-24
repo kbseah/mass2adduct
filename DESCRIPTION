@@ -1,10 +1,11 @@
 Package: mass2adduct
 Title: Mass Spectrometry Imaging Molecular Adduct Finder
-Version: 1.0.0.0
-Date: 2018-08-28
+Version: 1.0.1.0
+Date: 2019-05-24
 Authors@R: c(
     person("Brandon", "Seah", email = "kbseah@mpi-bremen.de", role = c("aut", "cre")),
     person("Moritz", "Janda", role = "aut"),
+    person("Dennis", "Jakkob", role = "aut"),
     person("Manuel", "Liebeke", email = "mliebeke@mpi-bremen.de", role = "aut"))
 Description: Tools for calculating mass differences in mass spectrometry data to explore molecular adducts. To accompany Janda et al. (MS in prep.)
 Depends: R (>= 3.3.2)
