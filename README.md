@@ -9,14 +9,19 @@ You will need the [`devtools`](https://cran.r-project.org/web/packages/devtools/
 ```R
 install.packages("devtools") # Install from CRAN
 library(devtools) # Load the package
+install.packages(c("knitr","rmarkdown")) # If you want to build vignette
 ```
+
+If you want to build the vignette you will need `knitr` and `rmarkdown` R packages, as well as [`pandoc`](https://pandoc.org/).
 
 Install mass2adduct from Github:
 
 ```R
 install_github("kbseah/mass2adduct")
-install_github("kbseah/mass2adduct", build_vignettes=TRUE) # Build vignette "mass2adduct" (not done by default)
+install_github("kbseah/mass2adduct", build_vignettes=TRUE, build=TRUE, build_opts=c("--no-resave-data","--no-manual")) # Build vignette "mass2adduct" (not done by default)
 ```
+
+The vignette contains a detailed explanation of the mass2adduct package with a worked example, and it is recommended to read it if you want to understand the reasoning behind the package.
 
 Load mass2adduct package after it is installed
 
@@ -49,7 +54,7 @@ peaks <- scan("mass_example",what=numeric())
 
 ## Tabulate all pairwise mass differences
 
-Take all possible pairs of masses and calculate the mass difference for each pair. These mass differences represent potential molecular adducts. 
+Take all possible pairs of masses and calculate the mass difference for each pair. These mass differences represent potential molecular adducts.
 
 ```R
 d.diff <- massdiff(peaks) # From MSI data
@@ -145,5 +150,3 @@ Package maintainer: Brandon Seah (kbseah@mpi-bremen.de)
 Authors: Moritz Janda, Manuel Liebeke
 
 [Department of Symbiosis, Max Planck Institute for Marine Microbiology](https://www.mpi-bremen.de/en/Department-of-Symbiosis.html)
-
-
