@@ -4,16 +4,70 @@
 # parent ion, and plot distribution maps for each of the parent and putative
 # adduct peaks
 
-args = commandArgs(trailingOnly=TRUE)
+# Load optparse package and parse options first before loading other libraries
+suppressPackageStartupMessages(library(optparse));
 
-# Get input filename prefix
-ImzMLfile <- args[1]
-binwidth <- as.numeric(args[2]) # usually 0.001
-triplet <- args[3] # five files that result from msimunging.pl script
-parentmass <- as.numeric(args[4])
-outfile <- args[5]
+options <- list(
+  make_option(
+    c("-i", "--imzml"), type="character", action="store",
+    help="File name prefix of ImzML format file, without the .imzML prefix. Both the imzML and ibd files should be present."
+    ),
+  make_option(
+    c("-b","--binwidth"), type="numeric", action="store", default="0.001",
+    help="Mass resolution for peak binning, in m/z units."
+  ),
+  make_option(
+    c("-t","--triplet"), type="character", action="store",
+    help="File name prefix for output files from msimunging.pl script, without the file name suffixes"
+  ),
+  make_option(
+    c("-p","--parentmass"), type="numeric", action="store",
+    help="Parent mass for which to find adducts and generate plots"
+  ),
+  make_option(
+    c("-o","--out"), type="character", action="store",
+    help="Output plot file name"
+  )
+)
 
-# load packages
+parser <- OptionParser(
+  option_list=options,
+  usage="usage: %prog [options]",
+  description="Plot MS intensity image for a specified parent mass and putative adducts"
+)
+
+# Check that necessary arguments are supplied, otherwise quit
+
+conf <- parse_args(parser, positional_arguments = TRUE);
+if (length(conf$options$imzml) != 1) {
+  cat ("ERROR: File not specified to option --imzml \n")
+  print_help(parser)
+  quit(status=2)
+} else if (length(conf$options$triplet) != 1) {
+  cat ("ERROR: File prefix not specified to option --triplet \n")
+  print_help(parser)
+  quit(status=2)
+} else if (length(conf$options$parentmass) != 1) {
+  cat ("ERROR: Parent mass not specified to option --parentmass \n")
+  print_help(parser)
+  quit(status=2)
+}
+
+# Rename input options
+ImzMLfile <- conf$options$imzml
+binwidth <- conf$options$binwidth # usually 0.001
+triplet <- conf$options$triplet # five files that result from msimunging.pl script
+parentmass <- conf$options$parentmass
+outfile <- conf$options$out
+
+if (length(conf$options$out) != 1) {
+  outfile <- paste(as.character(parentmass),
+                   "_correlation_image.png",
+                  sep = "")
+  cat (paste("No output file name provided. Defaulting to ",outfile,"\n",sep=""))
+}
+
+# Load libraries
 suppressPackageStartupMessages(library(Cardinal))
 library(mass2adduct)
 
@@ -54,9 +108,7 @@ d.parentmass <- d.diff.annot.cor.sig[which(d.diff.annot.cor.sig$A == parentmass)
 ## plot images with significant correlation to parental mass
 options(Cardinal.dark = FALSE) # For dark mode set Cardinal.dark=TRUE and text_col <- "white"
 text_col <- "black"
-png(filename = paste(as.character(parentmass), # Experimental design for file name
-                     "_correlation_image.png",
-                     sep = ""),
+png(filename = outfile,
     width = 3000,
     height = 3000,
     pointsize = 12,
