@@ -2,13 +2,13 @@
 args = commandArgs(trailingOnly=TRUE)
 
 # Load package
-library("Cardinal")
+suppressPackageStartupMessages(library("Cardinal"))
 
 # file name
 ImzMLfile <- args[1]
-binwidth <- args[2] # usually 0.001
-chunksize <- args[3] # 50000
-i_threshold <- args[4] # 100 for not normalized datasets
+binwidth <- as.numeric(args[2]) # usually 0.001
+chunksize <- as.numeric(args[3]) # 50000
+i_threshold <- as.numeric(args[4]) # 100 for not normalized datasets
 outfile <- args[5]
 
 #-------------------------------------------------------------
@@ -42,6 +42,10 @@ for (i in 1:length(chunksize_list)) {
 matrix_list <- list()
 for (i in 1:length(mz_list)) {
   matrix_list[[i]]            <- spectra(msi)[chunksize_list[[i]],]
+  # Catch edge case where last chunk has size one, producing a vector instead of matrix
+  if (class(matrix_list[[i]]) != "matrix") {
+    matrix_list[[i]] <- matrix(matrix_list[[i]],nrow=1)
+  }
   colnames(matrix_list[[i]])  <- pixel
   rownames(matrix_list[[i]])  <- mz_list[[i]]
   matrix_list[[i]]            <- matrix_list[[i]][rowSums(matrix_list[[i]] > i_threshold) >= 1, ] # strips matrix by deleting peaks (rows) under threshold
@@ -62,6 +66,3 @@ write.table(intensity_matrix,
             na = "",
             col.names = FALSE,
             sep = ",")
-
-
-

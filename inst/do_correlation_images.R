@@ -1,15 +1,20 @@
 #!/usr/bin/env Rscript
+# For an MSI dataset, and a parent ion mass within that dataset
+# Find putative adduct peaks that have significant spatial correlation with the
+# parent ion, and plot distribution maps for each of the parent and putative
+# adduct peaks
+
 args = commandArgs(trailingOnly=TRUE)
 
 # Get input filename prefix
 ImzMLfile <- args[1]
-binwidth <- args[2] # usually 0.001
+binwidth <- as.numeric(args[2]) # usually 0.001
 triplet <- args[3] # five files that result from msimunging.pl script
-parentmass <- args[4]
+parentmass <- as.numeric(args[4])
 outfile <- args[5]
 
 # load packages
-library(Cardinal) 
+suppressPackageStartupMessages(library(Cardinal))
 library(mass2adduct)
 
 # import data
@@ -94,7 +99,7 @@ for (i in 1:nrow(d.parentmass)) {
         cex = 1.5)
 }
 mtext(paste("Significant correlations of ",parentmass, sep=""),
-      col = text_col, 
+      col = text_col,
       side = 3,
       line = 0,
       outer = TRUE,
