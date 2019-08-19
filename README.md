@@ -33,7 +33,7 @@ library(mass2adduct)
 
 ### Import MS imaging intensity data
 
-MSI data exported from the MSiReader software with the "intensity export" function. You can find an example CSV file in the folder `inst/extdata`. Import the data into R as a data.frame:
+MSI data exported from the MSiReader software with the "intensity export" function, or from some other third party software that can output plain-text comma-delimited tables (CSV format). You can find an example CSV file in the folder `inst/extdata`. Import the data into R as a data.frame:
 
 ```R
 d <- msimat("msi.csv", sep=";")
@@ -43,6 +43,22 @@ plot(d) # Mass spectrum of total intensities per peak
 ```
 
 If the data matrix is very large, consider reformatting it (see "Reformatting large CSV files" below).
+
+### Import Cardinal objects
+
+[Cardinal](http://cardinalmsi.org/) is an R package for working with MSI data. Cardinal `MSProcessedImagingExperiment` or `MSContinuousImagingExperiment` objects (requires Cardinal v2.2 and above) can be converted to mass2adduct's `msimat` format. However, the data must first be pre-processed, with peaks already binned with the `peakBin()` function from Cardinal.
+
+```R
+# Read ImzML file
+d <- readImzML("msi_file")
+# Pre-process and peak bin with existing peaklist
+d_peaks <- d %>% normalize() %>% smoothSignal() %>% reduceBaseline() %>% peakBin(peaklist) %>% process
+# Convert to msimat format for mass2adduct
+d_msimat <- cardinal2msimat(d_peaks)
+# Compare peak histograms from Cardinal vs mass2adduct, should look the same
+plot(d_peaks)
+plot(d_msimat)
+```
 
 ### Import list of masses directly
 

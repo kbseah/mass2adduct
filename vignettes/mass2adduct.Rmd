@@ -45,10 +45,12 @@ d <- msimat(system.file("extdata","msi.csv",package="mass2adduct"),sep=";")
 
 If the data matrix is very large, it may need to be reformatted to be loaded into memory during an R session.
 
+If you are using Cardinal to process your MSI data, data objects in the `MSProcessedImagingExperiment` or `MSContinuousImagingExperiment` formats can be converted to mass2adduct's `msimat` format with the `cardinal2msimat()` function. Cardinal version 2.2+ is required.
+
 Typing the object name or using the `summary()` function gives you a summary of its contents.
 
 ```{r}
-d 
+d
 ```
 
 Default plot method for an `msimat` object will display a mass spectrum, with vertical lines representing the total intensity of each peak.
@@ -87,7 +89,7 @@ At this point, the intensity information is not yet used.
 
 ## Quickly identify possible adducts
 
-Of course, most pairs do not represent real or meaningful chemical transformations. However, we expect that common chemical transformations, e.g. the difference between carbon-12 and carbon-13 isotopes in organic compounds, will be more often encountered than the background "noise". 
+Of course, most pairs do not represent real or meaningful chemical transformations. However, we expect that common chemical transformations, e.g. the difference between carbon-12 and carbon-13 isotopes in organic compounds, will be more often encountered than the background "noise".
 
 There are two built-in data sets `adducts` and `adducts2` (shorter), which list biologically-relevant chemical species that might occur in biological samples.
 
@@ -97,7 +99,7 @@ data(adducts) # Load dataset
 head(adducts) # Preview contents
 ```
 
-If you are interested in something that's not in the built-in list, simply make your own table with the same three columns. 
+If you are interested in something that's not in the built-in list, simply make your own table with the same three columns.
 
 ### Visualize with a histogram
 
@@ -116,7 +118,7 @@ We can examine certain areas of the histogram in more detail.
 plot(d.diff.hist, add=adducts, labels=10, xlim=c(100,200))
 ```
 
-Also note that the background of likely non-meaningful mass differences is not uniformly distributed, but instead has peaks at integer values. This can be understood from the fact that most chemical masses are themselves close to integer values, hence the differences between them should be too. 
+Also note that the background of likely non-meaningful mass differences is not uniformly distributed, but instead has peaks at integer values. This can be understood from the fact that most chemical masses are themselves close to integer values, hence the differences between them should be too.
 
 ### Summarize possible matches to chemical adducts
 
@@ -140,7 +142,7 @@ topAdducts(d.diff.hist, n=10) # Report top ten hits
 
 Using the histogram gives us a useful overview and helps us to see if there are possible chemical transformations that we do not know about (i.e. unlabelled peaks). However, there are some drawbacks. The histogram bins massdiff values into bins of fixed width, whereas we know that the mass resolution of a mass spectrometer varies with the mass. What do we do if we would like to identify massdiffs that correspond to specific adducts of interest?
 
-We can match massdiffs to specific adduct types using the same function `adductMatch` that we applied to the histogram above. This adds an additional column to the `massdiff` object called `matches`, which lists the closest-matching adduct (if any) corresponding to a given ion pair. 
+We can match massdiffs to specific adduct types using the same function `adductMatch` that we applied to the histogram above. This adds an additional column to the `massdiff` object called `matches`, which lists the closest-matching adduct (if any) corresponding to a given ion pair.
 
 ```{r}
 d.diff.annot <- adductMatch(d.diff,add=adducts2)
@@ -181,4 +183,4 @@ pointsAdducts(d, d.diff.annot.cor.Na, which="adduct", signif=TRUE, pch=20, cex=0
 pointsAdducts(d, d.diff.annot.cor.Na, which="parent", signif=TRUE, pch=1, cex=0.5, col="blue") # Parent ions in blue outlines
 ```
 
-The overlap in red and blue points shows that some adduct ions may themselves be parents of further adducts. 
+The overlap in red and blue points shows that some adduct ions may themselves be parents of further adducts.
