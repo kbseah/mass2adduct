@@ -1,6 +1,8 @@
 # mass2adduct - Finding molecular adducts in mass spectrometry data
 
-In mass spectrometry imaging, adducts can form between target molecules (e.g. metabolites) and other substances such as matrix or salt ions. This package presents tools for counting and identifying possible adducts in MS data, and accompanies Janda et al. (in prep.).
+In mass spectrometry imaging, adducts can form between target molecules (e.g. metabolites) and other substances such as matrix or salt ions. This package presents tools for counting and identifying possible adducts in MS data, and accompanies Janda et al. (2021).
+
+Read [the paper here](https://doi.org/10.1021/acs.analchem.0c04720).
 
 ## Install and load package
 
@@ -159,10 +161,8 @@ Further documentation for all the above functions can be found with the `help` o
 
 Please report any problems to the package maintainer, either by email or with the issue tracker on Github.
 
-## Contact
+## Citation
 
-Package maintainer: Brandon Seah (kbseah@mpi-bremen.de)
-
-Authors: Moritz Janda, Manuel Liebeke
+Janda M, Seah BKB, Jakob D, Beckmann J, Geier B, Liebeke M (2021) Determination of abundant metabolite matrix adducts illuminates the dark metabolome of MALDI-mass spectrometry imaging datasets. *Analytical Chemistry*. [doi:10.1021/acs.analchem.0c04720](https://doi.org/10.1021/acs.analchem.0c04720)
 
 [Department of Symbiosis, Max Planck Institute for Marine Microbiology](https://www.mpi-bremen.de/en/Department-of-Symbiosis.html)
